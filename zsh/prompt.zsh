@@ -18,7 +18,7 @@ git_dirty() {
     then
 			echo "on %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
     else
-			echo "on %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%}"
+			echo "on %{$fg_bold[red]%}$(git_prompt_info)*%{$reset_color%}"
     fi
 	fi
 }
@@ -54,7 +54,7 @@ rb_prompt(){
 # This keeps the number of todos always available the right hand side of my
 # command line. I filter it to only count those tagged as "+next", so it's more
 # of a motivation to clear out the list.
-todo(){
+todo_num(){
 	if $(which todo.sh &> /dev/null)
 	then
 		num=$(echo $(todo.sh ls +next | wc -l))
@@ -76,7 +76,7 @@ directory_name(){
 
 export PROMPT=$'\n$(rb_prompt) in $(directory_name) $(git_dirty)$(need_push)\n› '
 set_prompt () {
-	export RPROMPT="%{$fg_bold[cyan]%}$(todo)%{$reset_color%}"
+	export RPROMPT="%{$fg_bold[cyan]%}$(todo_num)%{$reset_color%}"
 }
 
 precmd() {
