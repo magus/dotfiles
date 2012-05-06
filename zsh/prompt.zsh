@@ -38,16 +38,7 @@ need_push () {
 	then
 		echo " "
 	else
-		echo " with %{$fg_bold[magenta]%}unpushed%{$reset_color%} "
-	fi
-}
-
-rb_prompt(){
-	if $(which rbenv &> /dev/null)
-	then
-		echo "%{$fg_bold[yellow]%}$(rbenv version | awk '{print $1}')%{$reset_color%}"
-	else
-		echo ""
+		echo " with %{$fg[magenta]%}%Bunpushed%b%{$reset_color%} "
 	fi
 }
 
@@ -70,11 +61,19 @@ todo_num(){
 	fi
 }
 
-directory_name(){
-	echo "%{$fg_bold[cyan]%}%1/%\/%{$reset_color%}"
+user_name(){
+	echo "%{$fg_bold[green]%}%B%n%b%{$reset_color%}"
 }
 
-export PROMPT=$'\n$(rb_prompt) in $(directory_name) $(git_dirty)$(need_push)\n› '
+host_name(){	
+	echo "%{$fg[yellow]%}%m%{$reset_color%}"
+}
+
+path_abbv(){
+	echo "%{$fg_bold[white]%}${PWD/#$HOME/~}%{$reset_color%}"
+}
+
+export PROMPT=$'\n$(user_name)@$(host_name) in $(path_abbv) $(git_dirty)$(need_push)\n› '
 set_prompt () {
 	export RPROMPT="%{$fg_bold[cyan]%}$(todo_num)%{$reset_color%}"
 }
