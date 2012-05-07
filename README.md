@@ -18,9 +18,13 @@ user@host | /path/to/dir #                            (gitstatus)(gitbranch)
 * copy the .files in ~ to .dotfiles in appropriate folders
 * e.g.  .vimrc, todo, etc.
 * symlink dotfiles to appropriate places (holman/cowboy dotfiles)
+* 'link' folders should be linked to ~/.command/ (e.g. todo/link > ~/.todo/)
 
 ## todo.sh
 * sudo easy_install --dry-run python-gflags httplib2 google-api-python-client
-* installs dependencies
+* installs dependencies add to dotfiles setup
+
+* in ~/.private/ set google api and secret for `todo google`
+* first use will prompt for auth and save credentials to ~/.oauth/google/.tasks.dat
 
 
