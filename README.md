@@ -19,3 +19,8 @@ user@host | /path/to/dir #                            (gitstatus)(gitbranch)
 * e.g.  .vimrc, todo, etc.
 * symlink dotfiles to appropriate places (holman/cowboy dotfiles)
 
+## todo.sh
+* sudo easy_install --dry-run python-gflags httplib2 google-api-python-client
+* installs dependencies
+
+
