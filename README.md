@@ -10,10 +10,12 @@ user@host | /path/to/dir #                            (gitstatus)(gitbranch)
 * should open a new subl window in the current directory
 
 ## dotfiles.sh
+* backup existing dotfiles before beginning import
+* e.g. .dotfiles/backup/%Y-%M-%D.... (cowboy dotfiles)
 * file install initial stuff (e.g. xcode command line tools, brew, etc.)
 * brew install (zsh, git, tree, etc.)
 * check brew list for anything that we should add to initial brew installs
 * copy the .files in ~ to .dotfiles in appropriate folders
-* e.g.  .vimrc, etc.
+* e.g.  .vimrc, todo, etc.
 * symlink dotfiles to appropriate places (holman/cowboy dotfiles)
 
