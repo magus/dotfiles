@@ -46,9 +46,9 @@ need_push () {
 # command line. I filter it to only count those tagged as "+next", so it's more
 # of a motivation to clear out the list.
 todo_num(){
-	if $(which todo.sh &> /dev/null)
+	if $(which todo &> /dev/null)
 	then
-		num=$(echo $(todo.sh ls +next | wc -l))
+		num=$(echo $(todo ls +next | wc -l))
 		let todos=num-2
 		if [ $todos != 0 ]
 		then
