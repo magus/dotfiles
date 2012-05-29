@@ -38,7 +38,7 @@ need_push () {
 	then
 		echo " "
 	else
-		echo "%{$fg[magenta]%}%Bunpushed%b%{$reset_color%} "
+		echo " %{$fg[magenta]%}%Bunpushed%b%{$reset_color%} "
 	fi
 }
 
