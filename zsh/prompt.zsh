@@ -53,9 +53,9 @@ git_prompt_color() {
     then
 			if [[ $(unpushed) == "" ]]
 			then
-				echo "%{$fg[magenta]%}⇨  %{$reset_color%} "
-			else
 				echo "%{$fg_bold[green]%}⇨  %{$reset_color%}"
+			else
+				echo "%{$fg[magenta]%}⇨  %{$reset_color%} "
 			fi
     else
 			echo "%{$fg_bold[red]%}⇨  %{$reset_color%}"
