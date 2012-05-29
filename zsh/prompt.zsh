@@ -16,9 +16,9 @@ git_dirty() {
 	else
 		if [[ $st == "nothing to commit (working directory clean)" ]]
     then
-			echo "on %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
+			echo "%{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
     else
-			echo "on %{$fg_bold[red]%}$(git_prompt_info)*%{$reset_color%}"
+			echo "%{$fg_bold[red]%}$(git_prompt_info)*%{$reset_color%}"
     fi
 	fi
 }
@@ -38,17 +38,16 @@ need_push () {
 	then
 		echo " "
 	else
-		echo " with %{$fg[magenta]%}%Bunpushed%b%{$reset_color%} "
+		echo "%{$fg[magenta]%}%Bunpushed%b%{$reset_color%} "
 	fi
 }
 
-# This keeps the number of todos always available the right hand side of my
-# command line. I filter it to only count those tagged as "+next", so it's more
-# of a motivation to clear out the list.
+#number of todo items
+#props @holman
 todo_num(){
 	if $(which todo &> /dev/null)
 	then
-		num=$(echo $(todo ls +next | wc -l))
+		num=$(echo $(todo ls | wc -l))
 		let todos=num-2
 		if [ $todos != 0 ]
 		then
@@ -73,12 +72,24 @@ path_abbv(){
 	echo "%{$fg_bold[white]%}${PWD/#$HOME/~}%{$reset_color%}"
 }
 
-export PROMPT=$'\n$(user_name)@$(host_name) in $(path_abbv) $(git_dirty)$(need_push)\n%{$fg_bold[red]%}⇨  %{$reset_color%}'
-set_prompt () {
-	export RPROMPT="%{$fg_bold[cyan]%}$(todo_num)%{$reset_color%}"
+set_right_prompt () {
+	export RPROMPT="$(git_dirty)$(need_push)%{$fg_bold[cyan]%}[$(todo_num)]%{$reset_color%}"
 }
+
+
+
+
+
+#special zsh function
+#executed just before each prompt
 
 precmd() {
 	title "zsh" "%m" "%55<...<%~"
-	set_prompt
+	set_right_prompt
 }
+
+#minimal prompt
+export PROMPT=$'%{$fg_bold[red]%}⇨  %{$reset_color%}'
+
+#heavy prompt
+#export PROMPT=$'\n$(user_name)@$(host_name) in $(path_abbv)\n%{$fg_bold[red]%}⇨  %{$reset_color%}'
