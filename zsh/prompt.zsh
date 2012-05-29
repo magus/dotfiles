@@ -42,6 +42,27 @@ need_push () {
 	fi
 }
 
+
+git_prompt_color() {
+	st=$(/usr/bin/git status 2>/dev/null | tail -n 1)
+	if [[ $st == "" ]]
+	then
+		echo "%{$fg_bold[white]%}⇨  %{$reset_color%}"
+	else
+		if [[ $st == "nothing to commit (working directory clean)" ]]
+    then
+			if [[ $(unpushed) == "" ]]
+			then
+				echo "%{$fg[magenta]%}⇨  %{$reset_color%} "
+			else
+				echo "%{$fg_bold[green]%}⇨  %{$reset_color%}"
+			fi
+    else
+			echo "%{$fg_bold[red]%}⇨  %{$reset_color%}"
+    fi
+	fi
+}
+
 #number of todo items
 #props @holman
 todo_num(){
@@ -89,7 +110,7 @@ precmd() {
 }
 
 #minimal prompt
-export PROMPT=$'%{$fg_bold[red]%}⇨  %{$reset_color%}'
+export PROMPT=$'$(git_prompt_color)'
 
 #heavy prompt
 #export PROMPT=$'\n$(user_name)@$(host_name) in $(path_abbv)\n%{$fg_bold[red]%}⇨  %{$reset_color%}'
