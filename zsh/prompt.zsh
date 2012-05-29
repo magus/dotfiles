@@ -113,4 +113,4 @@ precmd() {
 export PROMPT=$'$(git_prompt_color)'
 
 #heavy prompt
-#export PROMPT=$'\n$(user_name)@$(host_name) in $(path_abbv)\n%{$fg_bold[red]%}⇨  %{$reset_color%}'
+#export PROMPT=$'\n$(user_name)@$(host_name) in $(path_abbv)\n$(git_prompt_color)'
