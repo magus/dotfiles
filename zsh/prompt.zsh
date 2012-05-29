@@ -94,7 +94,7 @@ path_abbv(){
 }
 
 set_right_prompt () {
-	export RPROMPT="$(git_dirty)$(need_push) ($(todo_num))"
+	export RPROMPT="$(git_dirty) $(need_push) ($(todo_num))"
 }
 
 
