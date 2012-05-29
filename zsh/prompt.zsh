@@ -36,9 +36,9 @@ unpushed () {
 need_push () {
 	if [[ $(unpushed) == "" ]]
 	then
-		echo " "
+		echo ""
 	else
-		echo " %{$fg[magenta]%}%Bunpushed%b%{$reset_color%} "
+		echo "%{$fg[magenta]%}%Bunpushed%b%{$reset_color%}"
 	fi
 }
 
@@ -72,7 +72,7 @@ todo_num(){
 		let todos=num-2
 		if [ $todos != 0 ]
 		then
-			echo "$todos"
+			echo "%{$fg_bold[cyan]%}$todos%{$reset_color%}"
 		else
 			echo ""
 		fi
@@ -94,7 +94,7 @@ path_abbv(){
 }
 
 set_right_prompt () {
-	export RPROMPT="$(git_dirty)$(need_push)%{$fg_bold[cyan]%}[$(todo_num)]%{$reset_color%}"
+	export RPROMPT="$(git_dirty)$(need_push) ($(todo_num))"
 }
 
 
