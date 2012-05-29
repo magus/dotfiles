@@ -47,7 +47,7 @@ git_prompt_color() {
 	st=$(/usr/bin/git status 2>/dev/null | tail -n 1)
 	if [[ $st == "" ]]
 	then
-		echo "%{$fg_bold[white]%}⇨  %{$reset_color%}"
+		echo "%{$fg_bold[yellow]%}⇨  %{$reset_color%}"
 	else
 		if [[ $st == "nothing to commit (working directory clean)" ]]
     then
