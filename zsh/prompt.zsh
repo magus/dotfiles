@@ -73,7 +73,7 @@ path_abbv(){
 	echo "%{$fg_bold[white]%}${PWD/#$HOME/~}%{$reset_color%}"
 }
 
-export PROMPT=$'\n$(user_name)@$(host_name) in $(path_abbv) $(git_dirty)$(need_push)\n⇨ '
+export PROMPT=$'\n$(user_name)@$(host_name) in $(path_abbv) $(git_dirty)$(need_push)\n%{$fg_bold[red]%}⇨  %{$reset_color%}'
 set_prompt () {
 	export RPROMPT="%{$fg_bold[cyan]%}$(todo_num)%{$reset_color%}"
 }
