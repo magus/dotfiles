@@ -1,10 +1,6 @@
 # dotfiles
 
 ## todo
-* setup prompt
-* e.g.
-user@host | /path/to/dir #                            (gitstatus)(gitbranch)
-
 * setup subl function
 * similar to textmate: `mate .` > `subl .`
 * should open a new subl window in the current directory
