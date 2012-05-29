@@ -1,9 +1,11 @@
 # dotfiles
 
 ## todo
+* syntax highlighting (py, js, html, etc.)
 * setup subl function
 * similar to textmate: `mate .` > `subl .`
 * should open a new subl window in the current directory
+
 
 ## dotfiles.sh
 * backup existing dotfiles before beginning import
