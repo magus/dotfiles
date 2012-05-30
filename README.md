@@ -1,6 +1,7 @@
 # dotfiles
 
 ## todo
+* how to get exit status, use to check git install in dotfiles, etc.
 * syntax highlighting (py, js, html, etc.)
 * setup subl function
 * similar to textmate: `mate .` > `subl .`
