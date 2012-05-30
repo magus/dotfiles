@@ -4,9 +4,6 @@
 * use star unicode character for header, or another cool icon
 * how to get exit status, use to check git install in dotfiles, etc.
 * syntax highlighting (py, js, html, etc.)
-* setup subl function
-* similar to textmate: `mate .` > `subl .`
-* should open a new subl window in the current directory
 
 
 ## dotfiles.sh
