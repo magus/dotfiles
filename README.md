@@ -2,7 +2,6 @@
 
 ## todo
 * use star unicode character for header, or another cool icon
-* how to get exit status, use to check git install in dotfiles, etc.
 * syntax highlighting (py, js, html, etc.)
 
 

@@ -11,7 +11,8 @@ function e_arrow()    { echo -e " \033[1;33m➜\033[0m  $@"; }
 
 
 #git?
-if [[ "$(which git | grep -w 'not found')" ]]; then
+#if [[ "$(which git | grep -w 'not found')" ]]; then
+if [[ "$(which git | echo $?)" -ne 0 ]]; then
 	e_arrow 'git not installed'
 else
 	e_success 'git installed'
