@@ -1,8 +1,6 @@
 # dotfiles
 
 ## todo
-* FIX: mou command (.dotfiles/bin/mou) opens a blank window when opening a file
-* use star unicode character for header, or another cool icon
 * syntax highlighting (py, js, html, etc.)
 
 
