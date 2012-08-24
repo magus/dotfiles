@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+#USAGE
+#rename 's/ (.*)//' *.jpg
+#rename 's/old/new/' files.ext
+
+SUBSEXPR=$1
+shift
+for i in $@; do mv "$i" "`echo "$i" | sed $SUBSEXPR`"; done
