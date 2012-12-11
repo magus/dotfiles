@@ -1,0 +1,6 @@
+[submodule "bin/z"]
+	path = bin/z
+	url = https://github.com/rupa/z.git
+[submodule "libs/z"]
+	path = libs/z
+	url = https://github.com/rupa/z.git
