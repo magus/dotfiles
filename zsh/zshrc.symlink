@@ -1,0 +1,25 @@
+# shortcut to this dotfiles path is $ZSH
+export ZSH=$HOME/.dotfiles
+
+# your project folder that we can `c [tab]` to
+export PROJECTS=~/Development
+
+# source every .zsh file in this rep
+for config_file ($ZSH/**/*.zsh) source $config_file
+
+# use .private for SUPER SECRET CRAP that you don't
+# want in your public, versioned repo.
+if [[ -a ~/.private ]]
+then
+  source ~/.private
+fi
+
+# initialize autocomplete here, otherwise functions won't be loaded
+autoload -Uz compinit
+compinit
+#initialize bash completion (complete, compgen functions)
+autoload bashcompinit
+bashcompinit
+
+# load every completion after autocomplete loads
+for config_file ($ZSH/**/completion.sh) source $config_file
