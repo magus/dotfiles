@@ -4,7 +4,8 @@
 * syntax highlighting (py, js, html, etc.)
 
 ## dotfiles.sh
-* brew install: todo-txt 
+* automate brew installs
+* brew install: todo-txt grc
 
 ## todo.sh
 * sudo easy_install --dry-run python-gflags httplib2 google-api-python-client
