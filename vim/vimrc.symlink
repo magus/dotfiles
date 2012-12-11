@@ -1,0 +1,82 @@
+" don't try to be like vi
+set nocompatible
+" use UTF-8 without BOM
+set encoding=utf-8 nobomb
+
+" whitespace characters
+" set list
+set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
+
+" centralize backups, swapfiles and undo history
+set backupdir=~/.vim/backups
+set directory=~/.vim/swaps
+if exists("&undodir")
+	set undodir=~/.vim/undo
+endif
+
+" line numbers
+set number
+
+" set color columns in versions of ivm that support (7.3+)
+if exists('+colorcolumn')
+	set colorcolumn=80
+	augroup vimrc_autocmds
+	  "autocmd BufEnter * highlight OverLength ctermbg=073642 guibg=#d33682
+	  autocmd BufEnter * highlight OverLength ctermbg=230 guibg=#fdf6e3
+		autocmd BufEnter * match OverLength /\%80v.*/
+	augroup END
+else
+	au BufWinEnter * let w:m2=matchadd('ErrorMsg','\%>80v.\+', -1)
+endif
+
+" syntax highlighting
+syntax enable
+set background=dark
+colorscheme solarized
+
+" highlight current line
+set cursorline
+
+" tabs = 2 spaces
+set tabstop=2
+
+" vim: Vjj> (indent a block of lines)
+set shiftwidth=2
+
+" copy indent from last line when starting new line
+set autoindent
+
+" highlight searches
+set hlsearch
+
+" ignore case for search
+set ignorecase
+
+" dynamic highlight search
+set incsearch
+
+" always show status line
+set laststatus=2
+
+" enable mouse in all modes
+set mouse=a
+
+" show cursor position
+set ruler
+
+" show current mode
+set showmode
+
+" show filename in titlebar
+set title
+
+" start scrolling three lines before horizontal window border
+set scrolloff=3
+
+" disable bell, use visual bell
+set noerrorbells
+set visualbell
+
+" speed up viewport scrolling
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>

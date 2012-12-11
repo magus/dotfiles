@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/Users/noah/.ssh'
+let g:netrw_dirhist_2='/Users/noah/Pictures'
+let g:netrw_dirhist_3='/Users/noah/Development/test/.git'
+let g:netrw_dirhist_4='/private/var/empty'
+let g:netrw_dirhist_5='/Users/noah/.todo/.todo.actions.d'
+let g:netrw_dirhist_6='/Users/noah/Development/github/cowboy-dotfiles'
+let g:netrw_dirhist_7='/Users/noah/.dotfiles/.git'
+let g:netrw_dirhist_8='/Users/noah/Desktop'
