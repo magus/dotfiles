@@ -19,7 +19,7 @@
 
 [color]
   # Use colors in git output where capable
-  ui = auto
+  ui = always
 
 [merge]
   # Include summaries of merged commits in new merge commit messages
@@ -38,3 +38,6 @@
 
 [url "git://github.com/"]
 	insteadOf = "github:"
+
+[url "git@github.com:magus/"]
+  insteadOf = "git://github.com/magus/"
