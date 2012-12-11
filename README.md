@@ -4,7 +4,7 @@
 * syntax highlighting (py, js, html, etc.)
 
 ## dotfiles.sh
-* 'link' folders should be linked to ~/.command/ (e.g. todo/link > ~/.todo/)
+* brew install: todo-txt 
 
 ## todo.sh
 * sudo easy_install --dry-run python-gflags httplib2 google-api-python-client
