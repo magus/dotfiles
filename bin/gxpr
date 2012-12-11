@@ -33,7 +33,7 @@ res=$(
     $CURL "$SEARCH?q=$EXPR" |
     perl -ne '/<h2 class="r".*?>(.*)<\/h2>/ and print $1' |
     perl -ne '/= (.*)/ and print $1' |
-		perl -pe 's/[^\x00-\x7F]//g'
+    perl -pe 's/[^\x00-\x7F]//g'
 )
 
 # if we don't have a result, assume it's an invalid expression
