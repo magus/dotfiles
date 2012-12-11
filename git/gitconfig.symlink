@@ -7,8 +7,10 @@
   l = log --pretty=oneline -n 20 --graph
   # View current working tree status
   s = status -sb
+	# Cherry pick specific chunks for add
+	a = add -p
   # Diff
-  d = diff --patch-with-stat
+  d = diff --staged
   # Switch to a branch, creating it if necessary
   go = checkout -B
   # Undo a 'git push'
