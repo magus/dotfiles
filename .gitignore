@@ -1,1 +1,7 @@
+backups/
+caches/
 .private
+.ssh/authorized_keys
+.ssh/id_*
+.ssh/known_hosts
+
