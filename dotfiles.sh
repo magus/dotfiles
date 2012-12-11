@@ -96,32 +96,32 @@ function do_symlinks() {
 ## Begin installation
 
 # Ensure that we can actually, like, compile anything.
-if [[ "$(which gcc | echo $?)" -ne 0 && "$OSTYPE" =~ ^darwin ]]; then
+if [[ ! -e "$(which gcc)" && "$OSTYPE" =~ ^darwin ]]; then
   e_error "The XCode Command Line Tools must be installed first."
   exit 1
 fi
 
-# get homebrew
-if [[ "$OSTYPE" =~ "^darwin" ]]; then
-	e_arrow "OSX detected."
-fi
-
 # If Git is not installed...
-##if [[ ! "$(type -P git)" ]]; then
-if [[ "$(which git | echo $?)" -ne 0 ]]; then
+if [[ ! -e "$(which git)" ]]; then
   # OSX
   if [[ "$OSTYPE" =~ ^darwin ]]; then
     # It's easiest to get Git via Homebrew, so get that first.
-    if [[ "$(which brew | echo $?)" -ne 0 ]]; then
+    if [[ ! -e "$(which brew)" ]]; then
       e_header "Installing Homebrew"
   		true | /usr/bin/ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
     fi
-    # If Homebrew was installed, install Git.
-    if [[ "$(which brew | echo $?)" -ne 0 ]]; then
+    # If Homebrew was installed, install Git and Zsh
+    if [[ -e "$(which brew)" ]]; then
       e_header "Updating Homebrew"
       brew update
       e_header "Installing Git"
       brew install git
+			e_header "Installing zsh"
+			brew install --disable-etcdir zsh
+			# add zsh to /etc/shells && chsh
+			grep /usr/local/bin/zsh /etc/shells || echo "\n#added by dotfiles.sh\n/usr/local/bin/zsh" >> /etc/shells
+			chsh -s /usr/local/bin/zsh
+
     fi
   # Ubuntu.
   elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
@@ -132,7 +132,7 @@ if [[ "$(which git | echo $?)" -ne 0 ]]; then
 fi
 
 # If Git isn't installed by now, something exploded. We gots to quit!
-if [[ "$(which git | echo $?)" -ne 0 ]]; then
+if [[ ! -e "$(which git)" ]]; then
   e_error "Git should be installed. It isn't. Aborting."
   exit 1
 fi
@@ -184,4 +184,3 @@ fi
 
 # All done!
 e_header "All done!"
-
