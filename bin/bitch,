@@ -1,1 +1,1 @@
-/usr/bin/sudo
+/usr/bin/sudo "$@"
