@@ -1,21 +1,20 @@
 [user]
-	name = Noah Jorgenson
-	email = noah.m.jorgenson@gmail.com
+  name = Noah Jorgenson
+  email = noah.m.jorgenson@gmail.com
 
 [alias]
   # View the SHA, description and history graph of last 20 commits
   l = log --pretty=oneline -n 20 --graph
   # View current working tree status
   s = status -sb
-	# Cherry pick specific chunks for add
-	a = add -p
+  # Cherry pick specific chunks for add
+  a = add -p
   # Diff
   d = diff --staged
   # Switch to a branch, creating it if necessary
   go = checkout -B
   # Undo a 'git push'
   undopush = push -f origin HEAD^:master
-
 
 [color]
   # Use colors in git output where capable
@@ -31,13 +30,13 @@
   merge = refs/heads/master
 
 [url "git@github.com:"]
-	insteadOf = "gh:"
-	pushInsteadOf = "github:"
-	pushInsteadOf = "git://github.com/"
-	pushInsteadOf = "https://github.com/"
+  insteadOf = "gh:"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "git://github.com/"
+  pushInsteadOf = "https://github.com/"
 
 [url "git://github.com/"]
-	insteadOf = "github:"
+  insteadOf = "github:"
 
 [url "git@github.com:magus/"]
   insteadOf = "git://github.com/magus/"
