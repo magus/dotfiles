@@ -1,0 +1,13 @@
+#!/bin/sh -e
+# Usage: git-restore <path/filename>
+# Find the most recent commit that affected this file (deleted it). Checkout
+# commit before last commit with file existing for just this file/path.
+
+LAST_COMMIT=$(git rev-list -n 1 HEAD -- "$@")
+
+if [[ $LAST_COMMIT ]]; then
+  git checkout $LAST_COMMIT^ -- "$@"
+  echo "Restored $@ via commit $LAST_COMMIT."
+else
+  echo "Unable to find $@ in git history."
+fi
