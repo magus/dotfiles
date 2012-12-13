@@ -2,6 +2,9 @@
   name = Noah Jorgenson
   email = noah.m.jorgenson@gmail.com
 
+[core]
+  editor = /usr/bin/vim
+
 [alias]
   # View the SHA, description and history graph of last 20 commits
   l = log --pretty=oneline -n 20 --graph
