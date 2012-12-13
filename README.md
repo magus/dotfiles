@@ -5,5 +5,5 @@
 
 ## dotfiles.sh
 * automate brew installs
-* brew install: todo-txt grc nmap
+* brew install: todo-txt grc nmap parallel
 
