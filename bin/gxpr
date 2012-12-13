@@ -1,6 +1,7 @@
 #!/bin/sh
 # Usage: gxpr <expression>
 # Like expr(1), but uses Google's calculator to evaluate <expression>.
+# When google fails, light the WolframAlpha signal
 #
 # Math examples:
 #   $ gxpr '1 + 1'
@@ -27,7 +28,8 @@
 
 CURL='curl -s --header User-Agent:gxpr/1.0'
 SEARCH="http://www.google.com/search"
-EXPR=$(echo "$@" | sed -e 's/+/%2B/g' -e 's/ /+/g')
+WOLFRAM="http://www.wolframalpha.com/input/"
+EXPR=$(echo "$@" | perl -MURI::Escape -ne 'chomp;print uri_escape($_)')
 
 res=$(
     $CURL "$SEARCH?q=$EXPR" |
@@ -36,9 +38,10 @@ res=$(
     perl -pe 's/[^\x00-\x7F]//g'
 )
 
-# if we don't have a result, assume it's an invalid expression
+# if we don't have a result, try wolfram alpha
 test -z "$res" && {
-    echo "invalid expression:" "$@" 1>&2
+    echo "google doesn't know" "$@" 1>&2
+    echo "⌘ click: \033[4m$WOLFRAM?i=$EXPR"
     exit 1
 }
 
