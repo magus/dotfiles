@@ -4,5 +4,5 @@
 * syntax highlighting (py, js, html, etc.)
 
 ## dotfiles.sh
-* automate brew installs
+* automate brew installs for osx only (osx/osx.zsh? or dotfiles.sh)
 * brew install: todo-txt grc nmap parallel iftop
