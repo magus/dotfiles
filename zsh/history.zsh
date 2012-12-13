@@ -5,6 +5,7 @@ SAVEHIST=1000
 
 setopt appendhistory          # one $HISTFILE to rule them all
 unsetopt histignorealldups    # do not remove old dup entries
+setopt histignoredups         # ignore immediate duplicates
 setopt incappendhistory       # add to $HISTFILE immediately not on shell exit
 
 

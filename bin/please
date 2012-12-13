@@ -1,0 +1,4 @@
+#!/bin/zsh
+# pretty. with sugar on top.
+. $HOME/.zshrc
+sudo `cat $HISTFILE | tail -n2 | head -n1`
