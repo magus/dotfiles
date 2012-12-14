@@ -33,7 +33,8 @@ EXPR=$(echo "$@" | perl -MURI::Escape -ne 'chomp;print uri_escape($_)')
 
 res=$(
   $CURL "$GOOGLE?q=$EXPR" |
-  perl -ne '/rhs: "?([^\[\],":]+)/ and print $1'
+  perl -ne '/rhs: "?([^\[\],":]+)/ and print $1' |
+  perl -pe 's/[^\x00-\x7F]//g'
 )
 
 # if we don't have a result, try wolfram alpha
