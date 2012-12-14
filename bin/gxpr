@@ -27,15 +27,13 @@
 #   126720 inches
 
 CURL='curl -s --header User-Agent:gxpr/1.0'
-SEARCH="http://www.google.com/search"
+GOOGLE="http://www.google.com/ig/calculator"
 WOLFRAM="http://www.wolframalpha.com/input/"
 EXPR=$(echo "$@" | perl -MURI::Escape -ne 'chomp;print uri_escape($_)')
 
 res=$(
-    $CURL "$SEARCH?q=$EXPR" |
-    perl -ne '/<h2 class="r".*?>(.*)<\/h2>/ and print $1' |
-    perl -ne '/= (.*)/ and print $1' |
-    perl -pe 's/[^\x00-\x7F]//g'
+  $CURL "$GOOGLE?q=$EXPR" |
+  perl -ne '/rhs: "?([^\[\],":]+)/ and print $1'
 )
 
 # if we don't have a result, try wolfram alpha
