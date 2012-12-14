@@ -66,8 +66,8 @@ function do_symlinks() {
   [[ $(declare -f link_header) ]] && link_header
   # Iterate over files.
   for file in "${files[@]}"; do
-		filename="$(basename $file)"
-		base=".${filename%.symlink}"
+    filename="$(basename $file)"
+    base=".${filename%.symlink}"
     dest="$HOME/$base"
     # Run _test function only if declared.
     if [[ $(declare -f link_test) ]]; then
@@ -108,7 +108,7 @@ if [[ ! -e "$(which git)" ]]; then
     # It's easiest to get Git via Homebrew, so get that first.
     if [[ ! -e "$(which brew)" ]]; then
       e_header "Installing Homebrew"
-  		true | /usr/bin/ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
+      true | /usr/bin/ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
     fi
     # If Homebrew was installed, install Git and Zsh
     if [[ -e "$(which brew)" ]]; then
@@ -116,11 +116,11 @@ if [[ ! -e "$(which git)" ]]; then
       brew update
       e_header "Installing Git"
       brew install git
-			e_header "Installing zsh"
-			brew install --disable-etcdir zsh
-			# add zsh to /etc/shells && chsh
-			grep /usr/local/bin/zsh /etc/shells || echo "\n#added by dotfiles.sh\n/usr/local/bin/zsh" >> /etc/shells
-			chsh -s /usr/local/bin/zsh
+      e_header "Installing zsh"
+      brew install --disable-etcdir zsh
+      # add zsh to /etc/shells && chsh
+      grep /usr/local/bin/zsh /etc/shells || echo "\n#added by dotfiles.sh\n/usr/local/bin/zsh" >> /etc/shells
+      chsh -s /usr/local/bin/zsh
 
     fi
   # Ubuntu.
@@ -128,6 +128,9 @@ if [[ ! -e "$(which git)" ]]; then
     # Git is fairly easy.
     e_header "Installing Git"
     sudo apt-get -qq install git-core
+    # zsh and chsh
+    sudo apt-get install zsh
+    chsh -s /bin/zsh
   fi
 fi
 
