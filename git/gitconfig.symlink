@@ -21,7 +21,7 @@
 
 [color]
   # Use colors in git output where capable
-  ui = always
+  ui = auto
 
 [merge]
   # Include summaries of merged commits in new merge commit messages
