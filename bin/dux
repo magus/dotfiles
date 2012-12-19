@@ -1,0 +1,24 @@
+#!/bin/sh
+# a shell script to print directory size summaries
+# noah m jorgenson (noah@iamnoah.com)
+# original by:
+# rick vannorman 20oct2004
+
+du -ck | sort -nr | awk '{
+   dir = $0;                		# preserve the input recordd
+   x = gsub(/\//,"",dir);   		# count the slashes, nesting level
+   if (x != 1) next;        		# ignore all but top level
+	 size = $1 / 1;								# extract size to int
+	 $1 = "";											# clear input field
+	 if (size > 1023){
+	 	size = size / 1024;
+		if (size > 1023){
+			size = size / 1024;
+			printf("%12.3sG %s\n",size,$0); # display user friendly output
+			next;
+		}
+		printf("%12.3sM %s\n",size,$0); # display user friendly output
+		next;
+	 }
+	 printf("%12.3sK %s\n",size,$0); # display user friendly output
+}'
