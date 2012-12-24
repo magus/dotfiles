@@ -5,3 +5,5 @@ caches/
 .ssh/id_*
 .ssh/known_hosts
 
+#ignore vim netrw hist file generated when navigating dirs
+.netrwhist
