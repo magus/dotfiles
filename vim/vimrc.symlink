@@ -83,7 +83,6 @@ set shiftwidth=2        " vim: Vjj> (indent a block of lines)
 set tabstop=4
 set expandtab           " expand tabs to spaces
 set formatoptions+=n    " support for numbered/bullet lists
-set textwidth=80        " wrap at 80 chars by default
 
 " ----------------------------------------------------------------------------
 "  Mappings
