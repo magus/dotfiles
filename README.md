@@ -1,7 +1,7 @@
 ## dotfiles
 
 ### Installation
-```curl https://raw.github.com/magus/dotfiles/master/dotfiles.sh | bash```
+    curl https://raw.github.com/magus/dotfiles/master/dotfiles.sh | bash
 
 ### todo
 * syntax highlighting (py, js, html, etc.)
