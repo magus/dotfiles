@@ -6,6 +6,7 @@ function prepend_path () {
 
 #npm modules
 export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
+prepend_path /usr/local/share/npm/bin
 
 #apple put /usr/bin before /usr/local/bin -_-
 prepend_path /usr/local/bin
