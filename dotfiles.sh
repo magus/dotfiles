@@ -130,7 +130,7 @@ if [[ ! -e "$(which git)" ]]; then
     sudo apt-get -qq install git-core
     # zsh and chsh
     sudo apt-get install zsh
-    chsh -s /bin/zsh
+    sudo chsh -s /bin/zsh
   fi
 fi
 
