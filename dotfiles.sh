@@ -108,10 +108,11 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     e_header "Installing Homebrew"
     true | /usr/bin/ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
   fi
-  # If Homebrew installed, update it
+  # If Homebrew installed, install some initial bits
   if [[ -e "$(which brew)" ]]; then
-    e_header "Updating Homebrew"
-    brew update
+    e_header "Installing some initial homebrew items..."
+    # Install homebrew packages
+    $ZSH/homebrew/install.sh 2>&1
   fi
 fi
 
