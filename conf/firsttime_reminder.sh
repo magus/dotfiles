@@ -9,7 +9,8 @@ SSH Keys (if this is a server)
 Git / GitHub
  1. Get GitHub API token from https://github.com/account/admin
  2. (here) git config --global github.token "omgsupersecretgithubapitoken"
- 3. (here) git config --global user.email "email@domain.com"
+ 3. (here) git config --global user.name "First Last"
+ 4. (here) git config --global user.email "email@domain.com"
 
  * zsh will start as your default shell on subsequent logins
 EOF
