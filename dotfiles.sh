@@ -135,16 +135,18 @@ if [[ ! -e "$(which zsh)" ]]; then
     e_header "Installing zsh"
     brew install --disable-etcdir zsh
     # add zsh to /etc/shells && chsh
-    grep /usr/local/bin/zsh /etc/shells || echo "\n#added by dotfiles.sh\n/usr/local/bin/zsh" >> /etc/shells
-    chsh -s /usr/local/bin/zsh
+    zshPath=/usr/local/bin/zsh
+    if [[ ! -e "$(grep $zshPath /etc/shells)" ]]; then
+      sudo sh -c "echo '\n#added by $0 ($(date))\n$zshPath' >> /etc/shells"
+      sudo chsh -s $zshPath $USER
+    fi
   # Ubuntu.
   elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
     e_header "Installing zsh"
     sudo apt-get install zsh
-    sudo chsh -s /bin/zsh
+    sudo chsh -s /bin/zsh $USER
   fi
 fi
-
 
 # If Git isn't installed by now, something exploded. We gots to quit!
 if [[ ! -e "$(which git)" ]]; then
@@ -188,13 +190,15 @@ do_symlinks
 
 # Alert if backups were made.
 if [[ "$backup" ]]; then
-  echo -e "\nBackups were moved to ~/${backup_dir#$HOME/}"
+  e_arrow "\nBackups were moved to ~/${backup_dir#$HOME/}"
 fi
 
 # Lest I forget to do a few additional things...
 if [[ "$new_dotfiles_install" && -e "conf/firsttime_reminder.sh" ]]; then
   e_header "First-Time Reminders"
-  zsh -c 'source conf/firsttime_reminder.sh'
+  zsh -c 'source conf/firsttime_reminder.sh' && zsh
+else
+  zsh -c 'source ~/.zshrc'
 fi
 
 # All done!
