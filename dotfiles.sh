@@ -100,39 +100,51 @@ if [[ ! -e "$(which gcc)" && "$OSTYPE" =~ ^darwin ]]; then
   e_error "The XCode Command Line Tools must be installed first."
   exit 1
 fi
+  
+# OSX Homebrew
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+  # It's easiest to install things via Homebrew, so get that first.
+  if [[ ! -e "$(which brew)" ]]; then
+    e_header "Installing Homebrew"
+    true | /usr/bin/ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
+  fi
+  # If Homebrew installed, update it
+  if [[ -e "$(which brew)" ]]; then
+    e_header "Updating Homebrew"
+    brew update
+  fi
+fi
 
 # If Git is not installed...
 if [[ ! -e "$(which git)" ]]; then
   # OSX
   if [[ "$OSTYPE" =~ ^darwin ]]; then
-    # It's easiest to get Git via Homebrew, so get that first.
-    if [[ ! -e "$(which brew)" ]]; then
-      e_header "Installing Homebrew"
-      true | /usr/bin/ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
-    fi
-    # If Homebrew was installed, install Git and Zsh
-    if [[ -e "$(which brew)" ]]; then
-      e_header "Updating Homebrew"
-      brew update
-      e_header "Installing Git"
-      brew install git
-      e_header "Installing zsh"
-      brew install --disable-etcdir zsh
-      # add zsh to /etc/shells && chsh
-      grep /usr/local/bin/zsh /etc/shells || echo "\n#added by dotfiles.sh\n/usr/local/bin/zsh" >> /etc/shells
-      chsh -s /usr/local/bin/zsh
-
-    fi
+    e_header "Installing Git"
+    brew install git
   # Ubuntu.
   elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
-    # Git is fairly easy.
     e_header "Installing Git"
     sudo apt-get -qq install git-core
-    # zsh and chsh
+  fi
+fi
+
+# If zsh is not installed...
+if [[ ! -e "$(which zsh)" ]]; then
+  # OSX
+  if [[ "$OSTYPE" =~ ^darwin ]]; then
+    e_header "Installing zsh"
+    brew install --disable-etcdir zsh
+    # add zsh to /etc/shells && chsh
+    grep /usr/local/bin/zsh /etc/shells || echo "\n#added by dotfiles.sh\n/usr/local/bin/zsh" >> /etc/shells
+    chsh -s /usr/local/bin/zsh
+  # Ubuntu.
+  elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+    e_header "Installing zsh"
     sudo apt-get install zsh
     sudo chsh -s /bin/zsh
   fi
 fi
+
 
 # If Git isn't installed by now, something exploded. We gots to quit!
 if [[ ! -e "$(which git)" ]]; then
