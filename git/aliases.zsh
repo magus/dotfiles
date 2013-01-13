@@ -2,6 +2,8 @@
 #hub breaks git autocomplete...fail
 #eval "$(hub alias -s)"
 
-#git aliases
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
-gall() { find . -type d -follow -exec sh -c "(cd {} && [[ -d .git ]] && echo {} && $* && echo)" ';'; }
+
+# gall -- execute command on all git repos in current directory
+# e.g. gall status -s
+gall() { find . -type d -follow -exec sh -c "(cd '{}' && [[ -d .git ]] && echo {} && git $* && echo)" ';'; }
