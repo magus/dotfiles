@@ -194,7 +194,7 @@ fi
 # Lest I forget to do a few additional things...
 if [[ "$new_dotfiles_install" && -e "conf/firsttime_reminder.sh" ]]; then
   e_header "First-Time Reminders"
-  source "conf/firsttime_reminder.sh"
+  zsh -c 'source conf/firsttime_reminder.sh'
 fi
 
 # All done!
