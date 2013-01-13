@@ -23,8 +23,8 @@
   # Use colors in git output where capable
   ui = auto
 
-[push]
-  default = simple
+#[push]
+#  default = simple
 
 [merge]
   # Include summaries of merged commits in new merge commit messages
