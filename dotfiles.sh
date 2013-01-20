@@ -116,15 +116,15 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   fi
 fi
 
-# If Git is not installed...
+# If git is not installed...
 if [[ ! -e "$(which git)" ]]; then
   # OSX
   if [[ "$OSTYPE" =~ ^darwin ]]; then
-    e_header "Installing Git"
+    e_header "Installing git"
     brew install git
   # Ubuntu.
   elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
-    e_header "Installing Git"
+    e_header "Installing git"
     sudo apt-get -qq install git-core
   fi
 fi
@@ -149,9 +149,9 @@ if [[ ! -e "$(which zsh)" ]]; then
   fi
 fi
 
-# If Git isn't installed by now, something exploded. We gots to quit!
+# If git isn't installed by now, something exploded. We gots to quit!
 if [[ ! -e "$(which git)" ]]; then
-  e_error "Git should be installed. It isn't. Aborting."
+  e_error "git should be installed. It isn't. Aborting."
   exit 1
 fi
 
