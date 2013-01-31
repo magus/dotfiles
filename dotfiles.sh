@@ -9,6 +9,13 @@ function e_success()  { echo -e " \033[1;32m ✔\033[0m  $@"; }
 function e_error()    { echo -e " \033[1;31m ✖\033[0m  $@"; }
 function e_arrow()    { echo -e " \033[1;33m ➜\033[0m  $@"; }
 
+# ask for administrator password up front
+e_arrow "You will be prompted for your admin password ..."
+sudo -v
+
+# update existing sudo time stamp until script finishes
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
 # Given a list of desired items and installed items, return a list
 # of uninstalled items. Arrays in bash are insane (not in a good way).
 function to_install() {
@@ -110,7 +117,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   fi
   # If Homebrew installed, install some initial bits
   if [[ -e "$(which brew)" ]]; then
-    e_header "Installing some initial homebrew items..."
+    e_header "Installing some initial homebrew items ..."
     # Install homebrew packages
     $ZSH/homebrew/install.sh 2>&1
   fi
@@ -155,9 +162,6 @@ if [[ ! -e "$(which git)" ]]; then
   exit 1
 fi
 
-# Update existing sudo time stamp if set, otherwise do nothing.
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-
 # Initialize.
 if [[ ! -d ~/.dotfiles ]]; then
   new_dotfiles_install=1
@@ -184,6 +188,13 @@ mkdir -p "$HOME/.dotfiles/caches"
 # If backups are needed, this is where they'll go.
 backup_dir="$HOME/.dotfiles/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
 backup=
+
+
+#setup osx defaults
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+  e_arrow "Setting OSX defaults ..."
+  $ZSH/osx/defaults.sh
+fi
 
 
 #do the heavy lifting, copy dem weights
