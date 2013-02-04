@@ -10,7 +10,7 @@ function e_error()    { echo -e " \033[1;31m ✖\033[0m  $@"; }
 function e_arrow()    { echo -e " \033[1;33m ➜\033[0m  $@"; }
 
 # ask for administrator password up front
-e_arrow "You will be prompted for your admin password ..."
+e_arrow "You may be prompted for your admin password ..."
 sudo -v
 
 # update existing sudo time stamp until script finishes
