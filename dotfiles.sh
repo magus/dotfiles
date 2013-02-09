@@ -4,13 +4,18 @@
 # set up the initial zsh and some dependencies
 # make dem dotfiles
 
-function e_header()   { echo -e "\n\n\033[1;35m☆\033[0m  $@"; }
-function e_success()  { echo -e " \033[1;32m ✔\033[0m  $@"; }
-function e_error()    { echo -e " \033[1;31m ✖\033[0m  $@"; }
-function e_arrow()    { echo -e " \033[1;33m ➜\033[0m  $@"; }
+VERSION="1.2";
+
+function e_header()   { echo -e "\n\n\033[1;35m☆\033[0m  $@"; };
+function e_success()  { echo -e " \033[1;32m ✔\033[0m  $@"; };
+function e_error()    { echo -e " \033[1;31m ✖\033[0m  $@"; };
+function e_arrow()    { echo -e " \033[1;33m ➜\033[0m  $@"; };
+
+## begin installation
+e_header "dotfiles :: v$VERSION"
 
 # ask for administrator password up front
-e_arrow "You may be prompted for your admin password ..."
+echo && e_arrow "You may be prompted for your admin password ..."
 sudo -v
 
 # update existing sudo time stamp until script finishes
@@ -196,13 +201,18 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   $ZSH/osx/defaults.sh
 fi
 
+#copy ~/.ssh/config
+e_arrow "Setting up ssh config ..."
+mkdir -p $HOME/.ssh
+ln -sf $ZSH/ssh/config $HOME/.ssh
+
 
 #do the heavy lifting, copy dem weights
 do_symlinks
 
 # Alert if backups were made.
 if [[ "$backup" ]]; then
-  e_arrow "\nBackups were moved to ~/${backup_dir#$HOME/}"
+  e_header "Backups were moved to ~/${backup_dir#$HOME/}"
 fi
 
 # Lest I forget to do a few additional things...

@@ -59,7 +59,8 @@ defaults write com.apple.dock wvous-bl-modifier -int 0
 # Kill affected applications                                                  #
 ###############################################################################
 
+function e_header()   { echo -e "\n\n\033[1;35m☆\033[0m  $@"; }
 for app in "Dashboard" "Finder" "SystemUIServer"; do
   killall "$app" > /dev/null 2>&1
 done
-echo "Done. Note that some of these changes require a logout/restart to take effect."
+e_header "Some OSX setting changes require a logout/restart to take effect."
