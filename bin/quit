@@ -1,3 +1,1 @@
-osascript <<EOF
-tell application "$*" to quit
-EOF
+kill `ps -efa | grep "$*" | grep -v grep | grep -v "$0" | awk '{print $2}'`
