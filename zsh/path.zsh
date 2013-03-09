@@ -12,4 +12,5 @@ prepend_path /usr/local/share/npm/bin
 prepend_path /usr/local/bin
 prepend_path /usr/local/sbin
 
-
+### Added by the Heroku Toolbelt
+prepend_path /usr/local/heroku/bin
