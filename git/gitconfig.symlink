@@ -4,6 +4,7 @@
 
 [core]
   editor = /usr/bin/vim
+  excludesfile = ~/.gitignore
 
 [alias]
   # View the SHA, description and history graph of last 20 commits
