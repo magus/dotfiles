@@ -120,6 +120,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     e_header "Installing Homebrew"
     true | /usr/bin/ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
   fi
+
   # If Homebrew installed, install some initial bits
   if [[ -e "$(which brew)" ]]; then
     e_header "Installing some initial homebrew items ..."
@@ -141,24 +142,26 @@ if [[ ! -e "$(which git)" ]]; then
   fi
 fi
 
-# If zsh is not installed...
-if [[ ! -e "$(which zsh)" ]]; then
-  # OSX
-  if [[ "$OSTYPE" =~ ^darwin ]]; then
+# zsh
+# OSX
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+  # If zsh is not installed...
+  if [[ ! -e "$(which zsh)" ]]; then
     e_header "Installing zsh"
     brew install --disable-etcdir zsh
-    # add zsh to /etc/shells && chsh
-    zshPath=/usr/local/bin/zsh
-    if [[ ! -e "$(grep $zshPath /etc/shells)" ]]; then
-      sudo sh -c "echo '\n#added by $0 ($(date))\n$zshPath' >> /etc/shells"
-      sudo chsh -s $zshPath $USER
-    fi
-  # Ubuntu.
-  elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
-    e_header "Installing zsh"
-    sudo apt-get install zsh
-    sudo chsh -s /bin/zsh $USER
   fi
+  
+  # add zsh to /etc/shells && chsh
+  zshPath=/usr/bin/zsh
+  if [[ ! -e "$(grep $zshPath /etc/shells)" ]]; then
+    sudo sh -c "echo '\n#added by $0 ($(date))\n$zshPath' >> /etc/shells"
+    sudo chsh -s $zshPath $USER
+  fi
+# Ubuntu.
+elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+  e_header "Installing zsh"
+  sudo apt-get install zsh
+  sudo chsh -s /bin/zsh $USER
 fi
 
 # If git isn't installed by now, something exploded. We gots to quit!
