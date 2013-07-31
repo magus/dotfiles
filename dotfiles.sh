@@ -155,6 +155,7 @@ elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
   e_header "Installing zsh"
   sudo apt-get install zsh
   sudo chsh -s /bin/zsh $USER
+
 fi
 
 # If git isn't installed by now, something exploded. We gots to quit!
@@ -195,19 +196,19 @@ backup=
 if [[ -e "$(which brew)" ]]; then
   e_header "Installing some initial homebrew items ..."
   # Install homebrew packages
-  $ZSH/homebrew/install.sh 2>&1
+  $HOME/.dotfiles/homebrew/install.sh 2>&1
 fi
 
 #setup osx defaults
 if [[ "$OSTYPE" =~ ^darwin ]]; then
   e_arrow "Setting OSX defaults ..."
-  $ZSH/osx/defaults.sh
+  $HOME/.dotfiles/osx/defaults.sh
 fi
 
 #copy ~/.ssh/config
 e_arrow "Setting up ssh config ..."
 mkdir -p $HOME/.ssh
-ln -sf $ZSH/ssh/config $HOME/.ssh
+ln -sf $HOME/.dotfiles/ssh/config $HOME/.ssh
 
 
 #do the heavy lifting, copy dem weights
