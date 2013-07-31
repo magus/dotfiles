@@ -120,13 +120,6 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     e_header "Installing Homebrew"
     true | /usr/bin/ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
   fi
-
-  # If Homebrew installed, install some initial bits
-  if [[ -e "$(which brew)" ]]; then
-    e_header "Installing some initial homebrew items ..."
-    # Install homebrew packages
-    $ZSH/homebrew/install.sh 2>&1
-  fi
 fi
 
 # If git is not installed...
@@ -152,7 +145,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   fi
   
   # add zsh to /etc/shells && chsh
-  zshPath=/usr/bin/zsh
+  zshPath=/bin/zsh
   if [[ ! -e "$(grep $zshPath /etc/shells)" ]]; then
     sudo sh -c "echo '\n#added by $0 ($(date))\n$zshPath' >> /etc/shells"
     sudo chsh -s $zshPath $USER
@@ -197,6 +190,13 @@ mkdir -p "$HOME/.dotfiles/caches"
 backup_dir="$HOME/.dotfiles/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
 backup=
 
+
+# If Homebrew installed, install some initial bits
+if [[ -e "$(which brew)" ]]; then
+  e_header "Installing some initial homebrew items ..."
+  # Install homebrew packages
+  $ZSH/homebrew/install.sh 2>&1
+fi
 
 #setup osx defaults
 if [[ "$OSTYPE" =~ ^darwin ]]; then
