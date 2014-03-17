@@ -203,6 +203,9 @@ fi
 if [[ "$OSTYPE" =~ ^darwin ]]; then
   e_arrow "Setting OSX defaults ..."
   $HOME/.dotfiles/osx/defaults.sh
+
+  e_header "Linking iTerm2 profile to ~/.iterm2/"
+  find -X $HOME/.dotfiles/osx/iterm2/ -type f | xargs -I{} ln -sf {} $HOME/.iterm2
 fi
 
 #copy ~/.ssh/config
