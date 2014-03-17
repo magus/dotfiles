@@ -63,29 +63,11 @@ git_prompt_color() {
     fi
 }
 
-#number of todo items
-#props @holman
-todo_num(){
-    if $(which todo &> /dev/null)
-    then
-        num=$(echo $(todo ls | wc -l))
-        let todos=num-2
-        if [ $todos != 0 ]
-        then
-            echo "%{$fg_bold[cyan]%}$todos%{$reset_color%}"
-        else
-            echo ""
-        fi
-    else
-        echo ""
-    fi
-}
-
 user_name(){
     echo "%{$fg_bold[green]%}%B%n%b%{$reset_color%}"
 }
 
-host_name(){    
+host_name(){
     echo "%{$fg[yellow]%}%m%{$reset_color%}"
 }
 
@@ -94,7 +76,7 @@ path_abbv(){
 }
 
 set_right_prompt () {
-    export RPROMPT="$(git_dirty) $(need_push) ($(todo_num))"
+    export RPROMPT="$(git_dirty) $(need_push)"
 }
 
 
