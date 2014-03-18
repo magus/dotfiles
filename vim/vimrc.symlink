@@ -53,12 +53,20 @@ highlight SpecialKey ctermfg=DarkGray ctermbg=Black
 " ----------------------------------------------------------------------------
 "  UI
 " ----------------------------------------------------------------------------
-set number              " line numbers
+set relativenumber      " relative line numbers
 set title               " show filename in titlebar
 set ruler               " show cursor position
 set mouse=a             " enable mouse in all modes
 set showmode            " show current mode
 set scrolloff=3         " start scrolling three lines before window border
+
+" set relative lines when focused
+au FocusLost * set number
+au FocusGained * set relativenumber
+
+" set the relative lines in normal mode for moving around
+autocmd InsertEnter * : set number
+autocmd InsertLeave * : set relativenumber
 
 " ----------------------------------------------------------------------------
 " Visual Cues
@@ -89,3 +97,13 @@ set formatoptions+=n    " support for numbered/bullet lists
 " ----------------------------------------------------------------------------
 nnoremap <C-e> 3<C-e>   " speed up viewport scrolling
 nnoremap <C-y> 3<C-y>
+
+" control+n to toggle relative line numbers
+function! RelativeToggle()
+  if(&relativenumber == 1)
+    set number
+  else
+    set relativenumber
+  endif
+endfunc
+nnoremap <C-n> :call RelativeToggle()<cr>
