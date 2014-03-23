@@ -4,6 +4,11 @@
 # original by:
 # rick vannorman 20oct2004
 
+BACKDIR="$(pwd)";
+[[ -z $@ ]] && DUXDIR="$BACKDIR" || DUXDIR="$@";
+
+cd $DUXDIR
+
 du -ck | sort -nr | awk '{
   dir = $0;                    # preserve the input recordd
   x = gsub(/\//,"",dir);       # count the slashes, nesting level
@@ -22,3 +27,5 @@ du -ck | sort -nr | awk '{
   }
   printf("%12.3sK %s\n",size,$0); # display user friendly output
 }'
+
+cd $BACKDIR
