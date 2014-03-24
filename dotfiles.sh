@@ -112,7 +112,10 @@ if [[ ! -e "$(which gcc)" && "$OSTYPE" =~ ^darwin ]]; then
   e_error "The XCode Command Line Tools must be installed first."
   exit 1
 fi
-  
+
+# install rvm
+curl -sSL https://get.rvm.io | bash -s stable --ruby
+
 # OSX Homebrew
 if [[ "$OSTYPE" =~ ^darwin ]]; then
   # It's easiest to install things via Homebrew, so get that first.
