@@ -1,0 +1,18 @@
+#!/bin/sh
+# script to zip and encrypt a directory
+# noah m jorgenson (noah@iamnoah.com)
+# usage: crypt <input_path> <output_dmg>
+# <input_path> : Default to current path
+# <output_dmg> : Default to current directory name
+
+BACKDIR="$(pwd)";
+[[ -z $1 ]] && CRYPTDIR="$(pwd)" || CRYPTDIR="$1";
+[[ -z $2 ]] && DMGNAME="$(basename $CRYPTDIR)" || DMGNAME="$2";
+
+echo Encrypting $CRYPTDIR...
+
+hdiutil create -srcfolder "$CRYPTDIR" -encryption AES-256 "$DMGNAME"
+
+if [[ $? -eq "0" ]]; then
+  echo "$DMGNAME encrypted."
+fi
