@@ -1,0 +1,24 @@
+#!/bin/bash
+# script to toggle tor and switch network location
+# noah m jorgenson (noah@iamnoah.com)
+# usage: tor
+
+TORAPP="$(find /Applications -depth 1 -iname 'tor*' -print)";
+
+TORNETLOC="TOR [localhost:9150]";
+# get current network location
+CURRNETLOC="$(networksetup -getcurrentlocation)";
+
+if [[ "$CURRNETLOC" != "$TORNETLOC" ]]; then
+  # start tor and enable tor network location
+  echo Starting TOR...
+  open $TORAPP
+  networksetup -switchtolocation "$TORNETLOC"
+else
+  # quit tor and return to automatic network location
+  echo Quitting TOR...
+  networksetup -switchtolocation "Automatic"
+  quit TorBrowser
+fi
+
+
