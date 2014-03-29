@@ -1,1 +1,13 @@
-kill `ps -efa | grep "$*" | grep -v grep | grep -v "$0" | awk '{print $2}'`
+#!/bin/sh
+# find the pid of specified app and kill it
+# noah m jorgenson (noah@iamnoah.com)
+# usage: quit <app>
+# <app> : app name, e.g. Safari
+
+QUITAPP="$*";
+THISCOMMAND="$(basename $0)";
+
+# only quit if argument supplied
+if [[ -n $QUITAPP ]]; then
+  kill `ps -efa | grep "$QUITAPP" | grep -v grep | grep -v "$THISCOMMAND" | awk '{print $2}'`
+fi
