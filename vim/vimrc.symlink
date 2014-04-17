@@ -107,3 +107,14 @@ function! RelativeToggle()
   endif
 endfunc
 nnoremap <C-n> :call RelativeToggle()<cr>
+
+" ----------------------------------------------------------------------------
+"  Powerline
+" ----------------------------------------------------------------------------
+set rtp+=/Users/noah/.vim/powerline/powerline/bindings/vim
+set guifont=Pragmata\ Pro:h15
+let g:Powerline_symbols = 'fancy'
+set t_Co=256
+set fillchars+=stl:\ ,stlnc:\
+set term=xterm-256color
+set termencoding=utf-8
