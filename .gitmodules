@@ -4,3 +4,6 @@
 [submodule "libs/z"]
 	path = libs/z
 	url = https://github.com/rupa/z.git
+[submodule "/Users/noah/.dotfiles/vim/vim.symlink/powerline"]
+	path = /Users/noah/.dotfiles/vim/vim.symlink/powerline
+	url = https://github.com/Lokaltog/powerline.git
