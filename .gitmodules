@@ -4,6 +4,3 @@
 [submodule "libs/z"]
 	path = libs/z
 	url = https://github.com/rupa/z.git
-[submodule "libs/powerline"]
-	path = libs/powerline
-	url = https://github.com/Lokaltog/powerline.git
