@@ -1,0 +1,1 @@
+curl -s ipinfo.io | grep -Eo "\"ip\":\s?\".*?[^\\]\"" | grep -Eo "[^\"]*[^\"]" | tail -n 1
