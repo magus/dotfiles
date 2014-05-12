@@ -1,0 +1,1 @@
+ssh noah@hakase.cloudapp.net -p 55626 -i ~/.ssh/azure.key $@
