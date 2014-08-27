@@ -3,11 +3,15 @@
 # Enable strict bash syntax and trap all errors
 
 set -euo errtrace -o pipefail
-trap 'err_handler $?' ERR
-err_handler() {
-    let i=0 exitCode=$1
+trap 'die $?' ERR
+die() {
+    local frame=0
+    local exitCode=$1
     echo "[$exitCode]::Stack trace"
     echo "------------------------"
-    while caller $i; do ((i++)); done
+    while caller $frame; do
+      ((frame++));
+    done
+    echo "$*"
     exit $?
 }
