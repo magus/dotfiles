@@ -1,0 +1,13 @@
+#!/bin/bash
+# Usage : source bashtrap
+# Enable strict bash syntax and trap all errors
+
+set -euo errtrace -o pipefail
+trap 'err_handler $?' ERR
+err_handler() {
+    let i=0 exitCode=$1
+    echo "[$exitCode]::Stack trace"
+    echo "------------------------"
+    while caller $i; do ((i++)); done
+    exit $?
+}
