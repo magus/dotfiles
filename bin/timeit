@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+start_time=`date +%s`
+$@
+echo "timedit. $(expr `date +%s` - $start_time)s"
