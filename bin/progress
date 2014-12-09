@@ -1,0 +1,25 @@
+#!/bin/bash
+
+progress(){
+  # example usage:
+  # progress 30G 9G 30
+  # 30G [================>.................................] 30% (9G)
+
+  # params:
+  # $1 = total value (e.g.: source size)
+  # $2 = current value (e.g.: destination size)
+  # $3 = percent completed
+  [[ -z $1 || -z $2 || -z $3 ]] && exit  # on empty param...
+
+  percent=$3
+  completed=$(( $percent / 2 ))
+  remaining=$(( 50 - $completed ))
+
+  echo -ne "\r$1 ["
+  printf "%0.s=" `seq $completed`
+  echo -n ">"
+  [[ $remaining != 0 ]] && printf "%0.s." `seq $remaining`
+  echo -ne "] $percent% ($2)  "
+
+  [[ $percent -eq 100 ]] && echo ""
+}
