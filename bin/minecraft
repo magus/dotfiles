@@ -1,0 +1,11 @@
+#!/bin/sh
+# execute minecraft without current java version
+# noah m jorgenson (noah@iamnoah.com)
+# usage: minecraft <max_heap>
+
+MAXHEAP="$1";
+if [[ -n $MAXHEAP ]]; then
+  MAXHEAPARG="-Xmx"$MAXHEAP"m";
+fi
+
+java $MAXHEAPARG -jar /Applications/Minecraft.app/Contents/Resources/Java/Bootstrap.jar
