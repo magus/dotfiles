@@ -44,11 +44,13 @@ need_push () {
 
 
 git_prompt_color() {
-    st=$(git status 2>/dev/null | tail -n 1)
-    if [[ $st == "" ]]
+    # detect non-git repo
+    notGit=$(git rev-parse --git-dir 2>/dev/null);
+    if [[ $notGit == "" ]]
     then
         echo "%{$fg_bold[yellow]%}⇨  %{$reset_color%}"
     else
+        st=$(git status 2>/dev/null | tail -n 1)
         if [[ "$st" =~ ^nothing ]]
         then
             if [[ $(unpushed) == "" ]]
