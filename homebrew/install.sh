@@ -11,6 +11,7 @@ if [[ -e $(which brew) ]]; then
   brew update
   # Install homebrew packages
   brew install grc coreutils grc nmap parallel iftop
+  brew install fpp
 else
   echo '  x You should probably install Homebrew first:'
   echo '    $ ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"'
