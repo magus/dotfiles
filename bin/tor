@@ -13,11 +13,11 @@ if [[ "$CURRNETLOC" != "$TORNETLOC" ]]; then
   # start tor and enable tor network location
   echo Starting TOR...
   open $TORAPP
-  networksetup -switchtolocation "$TORNETLOC"
+  networksetup -switchtolocation "$TORNETLOC" 1>/dev/null
 else
   # quit tor and return to automatic network location
   echo Quitting TOR...
-  networksetup -switchtolocation "Automatic"
+  networksetup -switchtolocation "Automatic" 1>/dev/null
   quit TorBrowser
 fi
 
