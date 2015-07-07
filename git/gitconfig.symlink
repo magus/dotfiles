@@ -16,7 +16,7 @@
   # Diff
   d = diff --staged
   # Switch to a branch, creating it if necessary
-  go = checkout -B
+  go = checkout -b
   # Undo a 'git push'
   undopush = push -f origin HEAD^:master
 
