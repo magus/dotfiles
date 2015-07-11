@@ -1,4 +1,0 @@
-# ignore ec2 gaming scripts with aws keys
-# TODO: $(cat ~/.aws/keys/key) instead of inline
-ec2-gaming-down.sh
-ec2-gaming-up.sh
