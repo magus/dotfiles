@@ -4,7 +4,7 @@ set -e
 
 export AWS_ACCESS_KEY_ID=$(cat ~/.aws/keys/access)
 export AWS_SECRET_ACCESS_KEY=$(cat ~/.aws/keys/secret)
-export AWS_DEFAULT_REGION=us-west-2b
+export AWS_DEFAULT_REGION=us-west-2
 
 # Verify that the gaming stane actually exists (and that there's only one)
 echo -n "Finding your gaming instance... "
