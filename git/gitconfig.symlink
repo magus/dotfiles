@@ -16,7 +16,7 @@
   # Diff
   d = diff --staged
   # Switch to a branch, creating it if necessary
-  go = checkout -b
+  go = "!f() { [[ $((git checkout -b $1) 2>&1) == fatal* ]] && git checkout $1; }; f"
   # Undo a 'git push'
   undopush = push -f origin HEAD^:master
 
