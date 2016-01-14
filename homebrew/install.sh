@@ -14,5 +14,5 @@ if [[ -e $(which brew) ]]; then
   brew install fpp
 else
   echo '  x You should probably install Homebrew first:'
-  echo '    $ ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"'
+  echo '    $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
 fi
