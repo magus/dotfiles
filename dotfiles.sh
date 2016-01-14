@@ -146,20 +146,19 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     e_header "Installing zsh"
     brew install --disable-etcdir zsh
   fi
-  
+
   # add zsh to /etc/shells && chsh
-  zshPath=/bin/zsh
   if [[ ! -e "$(grep $zshPath /etc/shells)" ]]; then
-    sudo sh -c "echo '\n#added by $0 ($(date))\n$zshPath' >> /etc/shells"
-    sudo chsh -s $zshPath $USER
+    sudo sh -c "echo '\n#added by $0 ($(date))\n/bin/zsh' >> /etc/shells"
   fi
 # Ubuntu.
 elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
   e_header "Installing zsh"
   sudo apt-get install zsh
-  sudo chsh -s /bin/zsh $USER
-
 fi
+
+# Change default shell to ZSH
+sudo chsh -s /bin/zsh $USER
 
 # If git isn't installed by now, something exploded. We gots to quit!
 if [[ ! -e "$(which git)" ]]; then
