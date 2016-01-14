@@ -3,7 +3,7 @@ source ~/.zshrc
 
 cat <<EOF
 SSH Keys (if this is a server)
- 1. (main) scp ~/.ssh/id_rsa.pub $USER@$(myip):~/.ssh/
+ 1. (main) scp ~/.ssh/id_rsa.pub $USER@$(ip):~/.ssh/
  2. (here) cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
 Git / GitHub
