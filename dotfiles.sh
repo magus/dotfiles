@@ -150,7 +150,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   fi
 
   # add zsh to /etc/shells && chsh
-  if [[ ! -e "$(grep $zshPath /etc/shells)" ]]; then
+  if [[ ! -e "$(grep /bin/zsh /etc/shells)" ]]; then
     sudo sh -c "echo '\n#added by $0 ($(date))\n/bin/zsh' >> /etc/shells"
   fi
 # Ubuntu.
