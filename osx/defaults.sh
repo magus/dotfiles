@@ -63,6 +63,9 @@ defaults write com.apple.TextEdit RichText -int 0
 defaults write com.apple.TextEdit PlainTextEncoding -int 4
 defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
 
+# Set default finder view as List view
+defaults write com.apple.Finder FXPreferredViewStyle Nlsv
+
 ###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
