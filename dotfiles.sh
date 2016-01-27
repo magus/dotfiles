@@ -124,8 +124,11 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   fi
 fi
 
-# install rvm
-curl -sSL https://get.rvm.io | bash -s stable --ruby
+# rvm
+if [[ ! -e "$(which rvm)" ]]; then
+  e_header "Installing rvm"
+  curl -sSL https://get.rvm.io | bash -s stable --ruby
+fi
 
 # If git is not installed...
 if [[ ! -e "$(which git)" ]]; then
