@@ -108,8 +108,10 @@ function do_symlinks() {
 ## Begin installation
 
 # Ensure that we can actually, like, compile anything.
-if [[ ! -e "$(which gcc)" && "$OSTYPE" =~ ^darwin ]]; then
+xcode-select -p 2> /dev/null
+if [[ $? -eq 2 && "$OSTYPE" =~ ^darwin ]]; then
   e_error "The XCode Command Line Tools must be installed first."
+  xcode-select --install
   exit 1
 fi
 
