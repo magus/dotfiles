@@ -121,6 +121,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   if [[ ! -e "$(which brew)" ]]; then
     e_header "Installing Homebrew"
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /usr/local/bin/brew doctor
   fi
 fi
 
