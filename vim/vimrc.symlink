@@ -112,7 +112,7 @@ nnoremap <C-n> :call RelativeToggle()<cr>
 "  Powerline
 " ----------------------------------------------------------------------------
 set rtp+=~/.dotfiles/libs/powerline/powerline/bindings/vim
-set guifont=PragmataPro
+"set guifont=PragmataPro
 set guifont=Source\ Code\ Pro\ for\ Powerline
 let g:Powerline_symbols = 'fancy'
 set t_Co=256
