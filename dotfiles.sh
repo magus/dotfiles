@@ -4,7 +4,7 @@
 # set up the initial zsh and some dependencies
 # make dem dotfiles
 
-VERSION="1.2";
+VERSION="1.4";
 
 function e_header()   { echo -e "\n\n\033[1;35m☆\033[0m  $@"; };
 function e_success()  { echo -e " \033[1;32m ✔\033[0m  $@"; };
