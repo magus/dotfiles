@@ -115,17 +115,17 @@ if [[ $? -eq 2 && "$OSTYPE" =~ ^darwin ]]; then
   exit 1
 fi
 
-# install rvm
-curl -sSL https://get.rvm.io | bash -s stable --ruby
-
 # OSX Homebrew
 if [[ "$OSTYPE" =~ ^darwin ]]; then
   # It's easiest to install things via Homebrew, so get that first.
   if [[ ! -e "$(which brew)" ]]; then
     e_header "Installing Homebrew"
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   fi
 fi
+
+# install rvm
+curl -sSL https://get.rvm.io | bash -s stable --ruby
 
 # If git is not installed...
 if [[ ! -e "$(which git)" ]]; then
