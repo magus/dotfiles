@@ -57,6 +57,11 @@ defaults write com.apple.dock wvous-bl-modifier -int 0
 defaults write com.apple.dock wvous-br-corner -int 4
 defaults write com.apple.dock wvous-br-modifier -int 0
 
+
+# TestEdit
+############
+# Do not use iCloud as default save location
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 # Use plain text mode for new TextEdit documents
 defaults write com.apple.TextEdit RichText -int 0
 # Open and save files as UTF-8 in TextEdit
