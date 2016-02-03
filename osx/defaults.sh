@@ -58,7 +58,7 @@ defaults write com.apple.dock wvous-br-corner -int 4
 defaults write com.apple.dock wvous-br-modifier -int 0
 
 
-# TestEdit
+# TextEdit
 ############
 # Do not use iCloud as default save location
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
@@ -70,6 +70,13 @@ defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
 
 # Set default finder view as List view
 defaults write com.apple.Finder FXPreferredViewStyle Nlsv
+
+###############################################################################
+# Photos                                                                      #
+###############################################################################
+
+# Prevent Photos from opening automatically when devices are plugged in
+defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
 ###############################################################################
 # Kill affected applications                                                  #
