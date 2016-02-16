@@ -16,8 +16,15 @@ if [[ -e $(which brew) ]]; then
 
   ## nvm & node
   brew install nvm
+
+  ## temp source nvm until zsh sh
+  source $HOME/.dotfiles/zsh/nvm.sh
+
+  ## install node
   nvm install node
   nvm alias default node
+
+
 else
   echo '  x You should probably install Homebrew first:'
   echo '    $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
