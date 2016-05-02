@@ -43,6 +43,9 @@ defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 # Show the ~/Library folder
 chflags nohidden ~/Library
 
+# Set the icon size of Dock items to 36 pixels
+defaults write com.apple.dock tilesize -int 36
+
 # Hot corners
 # Possible values:
 #  0: no-op
