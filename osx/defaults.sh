@@ -83,7 +83,7 @@ defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 ###############################################################################
 
 function e_header()   { echo -e "\n\n\033[1;35m☆\033[0m  $@"; }
-for app in "Dashboard" "Finder" "SystemUIServer"; do
+for app in "Dashboard" "Finder" "Dock" "SystemUIServer"; do
   killall "$app" > /dev/null 2>&1
 done
 e_header "Some OSX setting changes require a logout/restart to take effect."
