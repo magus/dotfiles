@@ -69,6 +69,9 @@ defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 # Show the ~/Library folder
 chflags nohidden ~/Library
 
+# Show the /Volumes folder
+sudo chflags nohidden /Volumes
+
 # Set the icon size of Dock items to 36 pixels
 defaults write com.apple.dock tilesize -int 36
 
