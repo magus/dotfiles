@@ -107,6 +107,9 @@ defaults write com.apple.dock wvous-br-modifier -int 0
 
 # TextEdit
 ############
+# Disable smart quotes as they’re annoying when typing code
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
 # Do not use iCloud as default save location
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 # Use plain text mode for new TextEdit documents
