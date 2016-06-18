@@ -1,2 +1,6 @@
 Host *
   ServerAliveInterval 120
+
+Host github.com
+  Hostname ssh.github.com
+  Port 443
