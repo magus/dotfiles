@@ -207,12 +207,16 @@ if [[ -e "$(which brew)" ]]; then
   $HOME/.dotfiles/homebrew/install.sh 2>&1
 fi
 
-#setup osx defaults
+# setup osx
 if [[ "$OSTYPE" =~ ^darwin ]]; then
+  e_header "OSX Setup"
   e_arrow "Setting OSX defaults ..."
   $HOME/.dotfiles/osx/defaults.sh
 
-  e_header "Linking iTerm2 profile to ~/.iterm2/"
+  e_arrow "Installing some OSX apps"
+  $HOME/.dotfiles/osx/apps.sh
+
+  e_arrow "Linking iTerm2 profile to ~/.iterm2/"
   itermDir=$HOME/.iterm2
   itermSettings=$HOME/.dotfiles/osx/iterm2
   ln -sf $itermSettings $itermDir
