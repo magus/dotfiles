@@ -28,4 +28,5 @@ if [[ -e $(which brew) ]]; then
 else
   echo '  x You should probably install Homebrew first:'
   echo '    $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
+  exit 1
 fi
