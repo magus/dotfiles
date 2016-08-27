@@ -40,11 +40,10 @@ hdiutil unmount "/Volumes/Dropbox Installer"
 rm Dropbox.dmg
 
 # The Unarchiver
-curl -L -o TheUnarchiver.dmg "http://unarchiver.c3.cx/downloads/TheUnarchiver3.10.1.dmg"
-hdiutil mount -nobrowse TheUnarchiver.dmg
-cp -R "/Volumes/The Unarchiver/The Unarchiver.app" /Applications
-rm TheUnarchiver.dmg
-
+curl -L -o TheUnarchiver.zip http://unarchiver.c3.cx/downloads/TheUnarchiver3.11.1.zip
+unzip TheUnarchiver.zip
+mv The\ Unarchiver.app /Applications
+rm TheUnarchiver.zip
 
 # SourceCodePro font
 open $HOME/.dotfiles/fonts/SourceCodePro/*.otf
