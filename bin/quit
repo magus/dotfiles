@@ -1,6 +1,6 @@
 #!/bin/sh
 # find the pid of specified app and kill it
-# noah m jorgenson (noah@iamnoah.com)
+# magus (noah@iamnoah.com)
 # usage: quit <app>
 # <app> : app name, e.g. Safari
 

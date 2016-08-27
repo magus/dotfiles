@@ -1,6 +1,6 @@
 #!/bin/bash
 # script to toggle tor and switch network location
-# noah m jorgenson (noah@iamnoah.com)
+# magus (noah@iamnoah.com)
 # usage: tor
 
 TORAPP="$(find /Applications -depth 1 -iname 'tor*' -print)";
@@ -20,5 +20,3 @@ else
   networksetup -switchtolocation "Automatic" 1>/dev/null
   quit TorBrowser
 fi
-
-
