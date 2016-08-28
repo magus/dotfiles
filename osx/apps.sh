@@ -55,6 +55,9 @@ open "https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgo
 open "http://redditenhancementsuite.com/"
 open "https://chrome.google.com/webstore/detail/hacker-news-enhancement-s/bappiabcodbpphnojdiaddhnilfnjmpm"
 open "https://chrome.google.com/webstore/detail/save-to-pocket/niloccemoadcdkdjlinkgdfekeahmflj"
+open "https://help.github.com/articles/testing-your-ssh-connection/"
+open "https://github.com/settings/ssh"
+open "https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/"
 
 # Navigate back
 cd -
