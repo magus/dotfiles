@@ -3,6 +3,16 @@
 # Move into /tmp
 cd /tmp
 
+# Chrome
+curl -L -O "https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg"
+hdiutil mount -nobrowse googlechrome.dmg
+cp -R "/Volumes/Google Chrome/Google Chrome.app" /Applications
+hdiutil unmount "/Volumes/Google Chrome"
+rm googlechrome.dmg
+
+# Open Google Chrome to set default browser
+open "/Applications/Google Chrome.app"
+
 # mpv
 brew install --with-bundle --with-little-cms2 --with-lua mpv && brew linkapps mpv
 
@@ -17,13 +27,6 @@ curl -L -o iTerm2.zip "https://iterm2.com/downloads/stable/iTerm2-3_0_4.zip"
 unzip iTerm2.zip
 mv iTerm.app /Applications
 rm iTerm2.zip
-
-# Chrome
-curl -L -O "https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg"
-hdiutil mount -nobrowse googlechrome.dmg
-cp -R "/Volumes/Google Chrome/Google Chrome.app" /Applications
-hdiutil unmount "/Volumes/Google Chrome"
-rm googlechrome.dmg
 
 # Transmission
 curl -L -o Transmission.dmg "https://transmission.cachefly.net/Transmission-2.84.dmg"
