@@ -16,6 +16,13 @@ open "/Applications/Google Chrome.app"
 # mpv
 brew install --with-bundle --with-little-cms2 --with-lua mpv && brew linkapps mpv
 
+# Slack
+curl -L -o slack.zip "https://slack.com/ssb/download-osx-beta"
+unzip slack.zip
+mv Slack.app /Applications
+rm slack.zip
+open /Applications/Slack.app
+
 # Atom
 curl -L -o atom-mac.zip "https://atom.io/download/mac"
 unzip atom-mac.zip
