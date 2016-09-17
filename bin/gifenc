@@ -1,9 +1,13 @@
 #!/bin/sh
 # high quality gif with ffmpeg
 # http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html
-# usage: gifenc <input> [<output> <res> <fps>]
-# example: gifenc video.mp4 output.gif 480 10
-# outputs to output.gif at 480 scale and 10 fps
+# usage: gifenc <input> [<res> <fps> <output>]
+# examples
+#  $ gifenc video.mp4 320
+#  outputs at 320 scale
+#  $ gifenc video.mp4 640 30
+#  outputs at 640 scale and 30 fps
+
 
 # INPUT is required
 INPUT=$1
@@ -12,13 +16,16 @@ if [ ! -f $INPUT ]; then
    exit 1
 fi
 
-OUTPUT=${2:-"${INPUT%.*}.gif"}  # Default to <INPUT>.gif
-RES=${3:-"720"}                 # Default to 720p
-FPS=${4:-"15"}                  # Default to 15 fps
+OUTPUT=${4:-"${INPUT%.*}.gif"}  # Default to <INPUT>.gif
+RES=${2:-"480"}                 # Default to 480p
+FPS=${3:-"15"}                  # Default to 15 fps
 
 palette="/tmp/palette.png"
 
-filters="fps=$FPS,scale=$RES:-1:flags=lanczos"
+f_fps="fps=$FPS"
+f_scale="scale=w=$RES:h=$RES:force_original_aspect_ratio=decrease:flags=lanczos"
+f_palettegen="palettegen=stats_mode=diff"
+filters="$f_fps,$f_scale"
 
-ffmpeg -v warning -i $INPUT -vf "$filters,palettegen" -y $palette
+ffmpeg -v warning -i $INPUT -vf "$filters,$f_palettegen" -y $palette
 ffmpeg -v warning -i $INPUT -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -y $OUTPUT
