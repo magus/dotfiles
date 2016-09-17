@@ -1,6 +1,6 @@
 #!/bin/sh
 # execute minecraft without current java version
-# noah m jorgenson (noah@iamnoah.com)
+# magus (noah@iamnoah.com)
 # usage: minecraft <max_heap>
 
 MAXHEAP="$1";
