@@ -1,6 +1,6 @@
 #!/bin/sh
 # number of unconfirmed bitcoin transactions
-# noah m jorgenson (noah@iamnoah.com)
+# magus (noah@iamnoah.com)
 
 c=$(curl -s https://blockchain.info/q/unconfirmedcount)
 

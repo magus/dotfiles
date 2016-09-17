@@ -7,3 +7,8 @@ caches/
 
 #ignore vim netrw hist file generated when navigating dirs
 .netrwhist
+
+#ignore atom configuration files
+atom/*
+!atom/config.cson
+!atom/keymap.cson
