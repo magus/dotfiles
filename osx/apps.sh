@@ -67,6 +67,9 @@ open "https://chrome.google.com/webstore/detail/hacker-news-enhancement-s/bappia
 open "https://chrome.google.com/webstore/detail/save-to-pocket/niloccemoadcdkdjlinkgdfekeahmflj"
 open "https://chrome.google.com/webstore/detail/go-back-with-backspace/eekailopagacbcdloonjhbiecobagjci/related?hl=en"
 
+# Great Suspender
+open "https://chrome.google.com/webstore/detail/the-great-suspender/klbibkeccnjlkjkiokjodocebajanakg?hl=en"
+
 # Github SSH keys
 open "https://help.github.com/articles/testing-your-ssh-connection/"
 open "https://github.com/settings/ssh"
