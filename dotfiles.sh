@@ -70,39 +70,51 @@ function link_stuff() {
 
 # link .symlink files
 function do_symlinks() {
-  local base dest filename skip
-  local files=(~/.dotfiles/**/*.symlink)
-  # No files? abort.
-  if (( ${#files[@]} == 0 )); then return; fi
-  # Run _header function only if declared.
-  [[ $(declare -f link_header) ]] && link_header
-  # Iterate over files.
-  for file in "${files[@]}"; do
-    filename="$(basename $file)"
-    base=".${filename%.symlink}"
-    dest="$HOME/$base"
-    # Run _test function only if declared.
-    if [[ $(declare -f link_test) ]]; then
-      # If _test function returns a string, skip file and print that message.
-      skip="$(link_test "$file" "$dest")"
-      if [[ "$skip" ]]; then
-        e_error "Skipping ~/$base, $skip."
-        continue
+  # find all .symlink files (recursive glob with find)
+  # encase all statements in block for scope
+  find $HOME/.dotfiles -iname '*.shymlink' | {
+    local base dest filename skip
+    local files=()
+
+    while read file; do
+      files+=($file)
+    done
+
+    # No files? abort.
+    if (( ${#files[@]} == 0 )); then return; fi
+
+    # Run _header function only if declared.
+    [[ $(declare -f link_header) ]] && link_header
+
+    # Iterate over files.
+    for file in "${files[@]}"; do
+      echo $file
+      filename="$(basename $file)"
+      base=".${filename%.symlink}"
+      dest="$HOME/$base"
+      # Run _test function only if declared.
+      if [[ $(declare -f link_test) ]]; then
+        # If _test function returns a string, skip file and print that message.
+        skip="$(link_test "$file" "$dest")"
+        if [[ "$skip" ]]; then
+          e_error "Skipping ~/$base, $skip."
+          continue
+        fi
+        # Destination file already exists in ~/. Back it up!
+        if [[ -e "$dest" ]]; then
+          e_arrow "Backing up ~/$base."
+          # Set backup flag, so a nice message can be shown at the end.
+          backup=1
+          # Create backup dir if it doesn't already exist.
+          [[ -e "$backup_dir" ]] || mkdir -p "$backup_dir"
+          # Backup file / link / whatever.
+          mv "$dest" "$backup_dir"
+        fi
       fi
-      # Destination file already exists in ~/. Back it up!
-      if [[ -e "$dest" ]]; then
-        e_arrow "Backing up ~/$base."
-        # Set backup flag, so a nice message can be shown at the end.
-        backup=1
-        # Create backup dir if it doesn't already exist.
-        [[ -e "$backup_dir" ]] || mkdir -p "$backup_dir"
-        # Backup file / link / whatever.
-        mv "$dest" "$backup_dir"
-      fi
-    fi
-    # Do stuff.
-    link_stuff "$base" "$file"
-  done
+      # Do stuff.
+      link_stuff "$base" "$file"
+    done
+  }
 }
 
 ## Begin installation
