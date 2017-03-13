@@ -35,6 +35,14 @@ unzip iTerm2.zip
 mv iTerm.app /Applications
 rm iTerm2.zip
 
+# hyper
+curl -L -o hyper.dmg "https://hyper-updates.now.sh/download/mac"
+hdiutil mount -nobrowse hyper.dmg
+HYPER_MOUNT=$(find /Volumes -iname Hyper* -type d -maxdepth 1)
+cp -R "$HYPER_MOUNT/Hyper.app" /Applications
+hdiutil unmount "$HYPER_MOUNT"
+rm hyper.dmg
+
 # Transmission
 curl -L -o Transmission.dmg "https://transmission.cachefly.net/Transmission-2.84.dmg"
 hdiutil mount -nobrowse Transmission.dmg
