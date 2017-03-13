@@ -35,7 +35,9 @@ endif
 
 syntax enable
 set background=dark
-colorscheme solarized
+" Disable solarize vim theme
+" colorscheme solarize
+
 
 " ---------------------------------------------------------------------------
 "  Highlight
