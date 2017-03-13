@@ -1,5 +1,6 @@
 #!/bin/bash
 
+RESTORE_DIR=$(pwd)
 # Move into /tmp
 cd /tmp
 
@@ -84,4 +85,4 @@ open "https://github.com/settings/ssh"
 open "https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/"
 
 # Navigate back
-cd -
+cd "$RESTORE_DIR"
