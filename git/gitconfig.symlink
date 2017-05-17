@@ -34,7 +34,7 @@
             git config --global alias.\"$1\" \"$2\"; \
           }; f"
 
-  which = !git branch | grep -i
+  which = "!f() {  [[ $# -eq '0' ]] && git branch || git branch | grep -i $@; }; f"
   lucky = !sh -c 'git checkout $(git branch --no-color | grep -i $1 -m1)' -
 
 
