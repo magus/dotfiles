@@ -19,10 +19,24 @@
   a = add -p
   # Diff
   d = diff --staged
-  # Switch to a branch, creating it if necessary
-  go = "!f() { [[ $((git checkout -b $1) 2>&1) == fatal* ]] && git checkout $1; }; f"
   # Undo a 'git push'
   undopush = push -f origin HEAD^:master
+
+  # Checkout branch > Checkout PR > Create PR
+  go = "!f() { [[ $((git checkout $1) 2>&1) == error* ]] && [[ $((git checkout -b dev/noah/$1) 2>&1) == fatal* ]] && git checkout dev/noah/$1; }; f"
+
+  # Delete branch > Delete PR
+  rb = "!g() { [[ $((git branch -D $1) 2>&1) == error* ]] && git branch -D dev/noah/$1; }; g"
+
+  # https://bitbucket.org/tpettersen/git-aliases/src/
+  alias = "!f() { \
+            if [ \"$#\" -ne 2 ]; then { echo >&2 \"Usage: git alias <name> <command>\"; exit 1; } fi; \
+            git config --global alias.\"$1\" \"$2\"; \
+          }; f"
+
+  which = !git branch | grep -i
+  lucky = !sh -c 'git checkout $(git branch --no-color | grep -i $1 -m1)' -
+
 
 # so much color
 [color]
