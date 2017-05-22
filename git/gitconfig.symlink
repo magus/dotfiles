@@ -22,21 +22,43 @@
   # Undo a 'git push'
   undopush = push -f origin HEAD^:master
 
-  # Checkout branch > Checkout PR > Create PR
-  go = "!f() { [[ $((git checkout $1) 2>&1) == error* ]] && [[ $((git checkout -b dev/noah/$1) 2>&1) == fatal* ]] && git checkout dev/noah/$1; }; f"
-
-  # Delete branch > Delete PR
-  rb = "!g() { [[ $((git branch -D $1) 2>&1) == error* ]] && git branch -D dev/noah/$1; }; g"
-
   # https://bitbucket.org/tpettersen/git-aliases/src/
   alias = "!f() { \
-            if [ \"$#\" -ne 2 ]; then { echo >&2 \"Usage: git alias <name> <command>\"; exit 1; } fi; \
+            if [ \"$#\" -ne 2 ]; then { \
+              echo >&2 \"Usage: git alias <name> <command>\"; \
+              exit 1; \
+            }fi; \
             git config --global alias.\"$1\" \"$2\"; \
           }; f"
 
-  which = "!f() {  [[ $# -eq '0' ]] && git branch || git branch | grep -i $@; }; f"
-  lucky = !sh -c 'git checkout $(git branch --no-color | grep -i $1 -m1)' -
+  which = !sh -c 'git branch | grep -i \"${@:-''}\"' -
+  branch-grep = "!f() { \
+    if [[ ! $@ ]]; then \
+      exit 1; \
+    else \
+      git branch --no-color | grep -i $1 -m1; \
+    fi \
+  }; f"
 
+  # Checkout branch > Checkout PR > Create PR
+  go = "!f() { \
+    local branch=$(git branch-grep $@); \
+    if [[ $branch ]]; then \
+      git checkout $branch; \
+    else \
+      git checkout -b dev/noah/$1; \
+    fi \
+  }; f"
+
+  # Delete branch > Delete PR
+  rb = "!f() { \
+    local branch=$(git branch-grep $@); \
+    if [[ $branch ]]; then \
+      git branch -D $branch; \
+    else \
+      echo \"Cannot find branch ($@)\"; \
+    fi \
+  }; f"
 
 # so much color
 [color]
