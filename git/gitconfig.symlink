@@ -31,7 +31,8 @@
             git config --global alias.\"$1\" \"$2\"; \
           }; f"
 
-  which = !sh -c 'git branch | grep -i \"${@:-''}\"' -
+  pr = !sh -c 'git checkout -b $@ origin/$@' -
+
   branch-grep = "!f() { \
     if [[ ! $@ ]]; then \
       exit 1; \
