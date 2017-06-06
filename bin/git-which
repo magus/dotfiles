@@ -1,0 +1,14 @@
+#!/bin/bash
+
+SEARCH=${@:-''}
+
+FORMAT=""
+FORMAT+="%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - "
+FORMAT+="%(contents:subject) - "
+FORMAT+="%(authorname) "
+FORMAT+="(%(color:green)%(committerdate:relative)%(color:reset))"
+
+git for-each-ref \
+  --sort=committerdate refs/heads/ \
+  --format="$FORMAT" \
+  | grep -i "$SEARCH"
