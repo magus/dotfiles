@@ -39,5 +39,9 @@
       showHome: false
   "one-dark-ui":
     fontSize: 15
+  "sync-settings":
+    _lastBackupHash: "033b8f6d48e84bb9c87c8391123e88949195fdcd"
+    gistId: "05b157a056067626ae61d6d7b1176b62"
+    personalAccessToken: "63cbdfebbae0fee4f86ab10d506465b1f058e25f"
   welcome:
     showOnStartup: false
