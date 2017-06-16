@@ -72,7 +72,7 @@ function link_stuff() {
 function do_symlinks() {
   # find all .symlink files (recursive glob with find)
   # encase all statements in block for scope
-  find $HOME/.dotfiles -iname '*.shymlink' | {
+  find $HOME/.dotfiles -iname '*.symlink' | {
     local base dest filename skip
     local files=()
 
