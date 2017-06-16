@@ -3,6 +3,7 @@
     customFileTypes:
       "source.ini": [
         ".buckconfig"
+        ".hgrc"
       ]
       "source.json": [
         ".arcconfig"
@@ -15,6 +16,16 @@
       "tree-view"
     ]
     excludeVcsIgnoredPaths: false
+    ignoredNames: [
+      ".git"
+      ".hg"
+      ".svn"
+      ".DS_Store"
+      "._*"
+      "Thumbs.db"
+      "desktop.ini"
+      "node_modules"
+    ]
     telemetryConsent: "no"
   editor:
     fontSize: 18
