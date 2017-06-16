@@ -27,6 +27,7 @@
       "node_modules"
     ]
     telemetryConsent: "no"
+    titleBar: "hidden"
   editor:
     fontSize: 18
     showInvisibles: true
