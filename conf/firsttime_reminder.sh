@@ -13,4 +13,9 @@ Git / GitHub
  4. (here) git config --global user.email "email@domain.com"
 
  * zsh will start as your default shell on subsequent logins
+
+ Open Atom and 'Install Shell Commands', then run:
+   $ apm install --packages-file ~/.dotfiles/atom/apm-packages.list
+
+ Alternatively, install 'sync-settings' package and setup Gist API token
 EOF
