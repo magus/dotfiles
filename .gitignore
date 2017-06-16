@@ -12,3 +12,4 @@ caches/
 atom/*
 !atom/config.cson
 !atom/keymap.cson
+!atom/apm-packages.list
