@@ -2,14 +2,16 @@
 
 SEARCH=${@:-''}
 
+SEP="→"
+
 FORMAT=""
-FORMAT+="(%(color:green)%(committerdate:relative)%(color:reset)),"
-FORMAT+="%(HEAD) %(color:yellow)%(refname:short)%(color:reset),"
-FORMAT+="%(authorname),"
+FORMAT+="(%(color:green)%(committerdate:relative)%(color:reset))$SEP"
+FORMAT+="%(HEAD) %(color:yellow)%(refname:short)%(color:reset)$SEP"
+FORMAT+="%(authorname)$SEP"
 FORMAT+="%(contents:subject)"
 
 git for-each-ref \
   --sort=committerdate refs/heads/ \
   --format="$FORMAT" \
   | grep -i "$SEARCH" \
-  | column -t -s ','
+  | column -t -s "$SEP"
