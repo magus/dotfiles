@@ -71,7 +71,7 @@ open $HOME/.dotfiles/fonts/SourceCodePro/*.otf
 # Open pages for Chrome extensions
 open "https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"
 open "https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi"
-open "http://redditenhancementsuite.com/"
+open "https://chrome.google.com/webstore/detail/reddit-enhancement-suite/kbmfpngjjgdllneeigpgjifpgocmfgmb"
 open "https://chrome.google.com/webstore/detail/hacker-news-enhancement-s/bappiabcodbpphnojdiaddhnilfnjmpm"
 open "https://chrome.google.com/webstore/detail/save-to-pocket/niloccemoadcdkdjlinkgdfekeahmflj"
 open "https://chrome.google.com/webstore/detail/go-back-with-backspace/eekailopagacbcdloonjhbiecobagjci/related?hl=en"
