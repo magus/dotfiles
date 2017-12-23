@@ -24,11 +24,11 @@ mv Slack.app /Applications
 rm slack.zip
 open /Applications/Slack.app
 
-# Atom
-curl -L -o atom-mac.zip "https://atom.io/download/mac"
-unzip atom-mac.zip
-mv Atom.app /Applications
-rm atom-mac.zip
+# Visual Studio Code
+curl -L -o vs-code.zip "https://go.microsoft.com/fwlink/?LinkID=620882"
+unzip vs-code.zip
+mv "Visual Studio Code.app" /Applications
+rm vs-code.zip
 
 # iTerm2
 curl -L -o iTerm2.zip "https://iterm2.com/downloads/stable/iTerm2-3_0_4.zip"
@@ -59,7 +59,7 @@ hdiutil unmount "/Volumes/Dropbox Installer"
 rm Dropbox.dmg
 
 # The Unarchiver
-curl -L -o TheUnarchiver.zip http://unarchiver.c3.cx/downloads/TheUnarchiver3.11.1.zip
+curl -L -o TheUnarchiver.zip https://dl.devmate.com/cx.c3.theunarchiver/TheUnarchiver.zip
 unzip TheUnarchiver.zip
 mv The\ Unarchiver.app /Applications
 rm TheUnarchiver.zip
