@@ -13,6 +13,7 @@ if [[ -e $(which brew) ]]; then
   brew install grc coreutils grc nmap parallel iftop
   brew install fpp
   brew install diff-so-fancy
+  brew install direnv
 
   ## nvm & node
   brew install nvm
