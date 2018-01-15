@@ -25,6 +25,9 @@ if [[ -e $(which brew) ]]; then
   nvm install node
   nvm alias default node
 
+  ## yarn
+  brew install yarn --without-node
+
 
 else
   echo '  x You should probably install Homebrew first:'
