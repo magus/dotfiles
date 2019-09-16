@@ -26,7 +26,7 @@ if [[ -e $(which brew) ]]; then
   nvm alias default node
 
   ## yarn
-  brew install yarn --without-node
+  brew install yarn --ignore-dependencies
 
 
 else
