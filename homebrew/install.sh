@@ -28,6 +28,9 @@ if [[ -e $(which brew) ]]; then
   ## yarn
   brew install yarn --ignore-dependencies
 
+  ## vim
+  brew install vim
+
 
 else
   echo '  x You should probably install Homebrew first:'

@@ -3,7 +3,7 @@
   email = noah@iamnoah.com
 
 [core]
-  editor = /usr/bin/vim
+  editor = vim
   excludesfile = ~/.gitignore
 
 [pager]
