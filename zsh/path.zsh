@@ -30,3 +30,6 @@ append_path "$HOME/.yarn/bin"
 
 # fastlane
 append_path "$HOME/.fastlane/bin"
+
+## periscope platform-binaries
+append_path $HOME/periscope/platform-binaries/bin
