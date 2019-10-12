@@ -33,3 +33,6 @@ append_path "$HOME/.fastlane/bin"
 
 # homebrew
 eval "$(cat $HOME/.dotfiles/homebrew/path.sh)"
+
+## periscope platform-binaries
+append_path $HOME/periscope/platform-binaries/bin
