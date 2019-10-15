@@ -79,7 +79,6 @@ open "https://chrome.google.com/webstore/detail/go-back-with-backspace/eekailopa
 open "https://chrome.google.com/webstore/detail/1password-password-manage/aomjjhallfgjeglblehebfpbcfeobpgk?hl=en"
 open "https://1password.com/downloads/"
 
-
 # Github SSH keys
 open "https://help.github.com/articles/testing-your-ssh-connection/"
 open "https://github.com/settings/ssh"
