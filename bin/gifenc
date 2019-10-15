@@ -20,12 +20,21 @@ OUTPUT=${4:-"${INPUT%.*}.gif"}  # Default to <INPUT>.gif
 RES=${2:-"480"}                 # Default to 480p
 FPS=${3:-"15"}                  # Default to 15 fps
 
-palette="/tmp/palette.png"
 
-f_fps="fps=$FPS"
-f_scale="scale=w=$RES:h=$RES:force_original_aspect_ratio=decrease:flags=lanczos"
+# get maximum fps of input
+SOURCE_FPS=$(ffmpeg -i $INPUT 2>&1 | sed -n "s/.*, \(.*\) fp.*/\1/p" | awk '{print int($1+0.5)}')
+if [ $FPS -gt $SOURCE_FPS ]; then
+  echo "$(basename $INPUT) has FPS=$SOURCE_FPS; lower FPS argument [$FPS]"
+  exit 1
+fi
+
+
+filters="fps=$FPS,scale=w=$RES:h=$RES:force_original_aspect_ratio=decrease:flags=lanczos"
 f_palettegen="palettegen=stats_mode=diff"
-filters="$f_fps,$f_scale"
+f_paletteuse="paletteuse"
 
-ffmpeg -v warning -i $INPUT -vf "$filters,$f_palettegen" -y $palette
-ffmpeg -v warning -i $INPUT -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -y $OUTPUT
+# run fps and scale filters first with just video as input ([0:v] 0-th -i input as input to filters)
+# split this filtered (fps/scale) video input two streams [a][b]
+# pass [a] into palettegen to generate a color palette [p]
+# pass [b] along with the palette [p] into the paletteuse filter
+ffmpeg -i $INPUT -filter_complex "[0:v] $filters,split [a][b];[a] $f_palettegen [p];[b][p] paletteuse=new=1" $OUTPUT
