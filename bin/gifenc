@@ -3,6 +3,8 @@
 # http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html
 # usage: gifenc <input> [<res> <fps> <output>]
 # examples
+#  $ gifenc video.mp4 -1
+#  keep original resolution of input
 #  $ gifenc video.mp4 320
 #  outputs at 320 scale
 #  $ gifenc video.mp4 640 30
