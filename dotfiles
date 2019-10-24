@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# dotfiles.sh
+# dotfiles
 # set up the initial zsh and some dependencies
 # make dem dotfiles
 
@@ -224,6 +224,9 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   e_header "OSX Setup"
   e_arrow "Setting OSX defaults ..."
   $HOME/.dotfiles/osx/defaults.sh
+
+  e_arrow "Installing OSX profiles ..."
+  profiles -I -F $HOME/.dotfiles/osx/askforpassworddelay.mobileconfig
 
   e_arrow "Installing some OSX apps"
   $HOME/.dotfiles/osx/apps.sh
