@@ -9,8 +9,10 @@ defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 
 # Require password immediately after sleep or screen saver begins
-defaults write com.apple.screensaver askForPassword -int 1
+# No longer works as of 10.13; see ./askforpassworddelay.mobileconfig
+defaults write com.apple.screensaver askForPassword -bool true
 defaults write com.apple.screensaver askForPasswordDelay -int 0
+profiles -I -F $HOME/.dotfiles/osx/askforpassworddelay.mobileconfig
 
 # Trackpad: enable tap to click for this user and for the login screen
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
