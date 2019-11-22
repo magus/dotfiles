@@ -82,7 +82,7 @@ set ignorecase          " ignore case for search
 set laststatus=2        " always show status line
 set noerrorbells
 set visualbell          " disable bell, use visual bell
-
+set backspace=indent,eol,start
 " ----------------------------------------------------------------------------
 " Text Formatting
 " ----------------------------------------------------------------------------
