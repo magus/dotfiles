@@ -64,6 +64,12 @@ unzip TheUnarchiver.zip
 mv The\ Unarchiver.app /Applications
 rm TheUnarchiver.zip
 
+# Inconsolata font
+# https://github.com/googlefonts/Inconsolata
+curl -L -o Inconsolata.zip https://github.com/googlefonts/Inconsolata/releases/download/v3.000/fonts_ttf.zip
+unzip Inconsolata.zip
+open fonts/ttf/*.ttf
+
 # SourceCodePro font
 open $HOME/.dotfiles/fonts/SourceCodePro/*.otf
 
