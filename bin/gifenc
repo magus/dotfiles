@@ -10,6 +10,12 @@
 #  $ gifenc video.mp4 640 30
 #  outputs at 640 scale and 30 fps
 
+which ffmpeg > /dev/null
+if [[ $? -eq "1" ]]; then
+  echo "ffmpeg required; Try > brew install ffmpeg"
+  exit 1
+fi
+
 
 # INPUT is required
 INPUT=$1
