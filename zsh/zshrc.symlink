@@ -4,6 +4,13 @@ export ZSH=$HOME/.dotfiles
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Development
 
+# load antigen
+source $ZSH/zsh/antigen.zsh
+# configure antigen
+antigen bundle zsh-users/zsh-autosuggestions
+# tell antigen we are done configuring
+antigen apply
+
 # z jump for cool kids
 . $ZSH/libs/z/z.sh
 
