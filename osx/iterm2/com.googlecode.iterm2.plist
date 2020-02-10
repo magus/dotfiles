@@ -14,6 +14,8 @@
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
 	<integer>1</integer>
+	<key>AppleWindowTabbingMode</key>
+	<string>manual</string>
 	<key>AutoHideTmuxClientSession</key>
 	<false/>
 	<key>CheckTestRelease</key>
@@ -773,7 +775,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>586 540 620 392 0 0 1792 1097 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>37 557 730 597 0 0 2048 1257 </string>
+	<string>36 498 730 590 0 0 2048 1257 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1345,11 +1347,13 @@
 			<key>Name</key>
 			<string>Default</string>
 			<key>Non Ascii Font</key>
-			<string>SauceCodePowerline-Regular 14</string>
+			<string>MesloLGSNerdFo-Bold 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<false/>
 			<key>Normal Font</key>
-			<string>Monaco 14</string>
+			<string>MesloLGSNerdFo-Bold 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -1529,6 +1533,13 @@
 		<string>3.0.4</string>
 		<string>3.3.7beta4</string>
 	</array>
+	<key>NoSyncBFPRecents</key>
+	<array>
+		<string>Source Code Pro for Powerline</string>
+		<string>MesloLGS NF</string>
+		<string>Menlo</string>
+		<string>Monaco</string>
+	</array>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
@@ -1541,7 +1552,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>71FC1CA1-47E9-4E17-AD84-99F0449EF396</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>4</integer>
+	<integer>5</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>599142118.41072798</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
