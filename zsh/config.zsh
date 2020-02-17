@@ -15,3 +15,8 @@ setopt promptsubst		#expansion/substitution in prompts
 #emacs line editing
 bindkey -e
 
+# `⌥ + ← →` to move back and forward words
+# `esc + f b` also works in this same way
+bindkey "^[^[[C" forward-word
+bindkey "^[^[[D" backward-word
+
