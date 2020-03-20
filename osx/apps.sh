@@ -64,6 +64,13 @@ unzip TheUnarchiver.zip
 mv The\ Unarchiver.app /Applications
 rm TheUnarchiver.zip
 
+# ScrollReverser
+curl -L -o ScrollReverser.zip https://pilotmoon.com/downloads/ScrollReverser-1.7.6.zip
+unzip ScrollReverser.zip
+mv Scroll\ Reverser.app /Applications
+rm ScrollReverser.zip
+open /Applications/Scroll\ Reverser.app
+
 # Inconsolata font
 # https://github.com/googlefonts/Inconsolata
 curl -L -o Inconsolata.zip https://github.com/googlefonts/Inconsolata/releases/download/v3.000/fonts_ttf.zip
