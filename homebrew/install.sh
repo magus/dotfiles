@@ -12,7 +12,7 @@ if [[ -e $(which brew) ]]; then
   # Install homebrew packages
   brew install grc coreutils grc nmap parallel iftop
   brew install fpp
-  brew install diff-so-fancy
+  brew install git-delta
   brew install direnv
 
   ## nvm & node
