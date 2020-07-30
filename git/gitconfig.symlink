@@ -42,7 +42,7 @@
     if [[ $branch ]]; then \
       git checkout $branch; \
     else \
-      git checkout -b dev/noah/$1; \
+      git checkout -b njorgensen/$1; \
     fi \
   }; f"
 
