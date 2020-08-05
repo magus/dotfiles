@@ -51,6 +51,13 @@ cp -R "/Volumes/Transmission/Transmission.app" /Applications
 hdiutil unmount "/Volumes/Transmission"
 rm Transmission.dmg
 
+# Spectacle
+curl -L -o Spectacle.zip "https://s3.amazonaws.com/spectacle/downloads/Spectacle+1.2.zip"
+unzip Spectacle.zip
+mv Spectacle.app /Applications
+open /Applications/Spectacle.app
+rm Spectacle.zip
+
 # The Unarchiver
 curl -L -o TheUnarchiver.zip https://dl.devmate.com/cx.c3.theunarchiver/TheUnarchiver.zip
 unzip TheUnarchiver.zip
