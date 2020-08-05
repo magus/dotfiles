@@ -15,7 +15,7 @@ rm googlechrome.dmg
 open "/Applications/Google Chrome.app"
 
 # mpv
-brew install --with-bundle --with-little-cms2 --with-lua mpv && brew linkapps mpv
+brew cask install mpv
 
 # Slack
 curl -L -o slack.zip "https://slack.com/ssb/download-osx-beta"
