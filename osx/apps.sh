@@ -51,13 +51,6 @@ cp -R "/Volumes/Transmission/Transmission.app" /Applications
 hdiutil unmount "/Volumes/Transmission"
 rm Transmission.dmg
 
-# Dropbox
-curl -L -o Dropbox.dmg "https://www.dropbox.com/download?plat=mac"
-hdiutil mount -nobrowse Dropbox.dmg
-open "/Volumes/Dropbox Installer/Dropbox.app"
-hdiutil unmount "/Volumes/Dropbox Installer"
-rm Dropbox.dmg
-
 # The Unarchiver
 curl -L -o TheUnarchiver.zip https://dl.devmate.com/cx.c3.theunarchiver/TheUnarchiver.zip
 unzip TheUnarchiver.zip
