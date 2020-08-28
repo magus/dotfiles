@@ -43,3 +43,6 @@ fi
 source "$HOME/.dotfiles/zsh/_twitter_mde"
 npm config delete prefix
 npm config delete registry
+
+# web repro conventional commits
+export WEB_USE_CC=1
