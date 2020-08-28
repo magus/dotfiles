@@ -21,3 +21,12 @@ prepend_path /usr/local/heroku/bin
 
 ### Added by RVM for scripting
 append_path $HOME/.rvm/bin
+
+# google cloud sdk
+append_path $HOME/google-cloud-sdk/bin
+
+# yarn
+append_path "$HOME/.yarn/bin"
+
+# fastlane
+append_path "$HOME/.fastlane/bin"
