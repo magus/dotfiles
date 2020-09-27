@@ -86,8 +86,8 @@
   changed = yellow
   untracked = cyan
 
-#[push]
-#  default = simple
+[push]
+  followTags = true
 
 [merge]
   # Include summaries of merged commits in new merge commit messages
