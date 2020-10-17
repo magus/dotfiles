@@ -123,6 +123,7 @@ function do_symlinks() {
 xcode-select -p > /dev/null 2>&1
 if [[ $? -eq 2 && "$OSTYPE" =~ ^darwin ]]; then
   e_error "The XCode Command Line Tools must be installed first."
+  /usr/bin/sudo /usr/sbin/softwareupdate -i "Command Line Tools for Xcode-12.0"
   xcode-select --install
   exit 1
 fi
