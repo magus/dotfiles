@@ -1,3 +1,7 @@
+#! /bin/bash
+set -m
+setopt monitor
+
 # File sourced by MDE users' .bash_profile and .zlogin files
 
 __MDESHELL="sh";
@@ -69,21 +73,26 @@ GIT_COMPLETION_DIR=/opt/twitter_mde/package/source_git/current/share/git-core/co
 if [[ $__MDESHELL = "bash" ]]; then
   __source_if_exists "$GIT_COMPLETION_DIR"/git-completion.bash
 fi
-# git prompt
-# Only set if PS1 is still default (i.e., user hasn't customized it).
-get_default_ps1() (
-  TEMP="$(/usr/bin/mktemp -d -t TEMP.XXXXXXX)" || die "failed to make tmpdir"
-  function cleanup() { [[ -n "${TEMP:-}" ]] && /bin/rm -rf "${TEMP}"; }
-  # `\\` to ensure this doesn't invoke an alias the user might have defined
-  # (in bash, aliases trump functions)
-  trap \\cleanup EXIT
-  # os x changes the default PS1 in /etc/profile, so we can't use --no-profile
-  # the user might have changed their PS1 in ~/.bash_profile, so omitting --noprofile is problematic
-  # if we change HOME, then we ignore their ~/ configs and still pick up /etc/profile
-  /usr/bin/env -i HOME="$TEMP" /bin/bash --login -ic 'echo "$PS1"'
-)
 
-if [[ "$PS1" == "$(get_default_ps1)" || "$PS1" == '[\h \[\033[0;36m\]\W\[\033[0m\]]\$ ' ]]; then
-  __source_if_exists "$GIT_COMPLETION_DIR"/git-prompt.sh
-  export PS1='[\h \[\033[0;36m\]\W\[\033[0m\]$(__git_ps1 " \[\033[1;32m\](%s)\[\033[0m\]")]\$ '
-fi
+# # git prompt
+# # Only set if PS1 is still default (i.e., user hasn't customized it).
+# get_default_ps1() (
+#   TEMP="$(/usr/bin/mktemp -d -t TEMP.XXXXXXX)" || die "failed to make tmpdir"
+#   function cleanup() { [[ -n "${TEMP:-}" ]] && /bin/rm -rf "${TEMP}"; }
+#   # `\\` to ensure this doesn't invoke an alias the user might have defined
+#   # (in bash, aliases trump functions)
+#   trap \\cleanup EXIT
+#   # os x changes the default PS1 in /etc/profile, so we can't use --no-profile
+#   # the user might have changed their PS1 in ~/.bash_profile, so omitting --noprofile is problematic
+#   # if we change HOME, then we ignore their ~/ configs and still pick up /etc/profile
+#   # /usr/bin/env -i HOME="$TEMP" /bin/bash --login -ic 'echo "$PS1"'
+#   /usr/bin/env -i HOME="$TEMP" /bin/bash --login -im
+# )
+
+
+
+# if [[ "$PS1" == "$(get_default_ps1)" || "$PS1" == '[\h \[\033[0;36m\]\W\[\033[0m\]]\$ ' ]]; then
+#   echo "inside ps1 default"
+#   __source_if_exists "$GIT_COMPLETION_DIR"/git-prompt.sh
+#   export PS1='[\h \[\033[0;36m\]\W\[\033[0m\]$(__git_ps1 " \[\033[1;32m\](%s)\[\033[0m\]")]\$ '
+# fi
