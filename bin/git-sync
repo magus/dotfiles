@@ -2,5 +2,5 @@
 
 BRANCH=${@:-'master'}
 
-git fetch origin $BRANCH
+git fetch origin $BRANCH:$BRANCH
 git rebase origin/$BRANCH
