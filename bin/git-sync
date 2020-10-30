@@ -1,0 +1,6 @@
+#!/bin/bash
+
+BRANCH=${@:-'master'}
+
+git fetch origin $BRANCH
+git rebase origin/$BRANCH
