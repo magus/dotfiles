@@ -1,6 +1,10 @@
 #!/bin/bash
 
-BRANCH=${@:-'master'}
+TARGET_BRANCH=${1:-''}
+SOURCE_BRANCH=${2:-'master'}
 
-git fetch origin $BRANCH:$BRANCH
-git rebase origin/$BRANCH
+echo "TARGET_BRANCH:$TARGET_BRANCH"
+echo "SOURCE_BRANCH:$SOURCE_BRANCH"
+
+git fetch origin $SOURCE_BRANCH:$SOURCE_BRANCH
+git rebase origin/$SOURCE_BRANCH $(git branch-grep $TARGET_BRANCH)
