@@ -37,7 +37,7 @@
     if [[ ! $@ ]]; then \
       exit 1; \
     else \
-      git branch --no-color | grep -i $1 -m1; \
+      git branch --no-color | grep -i $1 -m1 | awk '{ print $NF }'; \
     fi \
   }; f"
 
