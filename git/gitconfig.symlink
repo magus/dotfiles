@@ -86,12 +86,16 @@
   changed = yellow
   untracked = cyan
 
-[push]
-  followTags = true
-
 [merge]
   # Include summaries of merged commits in new merge commit messages
   log = true
+  ff = false
+
+[pull]
+  ff = only
+
+[push]
+  followTags = true
 
 [remote "origin"]
   push = HEAD
