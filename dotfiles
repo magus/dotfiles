@@ -116,6 +116,31 @@ function do_symlinks() {
   }
 }
 
+# run .config.sh files
+function configs_header() { e_header "Running one-time configurations"; }
+function do_configs() {
+  # find all .config.sh files (recursive glob with find)
+  find $HOME/.dotfiles -iname '*.config.sh' | {
+    while read file; do
+      files+=($file)
+    done
+
+    # No files? abort.
+    if (( ${#files[@]} == 0 )); then return; fi
+
+    # Run _header function only if declared.
+    [[ $(declare -f configs_header) ]] && configs_header
+
+    # Iterate over files.
+    for file in "${files[@]}"; do
+      local name=$(basename $file)
+      e_arrow $name
+      sh $file
+      e_success $name
+    done
+  }
+}
+
 # Begin installation
 
 # Ensure that we can actually, like, compile anything.
@@ -241,8 +266,11 @@ ln -sf $HOME/.dotfiles/ssh/config $HOME/.ssh
 e_arrow "~/.dotfiles/bin/dotfiles..."
 ln -sf $HOME/.dotfiles/dotfiles $HOME/.dotfiles/bin
 
-#do the heavy lifting, copy dem weights
+# do the heavy lifting, copy dem weights
 do_symlinks
+
+# do one-time configurations, run .config.sh files
+do_configs
 
 # Alert if backups were made.
 if [[ "$backup" ]]; then
