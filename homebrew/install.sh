@@ -31,6 +31,8 @@ if [[ -e $(which brew) ]]; then
   # vim
   brew install vim
 
+  # kitty terminal
+  brew install --cask kitty
 
 else
   echo '  x You should probably install Homebrew first:'
