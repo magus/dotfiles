@@ -15,20 +15,20 @@ if [[ -e $(which brew) ]]; then
   brew install git-delta
   brew install direnv
 
-  ## nvm & node
+  # nvm & node
   brew install nvm
 
-  ## setup nvm temporarily
+  # setup nvm temporarily
   . $HOME/.dotfiles/zsh/nvm.zsh
 
-  ## install node
+  # install node
   nvm install node
   nvm alias default node
 
-  ## yarn
+  # yarn
   brew install yarn --ignore-dependencies
 
-  ## vim
+  # vim
   brew install vim
 
 
