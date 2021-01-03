@@ -238,10 +238,6 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   ln -sf $itermSettings $itermDir
 fi
 
-# copy atom config files
-e_arrow "~/.atom config..."
-ln -sf $HOME/.dotfiles/atom $HOME/.atom
-
 # copy ~/.ssh/config
 e_arrow "~/.ssh config..."
 mkdir -p $HOME/.ssh

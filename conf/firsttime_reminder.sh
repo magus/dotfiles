@@ -14,8 +14,12 @@ Git / GitHub
 
  * zsh will start as your default shell on subsequent logins
 
- Open Atom and 'Install Shell Commands', then run:
-   $ apm install --packages-file ~/.dotfiles/atom/apm-packages.list
+Open Visual Studio Code > '⌘+Shift+P' > 'shell command' to install 'code' to 'PATH'
 
- Alternatively, install 'sync-settings' package and setup Gist API token
+   $ code .
+
+Then followup with '⌘+Shift+P' > 'install extensions'
+Install 'shan.code-settings-sync' and sync settings from gist below
+
+   https://gist.github.com/magus/96a4c2ed765de2ba98826cfed27e7b14
 EOF
