@@ -11,7 +11,6 @@ function e_success()  { echo -e " \033[1;32m ✔\033[0m  $@"; };
 function e_error()    { echo -e " \033[1;31m ✖\033[0m  $@"; };
 function e_arrow()    { echo -e " \033[1;33m ➜\033[0m  $@"; };
 
-## begin installation
 e_header "dotfiles :: v$VERSION"
 
 # ask for administrator password up front
@@ -117,7 +116,7 @@ function do_symlinks() {
   }
 }
 
-## Begin installation
+# Begin installation
 
 # Ensure that we can actually, like, compile anything.
 xcode-select -p > /dev/null 2>&1
