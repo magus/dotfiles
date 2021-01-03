@@ -7,3 +7,6 @@ caches/
 
 # ignore vim netrw hist file generated when navigating dirs
 .netrwhist
+
+# ignore dotfiles/bin/dotfiles (symmlink created in dotfiles script)
+bin/dotfiles

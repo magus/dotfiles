@@ -242,6 +242,9 @@ e_arrow "~/.ssh config..."
 mkdir -p $HOME/.ssh
 ln -sf $HOME/.dotfiles/ssh/config $HOME/.ssh
 
+# link dotfiles to bin
+e_arrow "~/.dotfiles/bin/dotfiles..."
+ln -sf $HOME/.dotfiles/dotfiles $HOME/.dotfiles/bin
 
 #do the heavy lifting, copy dem weights
 do_symlinks
