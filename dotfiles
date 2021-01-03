@@ -230,11 +230,6 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
 
   e_arrow "Installing some OSX apps"
   $HOME/.dotfiles/osx/apps.sh
-
-  e_arrow "Linking iTerm2 profile to ~/.iterm2/"
-  itermDir=$HOME/.iterm2
-  itermSettings=$HOME/.dotfiles/osx/iterm2
-  ln -sf $itermSettings $itermDir
 fi
 
 # copy ~/.ssh/config

@@ -30,20 +30,6 @@ unzip vs-code.zip
 mv "Visual Studio Code.app" /Applications
 rm vs-code.zip
 
-# iTerm2
-curl -L -o iTerm2.zip "https://iterm2.com/downloads/stable/iTerm2-3_0_4.zip"
-unzip iTerm2.zip
-mv iTerm.app /Applications
-rm iTerm2.zip
-
-# hyper
-curl -L -o hyper.dmg "https://hyper-updates.now.sh/download/mac"
-hdiutil mount -nobrowse hyper.dmg
-HYPER_MOUNT=$(find /Volumes -iname Hyper* -type d -maxdepth 1)
-cp -R "$HYPER_MOUNT/Hyper.app" /Applications
-hdiutil unmount "$HYPER_MOUNT"
-rm hyper.dmg
-
 # Transmission
 curl -L -o Transmission.dmg "https://transmission.cachefly.net/Transmission-2.84.dmg"
 hdiutil mount -nobrowse Transmission.dmg
