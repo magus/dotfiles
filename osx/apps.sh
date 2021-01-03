@@ -4,15 +4,15 @@ RESTORE_DIR=$(pwd)
 # Move into /tmp
 cd /tmp
 
-# Chrome
-curl -L -O "https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg"
-hdiutil mount -nobrowse googlechrome.dmg
-cp -R "/Volumes/Google Chrome/Google Chrome.app" /Applications
-hdiutil unmount "/Volumes/Google Chrome"
-rm googlechrome.dmg
+# Brave
+curl -L -O "https://referrals.brave.com/latest/Brave-Browser.dmg"
+hdiutil mount -nobrowse Brave-Browser.dmg
+cp -R "/Volumes/Brave Browser/Brave Browser.app" /Applications
+hdiutil unmount "/Volumes/Brave Browser"
+rm Brave-Browser.dmg
 
-# Open Google Chrome to set default browser
-open "/Applications/Google Chrome.app"
+# Open Brave to set default browser
+open "/Applications/Brave Browser.app"
 
 # mpv
 brew cask install mpv
@@ -81,7 +81,7 @@ open fonts/ttf/*.ttf
 open $HOME/.dotfiles/fonts/SourceCodePro/*.otf
 
 
-# Open pages for Chrome extensions
+# Open pages for Brave extensions
 # Name in middle of url
 open "https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"
 open "https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi"
