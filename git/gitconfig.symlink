@@ -19,6 +19,7 @@
   a = add -p
   # Diff
   d = diff --staged
+  kd = difftool --no-symlinks --dir-diff
   # Undo a 'git push'
   undopush = push -f origin HEAD^:master
 
@@ -116,3 +117,14 @@
 
 [url "git@github.com:magus/"]
   insteadOf = "git://github.com/magus/"
+
+[diff]
+    tool = kitty
+    guitool = kitty.gui
+[difftool]
+    prompt = false
+    trustExitCode = true
+[difftool "kitty"]
+    cmd = kitty +kitten diff $LOCAL $REMOTE
+[difftool "kitty.gui"]
+    cmd = kitty kitty +kitten diff $LOCAL $REMOTE
