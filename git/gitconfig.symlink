@@ -17,9 +17,12 @@
   s = status -sb
   # Cherry pick specific chunks for add
   a = add -p
+
   # Diff
   d = diff --staged
-  kd = difftool --no-symlinks --dir-diff
+  kdiff = difftool --no-symlinks --dir-diff
+  kd = difftool --no-symlinks --dir-diff --staged
+
   # Undo a 'git push'
   undopush = push -f origin HEAD^:master
 
