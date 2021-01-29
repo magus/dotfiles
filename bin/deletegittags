@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# run this to delete all local git tags
+
+# usage
+# > deletegittags
+# attempts to delete all tags
+# if that fails it will recursively walk the search space of a-z plus some special characters
+# e.g.
+# a
+# b
+# c
+# ...
+# twitter-a
+# twitter-b
+# twitter-c
+# ...
+# z
+# -
+# .
+# _
+
+SEARCH_SPACE=({a..z} \. \- \_)
+# echo "SEARCH_SPACE[${SEARCH_SPACE[@]}]"
+
+function deleteGitTags {
+  local search="${1:-}"
+  echo "search[$search]"
+
+  eval "git tag -d \`git tag | grep -E '^$search'\`"
+  local exitCode=$?
+  if [ $exitCode -ne 0 ]; then
+      echo "Error[$search]: going deeper..."
+      # deleteGitTags $search
+      walkSearchSpace "$search" ${SEARCH_SPACE[@]}
+  fi
+}
+
+
+# usage
+# walkSearchSpace "com" {a..z}
+# walkSearchSpace "com" \. \- \_
+function walkSearchSpace {
+  local previousSearch="${1:-}"
+  echo "previousSearch[$previousSearch]"
+
+  # shift arguments so $@ contains the rest of the arguments (excluding previousSearch)
+  shift
+
+  local searchSpace=($@)
+  echo "walking searchSpace[${searchSpace[@]}]"
+
+
+  for char in ${searchSpace[@]} ; do
+    local search="$previousSearch$char"
+    echo "search[$search]"
+    deleteGitTags $search
+  done
+}
+
+# Testing
+#############
+# walkSearchSpace "com" \. \- \_
+# walkSearchSpace "com" {a..z} \. \- \_
+
+# Main
+#############
+walkSearchSpace "" ${SEARCH_SPACE[@]}
+
