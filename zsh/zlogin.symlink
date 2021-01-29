@@ -3,4 +3,4 @@
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 export PATH=$HOME/.nvm/versions/node/v8.12.0/bin:$PATH
-nvm use system > /dev/null 2>&1
+nvm use --delete-prefix system --silent > /dev/null 2>&1
