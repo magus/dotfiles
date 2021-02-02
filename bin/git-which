@@ -11,6 +11,7 @@ FORMAT+="%(authorname)$SEP"
 FORMAT+="%(contents:subject)"
 
 git for-each-ref \
+  --color=always \
   --sort=committerdate refs/heads/ \
   --format="$FORMAT" \
   | grep -i "$SEARCH" \
