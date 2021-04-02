@@ -7,7 +7,7 @@ echo "TARGET_BRANCH:$TARGET_BRANCH"
 echo "SOURCE_BRANCH:$SOURCE_BRANCH"
 
 echo "> [ git fetch origin $SOURCE_BRANCH:$SOURCE_BRANCH ]"
-git fetch origin $SOURCE_BRANCH:$SOURCE_BRANCH
+git fetch --no-tags origin $SOURCE_BRANCH:$SOURCE_BRANCH
 
 echo "> [ git rebase origin/$SOURCE_BRANCH $(git branch-grep $TARGET_BRANCH) ]"
 git rebase origin/$SOURCE_BRANCH $(git branch-grep $TARGET_BRANCH)
