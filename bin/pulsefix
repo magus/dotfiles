@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# run this to fix pulse secure
+
+# usage
+# > pulsefix
+
+# Main
+#############
+PULSE_DAEMON="/Library/LaunchDaemons/net.pulsesecure.AccessService.plist"
+sudo launchctl unload -w "$PULSE_DAEMON"
+sudo launchctl load -w "$PULSE_DAEMON"
+
