@@ -1,13 +1,17 @@
 #!/bin/bash
 
+set -x
+
+MASTER_BRANCH="master"
+CURRENT_BRANCH="$(git branch --show-current)"
 TARGET_BRANCH=${1:-''}
-SOURCE_BRANCH=${2:-'master'}
+SOURCE_BRANCH=${2:-$MASTER_BRANCH}
 
-echo "TARGET_BRANCH:$TARGET_BRANCH"
-echo "SOURCE_BRANCH:$SOURCE_BRANCH"
+if [[ $CURRENT_BRANCH == $MASTER_BRANCH ]]; then
+  git pull --no-tags origin $SOURCE_BRANCH
+  exit 0
+fi
 
-echo "> [ git fetch origin $SOURCE_BRANCH:$SOURCE_BRANCH ]"
 git fetch --no-tags origin $SOURCE_BRANCH:$SOURCE_BRANCH
 
-echo "> [ git rebase origin/$SOURCE_BRANCH $(git branch-grep $TARGET_BRANCH) ]"
 git rebase origin/$SOURCE_BRANCH $(git branch-grep $TARGET_BRANCH)
