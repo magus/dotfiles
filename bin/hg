@@ -1,0 +1,18 @@
+#!/bin/zsh
+# Usage: hg <search> <num>
+# Find all recent commands matching <search>
+# Output <num> results (defaults to 1)
+#
+# Example
+# > hg sync
+# 14  2074  2021-04-29 17:51  0:00  git sync
+# (indicates there are at least 14 results)
+# > hg sync 20
+# ... (prints all 20+ results)
+
+INPUT=${1:-""}      # Default to empty string
+RESULTS=${2:-"2"}   # Default to 2 (because 1 will always be this command matching itself)
+
+fc -R
+# fc -Dlim "*$INPUT*" 1 | nl | tail -r | tail -n $RESULTS | tail -r
+fc -Dlim "*$INPUT*" 1 | nl | tail -n $RESULTS
