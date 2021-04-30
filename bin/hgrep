@@ -14,5 +14,4 @@ INPUT=${1:-""}      # Default to empty string
 RESULTS=${2:-"2"}   # Default to 2 (because 1 will always be this command matching itself)
 
 fc -R
-# fc -Dlim "*$INPUT*" 1 | nl | tail -r | tail -n $RESULTS | tail -r
 fc -Dlim "*$INPUT*" 1 | nl | tail -n $RESULTS
