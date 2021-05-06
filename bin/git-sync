@@ -4,10 +4,11 @@ set -x
 
 MASTER_BRANCH="master"
 CURRENT_BRANCH="$(git branch --show-current)"
-TARGET_BRANCH=${1:-''}
+
+TARGET_BRANCH=${1:-$CURRENT_BRANCH}
 SOURCE_BRANCH=${2:-$MASTER_BRANCH}
 
-if [[ $CURRENT_BRANCH == $MASTER_BRANCH ]]; then
+if [[ $TARGET_BRANCH == $MASTER_BRANCH ]]; then
   git pull --no-tags origin $SOURCE_BRANCH
   exit 0
 fi
