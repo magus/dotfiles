@@ -8,18 +8,18 @@ CURRENT_BRANCH="$(git branch --show-current)"
 # default to master branch
 DEFAULT_MAIN_BRANCH=$MASTER_BRANCH
 # if master branch does not exist, fallback to main
-if [[ $(git branch --list "$MASTER_BRANCH") -eq "" ]]; then
+if [[ "$(git branch --list "$MASTER_BRANCH")" == "" ]]; then
   DEFAULT_MAIN_BRANCH="main"
 fi
 
 TARGET_BRANCH=${1:-$CURRENT_BRANCH}
 SOURCE_BRANCH=${2:-$DEFAULT_MAIN_BRANCH}
 
-if [[ $TARGET_BRANCH == $MASTER_BRANCH ]]; then
-  git pull --no-tags origin $SOURCE_BRANCH
+if [[ $TARGET_BRANCH == "$MASTER_BRANCH" ]]; then
+  git pull --no-tags origin "$SOURCE_BRANCH"
   exit 0
 fi
 
-git fetch --no-tags origin $SOURCE_BRANCH:$SOURCE_BRANCH
+git fetch --no-tags origin "$SOURCE_BRANCH":"$SOURCE_BRANCH"
 
-git rebase origin/$SOURCE_BRANCH $(git branch-grep $TARGET_BRANCH)
+git rebase origin/"$SOURCE_BRANCH" "$(git branch-grep "$TARGET_BRANCH")"
