@@ -1,0 +1,79 @@
+#!/bin/bash
+# restart the media expression team services, i.e. foundmedia, stickers
+# runs a dry run by default, must include `DRY=false` to execute commands
+# restart-twc [smf1|atla] [DRY=false]
+
+# DEBUG
+# set -x
+
+
+PrintHeader="      "
+ChildProcessIds=()
+ZONE=$1
+IS_DRY_RUN=true
+
+# Require `DRY=false` to actually run commands
+[[ $2 == "DRY=false" ]] && IS_DRY_RUN=false
+
+function println() {
+  echo
+  echo "$1"
+}
+
+function printcmd() {
+    local command=$1
+    println "$PrintHeader> $command"
+    if [ $IS_DRY_RUN == false ]; then
+      eval $command &
+      ChildProcessIds+=("$!")
+    fi
+}
+
+function handletrap() {
+    println "🤖 ⏳ Closing script killing child processes ..."
+    for pid in "${ChildProcessIds[@]}"
+    do
+      println "$PrintHeader...killing pid [$pid]"
+      kill -TERM $pid
+    done
+    println "🤖 ✅ Done killing child processes"
+    println "🤖 ❌ restart-twc did not complete succcessfully"
+    exit 1
+}
+
+# Capture exits and CTRL+C
+trap 'handletrap' INT TERM SIGINT SIGTERM SIGHUP
+
+
+# ZONE is required
+if [[ -z $ZONE ]]; then
+  println "🤖 ❌ ZONE is required, e.g. restart-twc [smf1|atla]"
+  exit 1
+fi
+if [[ $ZONE != "smf1" ]] && [[ $ZONE != "atla" ]]; then
+  println "🤖 ❌ ZONE must be one of [smf1|atla]"
+  exit 1
+fi
+
+println "🤖 ⏳ Restarting foundmedia [$ZONE] ..."
+
+printcmd "aurora job restart $ZONE/foundmedia/prod/foundmedia-core --batch-size=6"
+printcmd "aurora job restart $ZONE/foundmedia/prod/foundmedia-api --batch-size=6"
+printcmd "aurora job restart $ZONE/foundmedia/prod/foundmedia-takedown --batch-size=1"
+# printcmd "sleep 5 && echo foundmedia"
+
+println "🤖 ⏳ Restarting stickers [$ZONE] ..."
+
+printcmd "aurora job restart $ZONE/stickers/prod/stickerprovider-core --batch-size=7"
+printcmd "aurora job restart $ZONE/stickers/prod/stickerprovider-api --batch-size=7"
+# printcmd "sleep 5 && echo stickers"
+
+# wait for all child processes to complete
+wait
+
+println "🤖 ✅ restart-twc [$ZONE] completed successfully"
+
+
+if $IS_DRY_RUN; then
+  println "🤖 👉 Add DRY=false to the end of the command to run the commands"
+fi
