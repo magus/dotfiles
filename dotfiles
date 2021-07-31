@@ -68,6 +68,8 @@ function link_stuff() {
 }
 
 # link .symlink files
+# NOTE: To manually link run command below from inside .dotfiles directory
+# ln -sf .dotfiles/tarsnap/tarsnaprc.symlink ~/.tarsnaprc
 function do_symlinks() {
   # find all .symlink files (recursive glob with find)
   # encase all statements in block for scope

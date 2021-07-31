@@ -36,7 +36,7 @@ for config_file ($ZSH/**/completion.sh) source $config_file
 # source every .zsh file in this rep
 for config_file ($ZSH/**/*.zsh) source $config_file
 
-# use .private for SUPER SECRET CRAP that you don't
+# use .private for defining SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
 if [[ -a ~/.private ]]
 then

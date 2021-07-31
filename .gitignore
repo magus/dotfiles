@@ -1,6 +1,10 @@
+# ignore dotfiles backups and caches
 backups/
 caches/
+
+# ignore secret files and directories
 .private
+.secrets
 .ssh/authorized_keys
 .ssh/id_*
 .ssh/known_hosts
