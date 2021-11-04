@@ -1,7 +1,7 @@
 #!/bin/bash
 # restart the media expression team services, i.e. foundmedia, stickers
 # runs a dry run by default, must include `DRY=false` to execute commands
-# restart-twc [smf1|atla] [DRY=false]
+# restart-twc [smf1|atla|pdxa] [DRY=false]
 
 # DEBUG
 # set -x
@@ -47,11 +47,11 @@ trap 'handletrap' INT TERM SIGINT SIGTERM SIGHUP
 
 # ZONE is required
 if [[ -z $ZONE ]]; then
-  println "🤖 ❌ ZONE is required, e.g. restart-twc [smf1|atla]"
+  println "🤖 ❌ ZONE is required, e.g. restart-twc [smf1|atla|pdxa]"
   exit 1
 fi
-if [[ $ZONE != "smf1" ]] && [[ $ZONE != "atla" ]]; then
-  println "🤖 ❌ ZONE must be one of [smf1|atla]"
+if [[ $ZONE != "smf1" ]] && [[ $ZONE != "atla" ]] && [[ $ZONE != "pdxa" ]]; then
+  println "🤖 ❌ ZONE must be one of [smf1|atla|pdxa]"
   exit 1
 fi
 
@@ -77,3 +77,4 @@ println "🤖 ✅ restart-twc [$ZONE] completed successfully"
 if $IS_DRY_RUN; then
   println "🤖 👉 Add DRY=false to the end of the command to run the commands"
 fi
+
