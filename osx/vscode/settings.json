@@ -1,0 +1,55 @@
+{
+  "explorer.autoReveal": false,
+  "settingsSync.ignoredExtensions": [
+    "platformio.platformio-ide",
+    "kellywallach2021.twitter-sourcegraph-vscode"
+  ],
+  "workbench.colorTheme": "Palenight Operator",
+  "window.newWindowDimensions": "maximized",
+
+  // Configurable window title
+  // https://code.visualstudio.com/updates/v1_10#_configurable-window-title
+  "window.title": "[ ${rootName} ]  ${activeEditorMedium}  ${dirty}",
+
+  "files.trimTrailingWhitespace": true,
+  "editor.renderWhitespace": "all",
+  "editor.tabSize": 2,
+  "files.insertFinalNewline": true,
+  "gitlens.advanced.messages": {
+    "suppressCommitHasNoPreviousCommitWarning": false,
+    "suppressCommitNotFoundWarning": false,
+    "suppressFileNotUnderSourceControlWarning": false,
+    "suppressGitVersionWarning": false,
+    "suppressLineUncommittedWarning": false,
+    "suppressNoRepositoryWarning": false,
+  },
+
+  "git.autorefresh": false,
+  "git.autoRepositoryDetection": false,
+  "git.enableStatusBarSync": false,
+  "javascript.format.enable": false,
+  "javascript.validate.enable": false,
+  // Enable per-language
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "Ligconsolata-Regular, Menlo, Monaco, 'Courier New', monospace",
+  // For all languages (it is enabled the default)
+  "editor.showUnused": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "importCost.timeout": 120000,
+  "importCost.debug": true,
+  "window.zoomLevel": 3,
+  "terminal.integrated.env.osx": {
+    "FIG_NEW_SESSION": "1"
+  },
+  "editor.accessibilitySupport": "off",
+}
