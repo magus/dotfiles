@@ -14,5 +14,5 @@ NAMESPACE=$1
 GUID=$(uuidgen | tr A-Z a-z | cut -d'-' -f5)
 LINK="http://go/docs-link/$NAMESPACE-$GUID"
 
-echo $LINK | pbcopy
+echo -n $LINK | pbcopy
 echo "✅ 📋 Generated link copied to clipboard [$LINK]"
