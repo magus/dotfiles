@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# generate a go/docs-link with given namespace
+#
+# usage
+# > docs-link crf-docs
+# http://go/docs-link/crf-docs-e335dfb11fc9
+
+# DEBUG
+# set -x
+
+NAMESPACE=$1
+
+GUID=$(uuidgen | tr A-Z a-z | cut -d'-' -f5)
+LINK="http://go/docs-link/$NAMESPACE-$GUID"
+
+echo $LINK | pbcopy
+echo "✅ 📋 Generated link copied to clipboard [$LINK]"
