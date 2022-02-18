@@ -47,9 +47,14 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "importCost.timeout": 120000,
   "importCost.debug": true,
-  "window.zoomLevel": 3,
+  "window.zoomLevel": 2,
   "terminal.integrated.env.osx": {
     "FIG_NEW_SESSION": "1"
   },
   "editor.accessibilitySupport": "off",
+  "cSpell.userWords": [
+    "buildable",
+    "magusn",
+    "nextjs"
+  ],
 }
