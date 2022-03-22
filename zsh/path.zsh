@@ -32,4 +32,4 @@ append_path "$HOME/.yarn/bin"
 append_path "$HOME/.fastlane/bin"
 
 # homebrew
-$HOME/homebrew/path.sh
+$HOME/.dotfiles/homebrew/path.sh

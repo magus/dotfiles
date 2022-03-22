@@ -159,7 +159,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   # It's easiest to install things via Homebrew, so get that first.
   if [[ ! -e "$(which brew)" ]]; then
     e_header "Installing Homebrew"
-    source <(curl https://raw.githubusercontent.com/magus/dotfiles/master/homebrew/install.sh)
+    eval "$(curl https://raw.githubusercontent.com/magus/dotfiles/master/homebrew/install.sh)"
   fi
 fi
 
@@ -227,7 +227,7 @@ else
     # ~/.dotfiles is not a valid git repository
     e_error '🚨 ~/.dotfiles exists and is not a valid git repository.'
     e_error 'Please backup or remove the directory before proceeding to run this command again.'
-    exit 1
+    exit 21
   fi
 fi
 
