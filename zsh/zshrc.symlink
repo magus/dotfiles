@@ -33,6 +33,9 @@ bashcompinit
 # load every completion after autocomplete loads
 for config_file ($ZSH/**/completion.sh) source $config_file
 
+# source zsh/path.zsh first to ensure paths are correct
+source $ZSH/zsh/path.zsh
+
 # source every .zsh file in this rep
 for config_file ($ZSH/**/*.zsh) source $config_file
 
