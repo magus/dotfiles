@@ -218,11 +218,17 @@ if [[ ! -d ~/.dotfiles ]]; then
   git clone --recursive git://github.com/magus/dotfiles.git ~/.dotfiles
   cd ~/.dotfiles
 else
-  # Make sure we have the latest files.
-  e_header "Updating dotfiles"
-  cd ~/.dotfiles
-  git pull
-  git submodule update --init --recursive --quiet
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]]; then
+    # Make sure we have the latest files.
+    e_header "Updating dotfiles"
+    git pull
+    git submodule update --init --recursive --quiet
+  else
+    # ~/.dotfiles is not a valid git repository
+    e_error '🚨 ~/.dotfiles exists and is not a valid git repository.'
+    e_error 'Please backup or remove the directory before proceeding to run this command again.'
+    exit 1
+  fi
 fi
 
 
