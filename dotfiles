@@ -159,8 +159,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   # It's easiest to install things via Homebrew, so get that first.
   if [[ ! -e "$(which brew)" ]]; then
     e_header "Installing Homebrew"
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    /usr/local/bin/brew doctor
+    $HOME/.dotfiles/homebrew/install.sh
   fi
 fi
 
@@ -243,7 +242,7 @@ backup=
 if [[ -e "$(which brew)" ]]; then
   e_header "Installing some initial homebrew items ..."
   # Install homebrew packages
-  $HOME/.dotfiles/homebrew/install.sh 2>&1
+  $HOME/.dotfiles/homebrew/setup.sh 2>&1
 fi
 
 # setup osx
