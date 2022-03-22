@@ -35,7 +35,10 @@ if [[ -e $(which brew) ]]; then
   brew install --cask kitty
 
 else
+  echo ' '
   echo '  🚨 You should probably install Homebrew first:'
-  echo '    $ curl https://raw.githubusercontent.com/magus/dotfiles/master/homebrew/install.sh | bash'
+  echo ' '
+  echo '     source <(curl https://raw.githubusercontent.com/magus/dotfiles/master/homebrew/install.sh)'
+  echo ' '
   exit 1
 fi

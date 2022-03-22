@@ -159,7 +159,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   # It's easiest to install things via Homebrew, so get that first.
   if [[ ! -e "$(which brew)" ]]; then
     e_header "Installing Homebrew"
-    $HOME/.dotfiles/homebrew/install.sh
+    source <(curl https://raw.githubusercontent.com/magus/dotfiles/master/homebrew/install.sh)
   fi
 fi
 

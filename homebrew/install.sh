@@ -5,5 +5,5 @@ if [[ -e $(which brew) ]]; then
   echo '✅ Homebrew already installed.'
 else
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  /usr/local/bin/brew doctor
+  source <(curl https://raw.githubusercontent.com/magus/dotfiles/master/homebrew/path.sh)
 fi
