@@ -66,6 +66,10 @@ open fonts/ttf/*.ttf
 # SourceCodePro font
 open $HOME/.dotfiles/fonts/SourceCodePro/*.otf
 
+# Meslo font
+# used by zsh/p10k.zsh.symlink (powerline)
+open $HOME/.dotfiles/fonts/MesloLGS-NerdFont/*.ttf
+
 
 # Open pages for Brave extensions
 # Name in middle of url
