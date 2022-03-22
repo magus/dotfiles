@@ -159,7 +159,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   # It's easiest to install things via Homebrew, so get that first.
   if [[ ! -e "$(which brew)" ]]; then
     e_header "Installing Homebrew"
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     /usr/local/bin/brew doctor
   fi
 fi
