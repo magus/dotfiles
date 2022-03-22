@@ -215,7 +215,7 @@ if [[ ! -d ~/.dotfiles ]]; then
   new_dotfiles_install=1
   # ~/.dotfiles doesn't exist? Clone it!
   e_header "Downloading dotfiles"
-  git clone --recursive git://github.com/magus/dotfiles.git ~/.dotfiles
+  git clone --recursive git@github.com:magus/dotfiles.git ~/.dotfiles
   cd ~/.dotfiles
 else
   if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]]; then
