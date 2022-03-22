@@ -220,7 +220,10 @@ if [[ ! -d ~/.dotfiles ]]; then
     e_error '🚨 Unable to clone dotfiles repo.'
     exit 31
   fi
+  cd ~/.dotfiles
 else
+  cd ~/.dotfiles
+
   if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]]; then
     # Make sure we have the latest files.
     e_header "Updating dotfiles"
