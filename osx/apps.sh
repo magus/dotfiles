@@ -15,7 +15,7 @@ rm Brave-Browser.dmg
 open "/Applications/Brave Browser.app"
 
 # mpv
-brew cask install mpv
+brew install --cask mpv
 
 # Slack
 curl -L -o slack.zip "https://slack.com/ssb/download-osx-beta"
