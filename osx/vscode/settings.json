@@ -40,6 +40,11 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust", // Makes the magic
+    "editor.formatOnSave": true,
+
+  },
   "editor.fontLigatures": true,
   "editor.fontFamily": "Ligconsolata-Regular, Menlo, Monaco, 'Courier New', monospace",
   // For all languages (it is enabled the default)
@@ -57,4 +62,9 @@
     "magusn",
     "nextjs"
   ],
+  "explorer.confirmDragAndDrop": false,
+  "flow.stopFlowOnExit": false,
+  "flow.useBundledFlow": false,
+  "typescript.format.enable": false,
+  "typescript.format.insertSpaceAfterCommaDelimiter": false,
 }
