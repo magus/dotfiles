@@ -130,6 +130,13 @@ defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
 ###############################################################################
+# Brave                                                                       #
+###############################################################################
+
+defaults write com.brave.Browser AuthServerWhitelist "*.TWITTER.BIZ,*.TWITTER.COM,localhost"
+defaults write com.brave.Browser DisableAuthNegotiateCnameLookup -boolean true
+
+###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
 
