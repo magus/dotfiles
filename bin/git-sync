@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+# set -x
 
 MASTER_BRANCH="master"
 CURRENT_BRANCH="$(git branch --show-current)"
@@ -19,6 +19,11 @@ if [[ "$CURRENT_BRANCH" == "$MASTER_BRANCH" ]]; then
   git pull --no-tags origin "$SOURCE_BRANCH"
 else
   git fetch --no-tags origin "$SOURCE_BRANCH":"$SOURCE_BRANCH"
+fi
+
+if [[ "$?" != "0" ]]; then
+  echo "🚨 Failure to update source branch [$SOURCE_BRANCH]"
+  exit 1
 fi
 
 git rebase "$SOURCE_BRANCH" "$(git branch-grep "$TARGET_BRANCH")"
