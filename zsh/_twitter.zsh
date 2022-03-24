@@ -48,5 +48,5 @@ npm config delete registry
 export WEB_USE_CC=1
 
 # force default editor back to vim
-export EDITOR=/usr/local/bin/vim
-export VISUAL=/usr/local/bin/vim
+export EDITOR=$HOMEBREW_PREFIX/bin/vim
+export VISUAL=$HOMEBREW_PREFIX/bin/vim
