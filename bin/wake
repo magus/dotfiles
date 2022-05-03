@@ -1,0 +1,4 @@
+#!/bin/sh
+# use caffeinate to keep display awake
+
+caffeinate -d
