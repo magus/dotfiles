@@ -15,7 +15,7 @@ fi
 TARGET_BRANCH=${1:-$CURRENT_BRANCH}
 SOURCE_BRANCH=${2:-$DEFAULT_MAIN_BRANCH}
 
-if [[ "$CURRENT_BRANCH" == "$MASTER_BRANCH" ]]; then
+if [[ "$CURRENT_BRANCH" == "$SOURCE_BRANCH" ]]; then
   git pull --no-tags origin "$SOURCE_BRANCH"
 else
   git fetch --no-tags origin "$SOURCE_BRANCH":"$SOURCE_BRANCH"
