@@ -1,0 +1,23 @@
+#!/bin/sh
+# do math on the cli
+# usage: math <input>
+# examples
+#   math 1 + 1
+#   math 1920 / 16
+#   math
+
+which bc > /dev/null
+if [[ $? -eq "1" ]]; then
+  echo "bc required"
+  exit 1
+fi
+
+
+INPUT=$@
+
+# if there is no INPUT enter interactive mode
+if [ -z $INPUT ]; then
+  bc -qli
+else
+  echo "$INPUT" | bc -ql
+fi
