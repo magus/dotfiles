@@ -16,7 +16,7 @@ fi
 INPUT=$@
 
 # if there is no INPUT enter interactive mode
-if [ -z $INPUT ]; then
+if [[ -z "$INPUT" ]]; then
   bc -qli
 else
   echo "$INPUT" | bc -ql
