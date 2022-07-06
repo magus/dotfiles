@@ -4,8 +4,13 @@
     "platformio.platformio-ide",
     "kellywallach2021.twitter-sourcegraph-vscode"
   ],
+
   "workbench.colorTheme": "Palenight Operator",
   "window.newWindowDimensions": "maximized",
+
+  // disable abc output in autocomplete
+  "editor.suggest.showWords": false,
+
 
   // Configurable window title
   // https://code.visualstudio.com/updates/v1_10#_configurable-window-title
@@ -41,7 +46,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[rust]": {
-    "editor.defaultFormatter": "matklad.rust-analyzer", // Makes the magic
+    "editor.defaultFormatter": "rust-lang.rust-analyzer", // Makes the magic
     "editor.formatOnSave": true,
 
   },
