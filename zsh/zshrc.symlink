@@ -57,3 +57,8 @@ eval "$(direnv hook zsh)"
 # Bun
 export BUN_INSTALL="/Users/noah/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# fnm
+# https://github.com/Schniz/fnm#zsh
+export PATH=/Users/noah/.fnm:$PATH
+eval "$(fnm env --use-on-cd)"

@@ -17,6 +17,7 @@ if [[ -e $(which brew) ]]; then
 
   # nvm & node
   brew install nvm
+  brew install fnm
 
   # setup nvm temporarily
   . $HOME/.dotfiles/zsh/nvm.zsh
