@@ -11,8 +11,6 @@
   # cherey pick faster
   cp = cherry-pick
   cpn = cherry-pick -n
-  # View the SHA, description and history graph of last 20 commits
-  l = log --pretty=oneline -n 20 --graph --color
   # View current working tree status
   s = status -sb
   # Cherry pick specific chunks for add
