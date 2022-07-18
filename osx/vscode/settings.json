@@ -45,6 +45,10 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[typescriptreact]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer", // Makes the magic
     "editor.formatOnSave": true,
