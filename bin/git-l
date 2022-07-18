@@ -3,4 +3,4 @@
 # set -x
 
 # View the SHA, description and history graph of last 20 commits
-git log --pretty=format:"%C(white)%>(15,trunc)%cr %C(green)%h %C(white)%<(12,trunc)%al %C(reset)%<(80,trunc)%s" -n20 --graph --color $@
+git log --pretty=format:"%C(green)%h %C(white)%<(15,trunc)%cr %C(white)%<(12,trunc)%al %C(reset)%<(80,trunc)%s" -n20 --graph --color $@
