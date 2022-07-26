@@ -39,7 +39,7 @@
     if [[ ! $@ ]]; then \
       exit 1; \
     else \
-      git branch --no-color | grep -i $1 -m1 | awk '{ print $NF }'; \
+      git branch --no-color --list --sort=committerdate \"*$1*\" | head -n1 | awk '{ print $NF }'; \
     fi \
   }; f"
 
