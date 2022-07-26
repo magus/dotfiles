@@ -26,4 +26,4 @@ if [[ "$?" != "0" ]]; then
   exit 1
 fi
 
-git rebase "$SOURCE_BRANCH" "$(git branch-grep "$TARGET_BRANCH")"
+git rebase --apply "$SOURCE_BRANCH" "$(git branch-grep "$TARGET_BRANCH")"
