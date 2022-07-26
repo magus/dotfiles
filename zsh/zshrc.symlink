@@ -85,3 +85,12 @@ _run_yargs_completions()
 compdef _run_yargs_completions run
 ###-end-run-completions-###
 ###-end-web-script-content-###
+
+# brew install pyenv for python on osx 12+
+# had to install python for installing periscope_web
+#  > pyenv install 2.7.18
+#  > pyenv global 2.7.18
+#  > fnm use 8.12.0
+#  > rehash
+#  > yarn
+export PATH="${HOME}/.pyenv/shims:${PATH}"
