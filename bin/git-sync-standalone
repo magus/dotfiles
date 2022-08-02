@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# set -x
+
+MASTER_BRANCH="master"
+CURRENT_BRANCH="$(git branch --show-current)"
+
+# default to master branch
+DEFAULT_MAIN_BRANCH=$MASTER_BRANCH
+# if master branch does not exist, fallback to main
+if [[ "$(git branch --list "$MASTER_BRANCH")" == "" ]]; then
+  DEFAULT_MAIN_BRANCH="main"
+fi
+
+function branch_list_no_color() {
+  git branch --no-color --list --sort=-committerdate "$@"
+}
+
+TARGET_BRANCH=${1:-$CURRENT_BRANCH}
+SOURCE_BRANCH=${2:-$DEFAULT_MAIN_BRANCH}
+
+if [[ "$CURRENT_BRANCH" == "$SOURCE_BRANCH" ]]; then
+  git pull --no-tags origin "$SOURCE_BRANCH"
+else
+  git fetch --no-tags origin "$SOURCE_BRANCH":"$SOURCE_BRANCH"
+fi
+
+if [[ "$?" != "0" ]]; then
+  echo "🚨 Failure to update source branch [$SOURCE_BRANCH]"
+  exit 1
+fi
+
+BRANCH_GREP=$((branch_list_no_color "$TARGET_BRANCH"; branch_list_no_color "*$TARGET_BRANCH*") | head -n1 | awk '{ print $NF }';)
+
+git rebase --apply "$SOURCE_BRANCH" "$BRANCH_GREP"
