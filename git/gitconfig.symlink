@@ -103,6 +103,7 @@
 
 [push]
   followTags = true
+	autoSetupRemote = true
 
 [remote "origin"]
   push = HEAD
