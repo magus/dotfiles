@@ -5,4 +5,4 @@
 FORMAT="%C(green)%h %C(white)%<(15,trunc)%cr %C(white)%<(12,trunc)%al %C(auto)%d %<(80,trunc)%s"
 
 # View the SHA, description and history graph of last 20 commits
-git log --pretty=format:"$FORMAT" -n20 --graph --color $@ | nl
+git log --pretty=format:"$FORMAT" -n20 --graph --color $@ | nl -w3 -s' '
