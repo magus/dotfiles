@@ -76,4 +76,7 @@
   "flow.useBundledFlow": false,
   "typescript.format.enable": false,
   "typescript.format.insertSpaceAfterCommaDelimiter": false,
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
