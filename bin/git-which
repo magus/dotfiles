@@ -5,7 +5,7 @@ SEARCH=${@:-''}
 SEP="→"
 
 FORMAT=""
-FORMAT+="(%(color:green)%(committerdate:relative)%(color:reset))$SEP"
+FORMAT+="%(color:white)%(committerdate:relative)%(color:reset)$SEP"
 FORMAT+="%(HEAD) %(color:yellow)%(refname:short)%(color:reset)$SEP"
 FORMAT+="%(authorname)$SEP"
 FORMAT+="%(contents:subject)"
