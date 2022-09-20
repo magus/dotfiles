@@ -35,19 +35,6 @@
 
   pr = !sh -c 'git branch $@ origin/$@ && git checkout $@' -
 
-  # branch list no color, sorted by commit date descending (`-committerdate`)
-  blnc = !sh -c 'git branch --no-color --list --sort=-committerdate "$@"' -
-
-
-
-  branch-grep = "!f() { \
-    if [[ ! $@ ]]; then \
-      exit 1; \
-    else \
-      (git blnc "$1"; git blnc "*$1*") | head -n1 | awk '{ print $NF }'; \
-    fi \
-  }; f"
-
   # Checkout branch > Checkout PR > Create PR
   go = "!f() { \
     local branch=$(git branch-grep $@); \

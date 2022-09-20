@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# set -x
+
+# branch list no color, sorted by commit date descending (`-committerdate`)
+blnc() {
+  git branch --no-color --list --sort=-committerdate "$@"
+}
+
+if [[ -z "$*" ]]; then
+  exit 1
+fi
+
+# prefer exact match (first) over loose wildcard match (second)
+# filter results to the first returned branch
+(blnc "$*"; blnc "*$**") | head -n1 | awk '{ print $NF }';
