@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# set -x
+
+read -n1 -s -r -p $'\n\n🤔 Proceed? [Y/n] ' KEY
+
+if ! echo "$KEY" | grep -E "[yY]" > /dev/null; then
+  echo -e "❌ Cancelled."
+  kill -s INT $$
+else
+  echo -e "✅ Confirmed."
+fi
