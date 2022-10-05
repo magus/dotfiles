@@ -69,19 +69,18 @@ eval "$(fnm env --use-on-cd)"
 #
 # yargs command completion script
 #
-# Installation: /Users/njorgensen/workspace/web/scripts/run null >> ~/.zshrc
-#    or /Users/njorgensen/workspace/web/scripts/run null >> ~/.zsh_profile on OSX.
+# Installation: scripts/run null >> ~/.zshrc
+#    or scripts/run null >> ~/.zsh_profile on OSX.
 #
 _run_yargs_completions()
 {
   local reply
   local si=$IFS
   IFS=$'
-' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" /Users/njorgensen/workspace/web/scripts/run --get-yargs-completions "${words[@]}"))
+' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" scripts/run --get-yargs-completions "${words[@]}"))
   IFS=$si
   _describe 'values' reply
 }
-
 compdef _run_yargs_completions run
 ###-end-run-completions-###
 ###-end-web-script-content-###
