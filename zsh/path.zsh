@@ -37,6 +37,9 @@ eval "$(cat $HOME/.dotfiles/homebrew/path.sh)"
 ## periscope platform-binaries
 append_path $HOME/periscope/platform-binaries/bin
 
+# gem bin path
+append_path $HOME/.gem/ruby/2.6.0/bin
+
 # go
 export GOPATH=$HOME/periscope/gocode;
 append_path $GOPATH/bin
