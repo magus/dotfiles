@@ -1,5 +1,4 @@
 {
-  "explorer.autoReveal": false,
   "settingsSync.ignoredExtensions": [
     "platformio.platformio-ide",
     "kellywallach2021.twitter-sourcegraph-vscode"
