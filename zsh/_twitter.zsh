@@ -41,8 +41,8 @@ fi
 # Automatically placed at end of file by MDE. To disable this behavior: touch ~/.no-mde-dotfile. Ideally you do not need to do this. Please contactmde-support@twitter.com to discuss long-term alternatives.
 # source /opt/twitter_mde/etc/bash_profile
 source "$HOME/.dotfiles/zsh/_twitter_mde.sh"
-npm config delete prefix
-npm config delete registry
+# npm config delete prefix
+# npm config delete registry
 
 # web repro conventional commits
 export WEB_USE_CC=1
