@@ -77,5 +77,6 @@
   "typescript.format.insertSpaceAfterCommaDelimiter": false,
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "workbench.sideBar.location": "right",
 }
