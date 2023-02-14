@@ -86,4 +86,6 @@
   "[markdown]":  {
     "editor.wordWrap": "off", // Default Settings JSON has this set to on, need to override
   },
+
+  "prettier.prettierPath": "/Users/njorgensen/workspace/web/node_modules/.bin/prettier.js",
 }
