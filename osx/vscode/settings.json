@@ -88,4 +88,11 @@
   },
 
   "prettier.prettierPath": "/Users/njorgensen/workspace/web/node_modules/.bin/prettier.js",
+
+  // ensure sourcegraph extension uses read-only twitter git repositories
+  "sourcegraph.defaultBranch": "master",
+  "sourcegraph.url": "https://sourcegraph.twitter.biz/",
+  "sourcegraph.remoteUrlReplacements": {
+    "git.twitter.biz": "git.twitter.biz/ro"
+  }
 }
