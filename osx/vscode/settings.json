@@ -79,4 +79,5 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "workbench.sideBar.location": "right",
+  "editor.wordWrap": "off",
 }
