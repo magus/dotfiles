@@ -51,10 +51,8 @@
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer", // Makes the magic
     "editor.formatOnSave": true,
+
   },
-  "[markdown]":  {
-		"editor.wordWrap": "off", // Default Settings JSON has this set to on, need to override
-	},
   "editor.fontLigatures": true,
   "editor.fontFamily": "Ligconsolata-Regular, Menlo, Monaco, 'Courier New', monospace",
   // For all languages (it is enabled the default)
@@ -80,6 +78,12 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+
   "workbench.sideBar.location": "right",
-  "editor.wordWrap": "off",
+
+  "eslint.lintTask.enable": true,
+
+  "[markdown]":  {
+    "editor.wordWrap": "off", // Default Settings JSON has this set to on, need to override
+  }
 }
