@@ -42,7 +42,7 @@
   },
   "[typescript]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[typescriptreact]": {
     "editor.formatOnSave": true,
@@ -85,5 +85,5 @@
 
   "[markdown]":  {
     "editor.wordWrap": "off", // Default Settings JSON has this set to on, need to override
-  }
+  },
 }
