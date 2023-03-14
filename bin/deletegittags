@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set -x
+
 # run this to delete all local git tags
 
 # usage
@@ -20,19 +22,21 @@
 # .
 # _
 
-SEARCH_SPACE=({a..z} \. \- \_)
-# echo "SEARCH_SPACE[${SEARCH_SPACE[@]}]"
+SEARCH_SPACE=({a..z} {0..9} \\. \\- \\_)
+SEARCH=${1:-""}
 
 function deleteGitTags {
   local search="${1:-}"
   echo "search[$search]"
 
-  eval "git tag -d \`git tag | grep -E '^$search'\`"
+  git tag -d $(git tag | grep -E "^$search")
+
   local exitCode=$?
+
   if [ $exitCode -ne 0 ]; then
       echo "Error[$search]: going deeper..."
       # deleteGitTags $search
-      walkSearchSpace "$search" ${SEARCH_SPACE[@]}
+      walkSearchSpace "$search"
   fi
 }
 
@@ -44,17 +48,14 @@ function walkSearchSpace {
   local previousSearch="${1:-}"
   echo "previousSearch[$previousSearch]"
 
-  # shift arguments so $@ contains the rest of the arguments (excluding previousSearch)
-  shift
-
-  local searchSpace=($@)
+  # always search over entire search space
+  local searchSpace=${SEARCH_SPACE[@]}
   echo "walking searchSpace[${searchSpace[@]}]"
 
 
   for char in ${searchSpace[@]} ; do
     local search="$previousSearch$char"
-    echo "search[$search]"
-    deleteGitTags $search
+    deleteGitTags $search &
   done
 }
 
@@ -65,5 +66,17 @@ function walkSearchSpace {
 
 # Main
 #############
-walkSearchSpace "" ${SEARCH_SPACE[@]}
+
+# attempt to delete all tags at once first (no search)
+# deleteGitTags $SEARCH
+walkSearchSpace $SEARCH
+
+# generate bunch of git tags
+# for i in {1..500}
+# do
+#   #  echo "i=$i"
+#    git tag "$i-really/long-tag-name/to-get-this/to/fail-$i" HEAD
+# done
+
+
 
