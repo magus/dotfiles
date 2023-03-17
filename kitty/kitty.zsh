@@ -13,4 +13,4 @@ alias diff="kitty +kitten diff"
 
 # ssh override for kitty
 # https://sw.kovidgoyal.net/kitty/faq.html#i-get-errors-about-the-terminal-being-unknown-or-opening-the-terminal-failing-when-sshing-into-a-different-computer
-alias ssh="kitty +kitten ssh"
+alias kssh="kitty +kitten ssh"
