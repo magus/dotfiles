@@ -1,22 +1,36 @@
-#!/bin/sh
+#!/bin/bash
 # install ffmpeg on osx/ubuntu
 
-if [[ -e "$(which ffmpeg)" ]]; then
+
+# regex matching is undefined in POSIX
+# https://www.shellcheck.net/wiki/SC3015
+# e.g. if [ "$OSTYPE" =~ ^darwin ]; then
+regex_test() {
+  search="$1"
+  regex="$2"
+
+  expr "$search" : "$regex" > /dev/null
+
+  return $?
+}
+
+
+if [ -e "$(which ffmpeg)" ]; then
   echo "✅ ffmpeg detected"
   exit 0
 fi
 
 
 
-if [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+if [ "$(regex_test "$(cat /etc/issue 2> /dev/null)" "Ubuntu")" ]; then
   # ubuntu
   sudo apt install ffmpeg
 
-  if [[ ! -e "$(which ffmpeg)" ]]; then
+  if [ ! -e "$(which ffmpeg)" ]; then
     echo "❌ ffmpeg could not be installed"
     exit 1
   fi
-elif [[ "$OSTYPE" =~ ^darwin ]]; then
+elif [ "$(regex_test "$OSTYPE" "^darwin")" ]; then
   # osx
   # Use FFMPEG_INSTALL_PATH=/custom/path to override this install path
   FFMPEG_INSTALL_PATH=${FFMPEG_INSTALL_PATH:-"/usr/local/bin"}
@@ -31,10 +45,10 @@ elif [[ "$OSTYPE" =~ ^darwin ]]; then
 
   echo
   echo "🧰 moving ffmpeg to $FFMPEG_INSTALL_PATH"
-  mv ffmpeg $FFMPEG_INSTALL_PATH
+  mv ffmpeg "$FFMPEG_INSTALL_PATH"
   echo
 
-  if [[ ! -e "$(which ffmpeg)" ]]; then
+  if [ ! -e "$(which ffmpeg)" ]; then
     echo "❌ ffmpeg could not be installed"
     echo
     echo "Check output above and confirm $FFMPEG_INSTALL_PATH in your path"

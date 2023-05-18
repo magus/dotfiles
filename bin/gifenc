@@ -10,7 +10,7 @@
 #  $ gifenc video.mp4 640 30
 #  outputs at 640 scale and 30 fps
 
-if [[ -e "$(which ffmpeg)" ]]; then
+if [ -e "$(which ffmpeg)" ]; then
   echo "❌ ffmpeg required"
   echo
   echo "use command below to quickly install ffmpeg osx"
@@ -26,8 +26,8 @@ fi
 
 
 # INPUT is required
-INPUT=$1
-if [ ! -f $INPUT ]; then
+INPUT="$1"
+if [ ! -f "$INPUT" ]; then
    echo "$INPUT does not exist"
    exit 1
 fi
@@ -38,19 +38,18 @@ FPS=${3:-"15"}                  # Default to 15 fps
 
 
 # get maximum fps of input
-SOURCE_FPS=$(ffmpeg -i $INPUT 2>&1 | sed -n "s/.*, \(.*\) fp.*/\1/p" | awk '{print int($1+0.5)}')
-if [ $FPS -gt $SOURCE_FPS ]; then
-  echo "$(basename $INPUT) has FPS=$SOURCE_FPS; lower FPS argument [$FPS]"
+SOURCE_FPS=$(ffmpeg -i "$INPUT" 2>&1 | sed -n "s/.*, \(.*\) fp.*/\1/p" | awk '{print int($1+0.5)}')
+if [ "$FPS" -gt "$SOURCE_FPS" ]; then
+  echo "$(basename "$INPUT") has FPS=$SOURCE_FPS; lower FPS argument [$FPS]"
   exit 1
 fi
 
 
 filters="fps=$FPS,scale=w=$RES:h=$RES:force_original_aspect_ratio=decrease:flags=lanczos"
 f_palettegen="palettegen=stats_mode=diff"
-f_paletteuse="paletteuse"
 
 # run fps and scale filters first with just video as input ([0:v] 0-th -i input as input to filters)
 # split this filtered (fps/scale) video input two streams [a][b]
 # pass [a] into palettegen to generate a color palette [p]
 # pass [b] along with the palette [p] into the paletteuse filter
-ffmpeg -i $INPUT -filter_complex "[0:v] $filters,split [a][b];[a] $f_palettegen [p];[b][p] paletteuse=new=1" $OUTPUT
+ffmpeg -i "$INPUT" -filter_complex "[0:v] $filters,split [a][b];[a] $f_palettegen [p];[b][p] paletteuse=new=1" "$OUTPUT"
