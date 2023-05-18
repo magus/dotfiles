@@ -15,15 +15,26 @@ fi
 TARGET_BRANCH=${1:-$CURRENT_BRANCH}
 SOURCE_BRANCH=${2:-$DEFAULT_MAIN_BRANCH}
 
+
+
 if [[ "$CURRENT_BRANCH" == "$SOURCE_BRANCH" ]]; then
   git pull --no-tags origin "$SOURCE_BRANCH"
+  sync_result="$?"
 else
   git fetch --no-tags origin "$SOURCE_BRANCH":"$SOURCE_BRANCH"
+  sync_result="$?"
 fi
 
-if [[ "$?" != "0" ]]; then
+if [[ ! $sync_result -eq "0" ]]; then
   echo "🚨 Failure to update source branch [$SOURCE_BRANCH]"
   exit 1
 fi
 
-git rebase --apply "$SOURCE_BRANCH" "$(git branch-grep "$TARGET_BRANCH")"
+target="$(git branch-grep "$TARGET_BRANCH")"
+
+if [ -z "$target" ]; then
+  echo "❌ $TARGET_BRANCH does not exist."
+  exit 1
+fi
+
+git rebase --apply "$SOURCE_BRANCH" "$target"
