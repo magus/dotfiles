@@ -10,9 +10,17 @@
 #  $ gifenc video.mp4 640 30
 #  outputs at 640 scale and 30 fps
 
-which ffmpeg > /dev/null
-if [[ $? -eq "1" ]]; then
-  echo "ffmpeg required; Try > brew install ffmpeg"
+if [[ -e "$(which ffmpeg)" ]]; then
+  echo "❌ ffmpeg required"
+  echo
+  echo "use command below to quickly install ffmpeg osx"
+  echo
+  echo "  curl https://raw.githubusercontent.com/magus/dotfiles/master/bin/install-ffmpeg.sh | bash"
+  echo
+  echo "alternatively, use brew to build from source (takes a long time!)"
+  echo
+  echo "  brew install ffmpeg"
+
   exit 1
 fi
 
