@@ -20,7 +20,7 @@ regex_test() {
 check_ffmpeg_bin() {
   name="$1"
 
-  if [ ! -e "$(which "$name")" ]; then
+  if [ ! -f "$(which "$name")" ]; then
     return 1
   fi
 }

@@ -10,7 +10,7 @@
 #  $ gifenc video.mp4 640 30
 #  outputs at 640 scale and 30 fps
 
-if [ -e "$(which ffmpeg)" ]; then
+if [ ! -f "$(which ffmpeg)" ]; then
   echo "❌ ffmpeg required"
   echo
   echo "use command below to quickly install ffmpeg osx"
