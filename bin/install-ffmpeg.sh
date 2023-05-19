@@ -1,6 +1,8 @@
 #!/bin/bash
 # install ffmpeg on osx/ubuntu
 
+# osx only, use FFMPEG_INSTALL_PATH=/custom/path to override this install path
+FFMPEG_INSTALL_PATH=${FFMPEG_INSTALL_PATH:-"/usr/local/bin"}
 
 # regex matching is undefined in POSIX
 # https://www.shellcheck.net/wiki/SC3015
@@ -9,57 +11,80 @@ regex_test() {
   search="$1"
   regex="$2"
 
-  expr "$search" : "$regex" > /dev/null
+  # echo "expr \"$search\" : \"$regex\""
+  expr "$search" : "$regex" >/dev/null
 
   return $?
 }
 
+check_ffmpeg_bin() {
+  name="$1"
 
-if [ -e "$(which ffmpeg)" ]; then
-  echo "✅ ffmpeg detected"
-  exit 0
-fi
-
-
-
-if [ "$(regex_test "$(cat /etc/issue 2> /dev/null)" "Ubuntu")" ]; then
-  # ubuntu
-  sudo apt install ffmpeg
-
-  if [ ! -e "$(which ffmpeg)" ]; then
-    echo "❌ ffmpeg could not be installed"
-    exit 1
+  if [ ! -e "$(which "$name")" ]; then
+    return 1
   fi
-elif [ "$(regex_test "$OSTYPE" "^darwin")" ]; then
-  # osx
-  # Use FFMPEG_INSTALL_PATH=/custom/path to override this install path
-  FFMPEG_INSTALL_PATH=${FFMPEG_INSTALL_PATH:-"/usr/local/bin"}
+}
 
-  echo "⏳ ffmpeg downloading ..."
+install_ffmpeg_bin() {
+  name="$1"
+
+  if check_ffmpeg_bin "$name"; then
+    echo "✅ $name detected"
+    return 0
+  fi
+
+  # fork based on operating system
+  if regex_test "$(cat /etc/issue 2>/dev/null)" "Ubuntu"; then
+    # ubuntu
+    ubuntu_install "$name"
+  elif regex_test "$OSTYPE" "^darwin"; then
+    # osx
+    osx_install "$name"
+
+    if check_ffmpeg_bin "$name"; then
+      echo "Check output above and confirm [$FFMPEG_INSTALL_PATH] in your \$PATH"
+      echo "Use \`FFMPEG_INSTALL_PATH=/custom/path install-ffmpeg\` to override install path"
+      echo
+    fi
+  else
+    echo "❌ system not handled by script"
+    echo "report issue to https://github.com/magus/dotfiles/issues/new"
+    return 1
+  fi
+
+  if ! check_ffmpeg_bin "$name"; then
+    echo "❌ $name could not be installed"
+    return 1
+  fi
+
+  echo "✅ $name installed successfully"
+}
+
+osx_install() {
+  name="$1"
+  url="https://evermeet.cx/ffmpeg/getrelease/$name/zip"
+
+  echo
+  echo "⏳ $name downloading [$url]..."
   echo
 
-  output_zip="ffmpeg.zip"
-  curl -L "https://evermeet.cx/ffmpeg/get/zip" --output "$output_zip"
+  output_zip="$name.zip"
+  curl -L "$url" --output "$output_zip"
   unzip "$output_zip"
   rm "$output_zip"
 
   echo
-  echo "🧰 moving ffmpeg to $FFMPEG_INSTALL_PATH"
-  mv ffmpeg "$FFMPEG_INSTALL_PATH"
+  echo "🧰 moving $name to $FFMPEG_INSTALL_PATH"
+  mv "$name" "$FFMPEG_INSTALL_PATH"
   echo
+}
 
-  if [ ! -e "$(which ffmpeg)" ]; then
-    echo "❌ ffmpeg could not be installed"
-    echo
-    echo "Check output above and confirm $FFMPEG_INSTALL_PATH in your path"
-    echo "Use FFMPEG_INSTALL_PATH=/custom/path to override install path"
+ubuntu_install() {
+  name="$1"
 
-    exit 1
-  fi
-else
-  echo "❌ system not handled by script"
-  echo "report issue to https://github.com/magus/dotfiles/issues/new"
-fi
+  echo
+  sudo apt install "$name"
+}
 
-
-echo "✅ ffmpeg installed successfully"
+install_ffmpeg_bin "ffmpeg"
+install_ffmpeg_bin "ffprobe"
