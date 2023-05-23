@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 # On M1 macs, gives you a new shell in which to do x86 deeds
 
-if [[ `uname -m` == 'arm64' ]]; then
+if [ "$(uname -m)" = 'arm64' ]; then
     echo "🧰 Changing to x86_64 architecture"
     arch -x86_64 zsh
 else
