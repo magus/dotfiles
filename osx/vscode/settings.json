@@ -10,7 +10,6 @@
   // disable abc output in autocomplete
   "editor.suggest.showWords": false,
 
-
   // Configurable window title
   // https://code.visualstudio.com/updates/v1_10#_configurable-window-title
   "window.title": "[ ${rootName} ]  ${activeEditorMedium}  ${dirty}",
@@ -25,7 +24,7 @@
     "suppressFileNotUnderSourceControlWarning": false,
     "suppressGitVersionWarning": false,
     "suppressLineUncommittedWarning": false,
-    "suppressNoRepositoryWarning": false,
+    "suppressNoRepositoryWarning": false
   },
 
   "git.autorefresh": false,
@@ -37,12 +36,13 @@
   "[javascript]": {
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
+      "source.fixAll": true,
       "source.fixAll.eslint": true
-    },
+    }
   },
   "[typescript]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescriptreact]": {
     "editor.formatOnSave": true,
@@ -50,8 +50,7 @@
   },
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer", // Makes the magic
-    "editor.formatOnSave": true,
-
+    "editor.formatOnSave": true
   },
   "editor.fontLigatures": true,
   "editor.fontFamily": "Ligconsolata-Regular, Menlo, Monaco, 'Courier New', monospace",
@@ -65,14 +64,8 @@
     "FIG_NEW_SESSION": "1"
   },
   "editor.accessibilitySupport": "off",
-  "cSpell.userWords": [
-    "buildable",
-    "magusn",
-    "nextjs"
-  ],
+  "cSpell.userWords": ["buildable", "magusn", "nextjs"],
   "explorer.confirmDragAndDrop": false,
-  "flow.stopFlowOnExit": false,
-  "flow.useBundledFlow": false,
   "typescript.format.enable": false,
   "typescript.format.insertSpaceAfterCommaDelimiter": false,
   "[json]": {
@@ -83,7 +76,7 @@
 
   "eslint.lintTask.enable": true,
 
-  "[markdown]":  {
-    "editor.wordWrap": "off", // Default Settings JSON has this set to on, need to override
-  },
+  "[markdown]": {
+    "editor.wordWrap": "off" // Default Settings JSON has this set to on, need to override
+  }
 }

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo 'symmlink vscode pref file to user library application dir'
 
 src="$HOME/.dotfiles/osx/vscode/settings.json"
