@@ -1,0 +1,34 @@
+#!/bin/bash
+# countdown timer
+#
+# Usage
+#   timer             # default to 30 second timer
+#   timer "60 * 5"    # 5 minute timer
+
+# Determine OS
+if regex_test "$OSTYPE" "^darwin"; then
+    # MacOS
+    format_date() {
+        date -u -r "$1" +%H:%M:%S
+    }
+else
+    # Assume Linux
+    format_date() {
+        date -u -d "$1" +%H:%M:%S
+    }
+fi
+
+
+# default to 30 seconds
+seconds=${1:-(("30"))}
+end_time=$(($(date +%s) + seconds))
+
+while [ "$end_time" -ge "$(date +%s)" ]; do
+    delta=$((end_time - $(date +%s)))
+    delta_fmt="$(format_date $delta)"
+
+    printf '%s\r' "$delta_fmt"
+    sleep 1
+done
+
+
