@@ -4,19 +4,6 @@
 # osx only, use FFMPEG_INSTALL_PATH=/custom/path to override this install path
 FFMPEG_INSTALL_PATH=${FFMPEG_INSTALL_PATH:-"/usr/local/bin"}
 
-# regex matching is undefined in POSIX
-# https://www.shellcheck.net/wiki/SC3015
-# e.g. if [ "$OSTYPE" =~ ^darwin ]; then
-regex_test() {
-  search="$1"
-  regex="$2"
-
-  # echo "expr \"$search\" : \"$regex\""
-  expr "$search" : "$regex" >/dev/null
-
-  return $?
-}
-
 check_ffmpeg_bin() {
   name="$1"
 
