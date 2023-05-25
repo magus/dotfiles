@@ -3,17 +3,13 @@
     "platformio.platformio-ide",
     "kellywallach2021.twitter-sourcegraph-vscode"
   ],
-
   "workbench.colorTheme": "Palenight Operator",
   "window.newWindowDimensions": "maximized",
-
   // disable abc output in autocomplete
   "editor.suggest.showWords": false,
-
   // Configurable window title
   // https://code.visualstudio.com/updates/v1_10#_configurable-window-title
   "window.title": "[ ${rootName} ]  ${activeEditorMedium}  ${dirty}",
-
   "files.trimTrailingWhitespace": true,
   "editor.renderWhitespace": "all",
   "editor.tabSize": 2,
@@ -26,7 +22,6 @@
     "suppressLineUncommittedWarning": false,
     "suppressNoRepositoryWarning": false
   },
-
   "git.autorefresh": false,
   "git.autoRepositoryDetection": false,
   "git.enableStatusBarSync": false,
@@ -38,14 +33,23 @@
     "editor.codeActionsOnSave": {
       "source.fixAll": true,
       "source.fixAll.eslint": true
-    }
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescript]": {
     "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.fixAll.eslint": true
+    },
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescriptreact]": {
     "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.fixAll.eslint": true
+    },
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[rust]": {
@@ -64,19 +68,23 @@
     "FIG_NEW_SESSION": "1"
   },
   "editor.accessibilitySupport": "off",
-  "cSpell.userWords": ["buildable", "magusn", "nextjs"],
+  "cSpell.userWords": [
+    "buildable",
+    "magusn",
+    "nextjs"
+  ],
   "explorer.confirmDragAndDrop": false,
   "typescript.format.enable": false,
   "typescript.format.insertSpaceAfterCommaDelimiter": false,
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-
   "workbench.sideBar.location": "right",
-
   "eslint.lintTask.enable": true,
-
   "[markdown]": {
     "editor.wordWrap": "off" // Default Settings JSON has this set to on, need to override
-  }
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
 }
