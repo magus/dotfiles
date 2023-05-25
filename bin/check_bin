@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# test if first argument exists in path
+
+name="$1"
+
+if [ ! -f "$(which "$name")" ]; then
+  exit 1
+fi

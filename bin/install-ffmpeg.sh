@@ -4,18 +4,10 @@
 # osx only, use FFMPEG_INSTALL_PATH=/custom/path to override this install path
 FFMPEG_INSTALL_PATH=${FFMPEG_INSTALL_PATH:-"/usr/local/bin"}
 
-check_ffmpeg_bin() {
-  name="$1"
-
-  if [ ! -f "$(which "$name")" ]; then
-    return 1
-  fi
-}
-
 install_ffmpeg_bin() {
   name="$1"
 
-  if check_ffmpeg_bin "$name"; then
+  if check_bin "$name"; then
     echo "✅ $name detected"
     return 0
   fi
@@ -28,7 +20,7 @@ install_ffmpeg_bin() {
     # osx
     osx_install "$name"
 
-    if check_ffmpeg_bin "$name"; then
+    if check_bin "$name"; then
       echo "Check output above and confirm [$FFMPEG_INSTALL_PATH] in your \$PATH"
       echo "Use \`FFMPEG_INSTALL_PATH=/custom/path install-ffmpeg\` to override install path"
       echo
@@ -39,7 +31,7 @@ install_ffmpeg_bin() {
     return 1
   fi
 
-  if ! check_ffmpeg_bin "$name"; then
+  if ! check_bin "$name"; then
     echo "❌ $name could not be installed"
     return 1
   fi
