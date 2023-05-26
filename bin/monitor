@@ -1,0 +1,57 @@
+#!/bin/bash
+# monitor output of a command
+
+# quietly exit from keyboard interrupts (CTRL+C)
+# disables echo for interrupt signal and restores when script ends
+stty -echoctl
+trap "stty echoctl" EXIT
+trap "exit" INT
+
+command="$*"
+
+clear
+
+# initial line counts
+old_lines=0
+
+while true; do
+  # save cursor position
+  tput sc
+  # move cursor to top left
+  tput home
+
+  # run the command, redirecting stderr to stdout
+  # to ensure we count all visible lines
+  output=$($command 2>&1)
+  new_lines=$(echo -e "$output" | wc -l)
+
+  # print the output
+  OLD_IFS=$IFS
+  IFS=$'\n' # set delimiter to newline for the loop
+  for line in $output; do
+    tput el       # clear to the end of the line
+    echo "$line"
+  done
+  IFS=$OLD_IFS # restore default delimiter
+
+   # if the new output is shorter than the old one, clear the remaining lines
+  if [ "$new_lines" -lt "$old_lines" ]; then
+    for ((i=new_lines; i<old_lines; i++)); do
+      tput el   # clear to the end of the line
+      tput cud1 # moves the cursor one line down
+    done
+
+    tput home   # move the cursor back to the top
+  fi
+
+  # restore cursor position
+  tput rc
+
+  # remember line count for the next iteration
+  old_lines=$new_lines
+
+  sleep 2
+done
+
+
+
