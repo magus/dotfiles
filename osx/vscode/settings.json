@@ -1,8 +1,5 @@
 {
-  "settingsSync.ignoredExtensions": [
-    "platformio.platformio-ide",
-    "kellywallach2021.twitter-sourcegraph-vscode"
-  ],
+  "settingsSync.ignoredExtensions": ["platformio.platformio-ide"],
   "workbench.colorTheme": "Palenight Operator",
   "window.newWindowDimensions": "maximized",
   // disable abc output in autocomplete
@@ -27,30 +24,15 @@
   "git.enableStatusBarSync": false,
   "javascript.format.enable": false,
   "javascript.validate.enable": false,
+
   // Enable per-language
-  "[javascript]": {
+  "[javascript][typescript][typescriptreact]": {
     "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
       "source.fixAll": true,
       "source.fixAll.eslint": true
-    },
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.fixAll": true,
-      "source.fixAll.eslint": true
-    },
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescriptreact]": {
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.fixAll": true,
-      "source.fixAll.eslint": true
-    },
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
   },
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer", // Makes the magic
@@ -68,15 +50,12 @@
     "FIG_NEW_SESSION": "1"
   },
   "editor.accessibilitySupport": "off",
-  "cSpell.userWords": [
-    "buildable",
-    "magusn",
-    "nextjs"
-  ],
+  "cSpell.userWords": ["buildable", "magusn", "nextjs"],
   "explorer.confirmDragAndDrop": false,
   "typescript.format.enable": false,
   "typescript.format.insertSpaceAfterCommaDelimiter": false,
-  "[json]": {
+  "[json][jsonc]": {
+    "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "workbench.sideBar.location": "right",
@@ -84,7 +63,57 @@
   "[markdown]": {
     "editor.wordWrap": "off" // Default Settings JSON has this set to on, need to override
   },
-  "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+  "[python]": {
+    "editor.inlineSuggest.enabled": true,
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    },
+    "editor.formatOnType": true
   },
+
+  "black-formatter.importStrategy": "fromEnvironment",
+  "black-formatter.args": ["--line-length", "100", "--exclude", "\"\""],
+
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": [
+    "--config",
+    ".flake8",
+    "--count",
+    "--show-source",
+    "--statistics"
+  ],
+  "isort.args": ["--line-length", "100", "--profile", "black"],
+  "isort.check": true,
+  "editor.inlineSuggest.enabled": true,
+  "totalTypeScript.hiddenTips": [
+    "passing-generics-to-types",
+    "typing-function-parameters",
+    "basic-types",
+    "as-assertion",
+    "array-type",
+    "as-const",
+    "literal-type",
+    "union-type",
+    "ts-object-type",
+    "type-alias-declaration",
+    "optional-object-property",
+    "null-keyword",
+    "partial-utility-type",
+    "generic-slots-in-functions",
+    "interface-declaration",
+    "returntype-utility-type",
+    "typeof",
+    "any-type",
+    "in-operator-narrowing",
+    "variable-type-annotation",
+    "record-utility-type",
+    "tuple-type",
+    "function-return-type",
+    "keyof",
+    "as-const-on-object"
+  ],
+  "totalTypeScript.hideAllTips": false,
+  "totalTypeScript.hideBasicTips": false
 }
