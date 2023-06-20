@@ -76,6 +76,7 @@
   "black-formatter.importStrategy": "fromEnvironment",
   "black-formatter.args": ["--line-length", "100", "--exclude", "\"\""],
 
+  "python.analysis.typeCheckingMode": "basic",
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Args": [
     "--config",
@@ -112,7 +113,10 @@
     "tuple-type",
     "function-return-type",
     "keyof",
-    "as-const-on-object"
+    "as-const-on-object",
+    "type-alias-with-generics",
+    "parameters-utility-type",
+    "undefined-keyword"
   ],
   "totalTypeScript.hideAllTips": false,
   "totalTypeScript.hideBasicTips": false
