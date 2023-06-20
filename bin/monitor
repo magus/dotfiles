@@ -7,12 +7,16 @@ stty -echoctl
 trap "stty echoctl" EXIT
 trap "exit" INT
 
-command="$*"
+command="$*"          # command to run
+refresh_interval=10   # refresh screen every 30 iterations (1min)
 
 clear
 
-# initial line counts
-old_lines=0
+
+
+
+old_lines=0         # initial line counts
+refresh_counter=0   # track refresh count
 
 while true; do
   # save cursor position
@@ -51,6 +55,13 @@ while true; do
   old_lines=$new_lines
 
   sleep 2
+
+  # clear the screen every $refresh_interval iterations
+  ((refresh_counter++))
+  if [ $refresh_counter -eq $refresh_interval ]; then
+    clear
+    refresh_counter=0
+  fi
 done
 
 
