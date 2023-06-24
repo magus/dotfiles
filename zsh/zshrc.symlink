@@ -14,9 +14,9 @@ export PROJECTS=~/Development
 # load antigen
 source $ZSH/zsh/antigen.zsh
 # configure antigen
-antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen theme romkatv/powerlevel10k
+antigen bundle zsh-users/zsh-autosuggestions
 # tell antigen we are done configuring
 antigen apply
 
