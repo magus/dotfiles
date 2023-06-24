@@ -1,5 +1,6 @@
 #!/bin/bash
-# monitor output of a command
+# monitor output of a command, refresh every 2 seconds
+# press 'R' key to manually refresh entire screen buffer
 
 # quietly exit from keyboard interrupts (CTRL+C)
 # disables echo for interrupt signal and restores when script ends
@@ -8,15 +9,11 @@ trap "stty echoctl" EXIT
 trap "exit" INT
 
 command="$*"          # command to run
-refresh_interval=10   # refresh screen every 30 iterations (1min)
 
 clear
 
 
-
-
 old_lines=0         # initial line counts
-refresh_counter=0   # track refresh count
 
 while true; do
   # save cursor position
@@ -54,13 +51,14 @@ while true; do
   # remember line count for the next iteration
   old_lines=$new_lines
 
-  sleep 2
+  # reset key and wait 2 seconds for user to press a key
+  # this is effectively our refresh interval for the output
+  key=""
+  read -rsn1 -t 2 key
 
-  # clear the screen every $refresh_interval iterations
-  ((refresh_counter++))
-  if [ $refresh_counter -eq $refresh_interval ]; then
+  # clear the screen if 'R' key is pressed
+  if [ "$key" == "r" ] || [ "$key" == "R" ]; then
     clear
-    refresh_counter=0
   fi
 done
 
