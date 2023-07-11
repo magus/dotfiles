@@ -25,12 +25,21 @@
   "javascript.format.enable": false,
   "javascript.validate.enable": false,
 
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
   // Enable per-language
   "[javascript][typescript][typescriptreact]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
-      "source.fixAll": true,
+      // this is false because typescript aggressively removes
+      // unused code by default unless you set the tsconfig below
+      //
+      //  "allowUnreachableCode": true,
+      //
+      "source.fixAll": false,
       "source.fixAll.eslint": true
     }
   },
@@ -116,7 +125,20 @@
     "as-const-on-object",
     "type-alias-with-generics",
     "parameters-utility-type",
-    "undefined-keyword"
+    "undefined-keyword",
+    "non-null-expression",
+    "type-predicate",
+    "interface-with-generics",
+    "interface-with-multiple-generics",
+    "readonly-utility-type",
+    "type-alias-with-multiple-generics",
+    "mapped-type",
+    "conditional-type",
+    "never-keyword",
+    "nested-conditional-type",
+    "infer",
+    "omit-utility-type",
+    "nonnullable-utility-type"
   ],
   "totalTypeScript.hideAllTips": false,
   "totalTypeScript.hideBasicTips": false
