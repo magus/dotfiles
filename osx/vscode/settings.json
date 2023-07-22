@@ -82,6 +82,8 @@
     "editor.formatOnType": true
   },
 
+  "shellcheck.executablePath": "/usr/local/bin/shellcheck",
+
   "black-formatter.importStrategy": "fromEnvironment",
   "black-formatter.args": ["--line-length", "100", "--exclude", "\"\""],
 
