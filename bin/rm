@@ -1,0 +1,16 @@
+#!/bin/bash
+
+for path in "$@"
+do
+  if [[ "${path}" = -* ]]
+  then
+    echo "Arguments are ignored."
+  else
+    dst=${path##*/}
+    while [[ -e ~/.Trash/"$dst" ]]
+    do
+      dst="$dst $(/bin/date +%H-%M-%S)"
+    done
+    /bin/mv "${path}" ~/.Trash/"$dst"
+  fi
+done
