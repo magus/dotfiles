@@ -140,7 +140,11 @@
     "nested-conditional-type",
     "infer",
     "omit-utility-type",
-    "nonnullable-utility-type"
+    "nonnullable-utility-type",
+    "readonly-object-property",
+    "pick-utility-type",
+    "exclude-utility-type",
+    "required-utility-type"
   ],
   "totalTypeScript.hideAllTips": false,
   "totalTypeScript.hideBasicTips": false
