@@ -7,10 +7,16 @@ do
     echo "Arguments are ignored."
   else
     dst=${path##*/}
+
+    # find a filename that doesn't exist
     while [[ -e ~/.Trash/"$dst" ]]
     do
       dst="$dst $(/bin/date +%H-%M-%S)"
     done
-    /bin/mv "${path}" ~/.Trash/"$dst"
+
+    if [ -f "${path}" ]; then
+      /bin/mv "${path}" ~/.Trash/"$dst"
+    fi
+
   fi
 done
