@@ -144,7 +144,8 @@
     "readonly-object-property",
     "pick-utility-type",
     "exclude-utility-type",
-    "required-utility-type"
+    "required-utility-type",
+    "awaited-utility-type"
   ],
   "totalTypeScript.hideAllTips": false,
   "totalTypeScript.hideBasicTips": false
