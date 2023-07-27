@@ -29,6 +29,9 @@
   "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
 
+  // required for eslint auto formatting
+  "eslint.lintTask.enable": true,
+
   // Enable per-language
   "[javascript][typescript][typescriptreact]": {
     "editor.formatOnSave": true,
@@ -68,7 +71,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "workbench.sideBar.location": "right",
-  "eslint.lintTask.enable": true,
+
   "[markdown]": {
     "editor.wordWrap": "off" // Default Settings JSON has this set to on, need to override
   },
