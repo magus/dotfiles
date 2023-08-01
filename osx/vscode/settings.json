@@ -28,6 +28,7 @@
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
 
   // required for eslint auto formatting
   "eslint.lintTask.enable": true,
