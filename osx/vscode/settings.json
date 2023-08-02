@@ -1,96 +1,65 @@
 {
   "settingsSync.ignoredExtensions": ["platformio.platformio-ide"],
-  "workbench.colorTheme": "Palenight Operator",
-  "window.newWindowDimensions": "maximized",
-  // disable abc output in autocomplete
-  "editor.suggest.showWords": false,
+
   // Configurable window title
   // https://code.visualstudio.com/updates/v1_10#_configurable-window-title
   "window.title": "[ ${rootName} ]  ${activeEditorMedium}  ${dirty}",
-  "files.trimTrailingWhitespace": true,
+  "window.newWindowDimensions": "maximized",
+  "window.zoomLevel": 2,
+  "workbench.colorTheme": "Palenight Operator",
+  "workbench.sideBar.location": "right",
+
+  "editor.accessibilitySupport": "off",
+  "editor.fontFamily": "Ligconsolata-Regular, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  "editor.inlineSuggest.enabled": true,
   "editor.renderWhitespace": "all",
+  "editor.showUnused": true,
+  // disable abc output in autocomplete
+  "editor.suggest.showWords": false,
   "editor.tabSize": 2,
-  "files.insertFinalNewline": true,
-  "gitlens.advanced.messages": {
-    "suppressCommitHasNoPreviousCommitWarning": false,
-    "suppressCommitNotFoundWarning": false,
-    "suppressFileNotUnderSourceControlWarning": false,
-    "suppressGitVersionWarning": false,
-    "suppressLineUncommittedWarning": false,
-    "suppressNoRepositoryWarning": false
-  },
-  "git.autorefresh": false,
-  "git.autoRepositoryDetection": false,
-  "git.enableStatusBarSync": false,
-  "javascript.format.enable": false,
-  "javascript.validate.enable": false,
+  "explorer.confirmDragAndDrop": false,
+  "files.trimTrailingWhitespace": true,
 
-  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
-  "typescript.tsdk": "./node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.preferences.importModuleSpecifier": "non-relative",
 
-  // required for eslint auto formatting
-  "eslint.lintTask.enable": true,
-
-  // Enable per-language
   "[javascript][typescript][typescriptreact]": {
-    "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      // this is false because typescript aggressively removes
-      // unused code by default unless you set the tsconfig below
-      //
-      //  "allowUnreachableCode": true,
-      //
       "source.fixAll": false,
       "source.fixAll.eslint": true
     }
   },
-  "[rust]": {
-    "editor.defaultFormatter": "rust-lang.rust-analyzer", // Makes the magic
-    "editor.formatOnSave": true
-  },
-  "editor.fontLigatures": true,
-  "editor.fontFamily": "Ligconsolata-Regular, Menlo, Monaco, 'Courier New', monospace",
-  // For all languages (it is enabled the default)
-  "editor.showUnused": true,
-  "javascript.updateImportsOnFileMove.enabled": "always",
   "importCost.timeout": 120000,
   "importCost.debug": true,
-  "window.zoomLevel": 2,
-  "terminal.integrated.env.osx": {
-    "FIG_NEW_SESSION": "1"
-  },
-  "editor.accessibilitySupport": "off",
-  "cSpell.userWords": ["buildable", "magusn", "nextjs"],
-  "explorer.confirmDragAndDrop": false,
+  "javascript.format.enable": false,
+  "javascript.updateImportsOnFileMove.enabled": "prompt",
+  "javascript.validate.enable": false,
+  "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.format.enable": false,
   "typescript.format.insertSpaceAfterCommaDelimiter": false,
-  "[json][jsonc]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "workbench.sideBar.location": "right",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
 
-  "[markdown]": {
-    "editor.wordWrap": "off" // Default Settings JSON has this set to on, need to override
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
   },
+
   "[python]": {
-    "editor.inlineSuggest.enabled": true,
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.inlineSuggest.enabled": true,
     "editor.codeActionsOnSave": {
       "source.organizeImports": true
-    },
-    "editor.formatOnType": true
+    }
   },
-
-  "shellcheck.executablePath": "/usr/local/bin/shellcheck",
-
   "black-formatter.importStrategy": "fromEnvironment",
   "black-formatter.args": ["--line-length", "100", "--exclude", "\"\""],
-
+  "isort.check": true,
+  "isort.args": ["--line-length", "100", "--profile", "black"],
   "python.analysis.typeCheckingMode": "basic",
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Args": [
@@ -100,9 +69,36 @@
     "--show-source",
     "--statistics"
   ],
-  "isort.args": ["--line-length", "100", "--profile", "black"],
-  "isort.check": true,
-  "editor.inlineSuggest.enabled": true,
+
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true
+  },
+
+  "[markdown]": {
+    "editor.wordWrap": "off" // Default Settings JSON has this set to on, need to override
+  },
+
+
+
+  "shellcheck.executablePath": "/usr/local/bin/shellcheck",
+
+
+  "git.autorefresh": false,
+  "git.autoRepositoryDetection": false,
+  "git.enableStatusBarSync": false,
+  "gitlens.advanced.messages": {
+    "suppressCommitHasNoPreviousCommitWarning": false,
+    "suppressCommitNotFoundWarning": false,
+    "suppressFileNotUnderSourceControlWarning": false,
+    "suppressGitVersionWarning": false,
+    "suppressLineUncommittedWarning": false,
+    "suppressNoRepositoryWarning": false
+  },
+
+
+  "totalTypeScript.hideAllTips": false,
+  "totalTypeScript.hideBasicTips": false,
   "totalTypeScript.hiddenTips": [
     "passing-generics-to-types",
     "typing-function-parameters",
@@ -150,7 +146,5 @@
     "exclude-utility-type",
     "required-utility-type",
     "awaited-utility-type"
-  ],
-  "totalTypeScript.hideAllTips": false,
-  "totalTypeScript.hideBasicTips": false
+  ]
 }
