@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Homebrew
 #
@@ -6,10 +6,11 @@
 # using Homebrew.
 
 # Check for Homebrew
-if [[ ! -e $(which brew) ]]; then
+if [ ! -e "$(which brew)" ]; then
   echo ' '
   echo '  🚨 You should probably install Homebrew first:'
   echo ' '
+  # shellcheck disable=SC2016
   echo '     eval "$(curl https://raw.githubusercontent.com/magus/dotfiles/master/homebrew/install.sh)"'
   echo ' '
   exit 1
@@ -24,17 +25,14 @@ brew install grc coreutils grc nmap parallel iftop
 brew install fpp
 brew install git-delta
 brew install direnv
+brew install vim
+brew install tmux
 
-# node
+# javascript
 brew install fnm
-
-# yarn
 brew install yarn --ignore-dependencies
 
-# vim
-brew install vim
-
 # kitty terminal
-if [[ ! -e $(which kitty) ]]; then
+if [ ! -e "$(which kitty)" ]; then
   brew install --cask kitty
 fi
