@@ -17,6 +17,7 @@ export EDITOR="/usr/local/bin/code"
 source $ZSH/zsh/antigen.zsh
 # configure antigen
 antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-history-substring-search
 antigen theme romkatv/powerlevel10k
 antigen bundle zsh-users/zsh-autosuggestions
 # tell antigen we are done configuring

@@ -17,8 +17,3 @@ bindkey -e
 # `esc + f b` also works in this same way
 bindkey "^[^[[C" forward-word
 bindkey "^[^[[D" backward-word
-
-# search history based on current line input
-bindkey '\e[A' history-beginning-search-backward
-bindkey '\e[B' history-beginning-search-forward
-
