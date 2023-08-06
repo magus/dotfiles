@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set -x
+
 for path in "$@"
 do
   if [[ "${path}" = -* ]]
@@ -14,7 +16,7 @@ do
       dst="$dst $(/bin/date +%H-%M-%S)"
     done
 
-    if [ -f "${path}" ]; then
+    if [[ -f "${path}" || -d "${path}" ]]; then
       /bin/mv "${path}" ~/.Trash/"$dst"
     fi
 
