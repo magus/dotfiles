@@ -4,16 +4,6 @@ RESTORE_DIR=$(pwd)
 # Move into /tmp
 cd /tmp
 
-# Brave
-curl -L -O "https://referrals.brave.com/latest/Brave-Browser.dmg"
-hdiutil mount -nobrowse Brave-Browser.dmg
-cp -R "/Volumes/Brave Browser/Brave Browser.app" /Applications
-hdiutil unmount "/Volumes/Brave Browser"
-rm Brave-Browser.dmg
-
-# Open Brave to set default browser
-open "/Applications/Brave Browser.app"
-
 # mpv
 brew install --cask mpv
 
