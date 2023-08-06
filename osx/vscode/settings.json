@@ -20,7 +20,7 @@
   "editor.tabSize": 2,
   "explorer.confirmDragAndDrop": false,
   "files.trimTrailingWhitespace": true,
-
+  "files.insertFinalNewline": true,
 
   "[javascript][typescript][typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -79,10 +79,7 @@
     "editor.wordWrap": "off" // Default Settings JSON has this set to on, need to override
   },
 
-
-
   "shellcheck.executablePath": "/usr/local/bin/shellcheck",
-
 
   "git.autorefresh": false,
   "git.autoRepositoryDetection": false,
@@ -95,7 +92,6 @@
     "suppressLineUncommittedWarning": false,
     "suppressNoRepositoryWarning": false
   },
-
 
   "totalTypeScript.hideAllTips": false,
   "totalTypeScript.hideBasicTips": false,
