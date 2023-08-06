@@ -37,9 +37,6 @@ bindkey '^[[B' history-substring-search-down
 # used by zsh-history-substring-search
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
-# z jump for cool kids
-. "$ZSH"/libs/z/z.sh
-
 # initialize autocomplete here, otherwise functions won't be loaded
 autoload -Uz compinit
 compinit
