@@ -27,6 +27,7 @@ brew install git-delta
 brew install direnv
 brew install vim
 brew install tmux
+brew install fzf
 
 # javascript
 brew install fnm
