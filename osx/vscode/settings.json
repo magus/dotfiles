@@ -61,8 +61,7 @@
   "isort.check": true,
   "isort.args": ["--line-length", "100", "--profile", "black"],
   "python.analysis.typeCheckingMode": "basic",
-  "python.linting.flake8Enabled": true,
-  "python.linting.flake8Args": [
+  "flake8.args": [
     "--config",
     ".flake8",
     "--count",
