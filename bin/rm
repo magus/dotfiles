@@ -4,10 +4,8 @@
 
 for path in "$@"
 do
-  if [[ "${path}" = -* ]]
+  if [[ "${path}" != -* ]]
   then
-    echo "Arguments are ignored."
-  else
     dst=${path##*/}
 
     # find a filename that doesn't exist
