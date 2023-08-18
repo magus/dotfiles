@@ -20,6 +20,11 @@ export EDITOR="/usr/local/bin/code"
 source "$ZSH"/zsh/antigen.zsh
 
 # configure antigen
+# may need to manually clone to fix plugins
+# https://github.com/zsh-users/zsh-autosuggestions/issues/673#issuecomment-1153309943
+#
+#   cd "$ANTIGEN_BUNDLES"
+#
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-history-substring-search
 antigen theme romkatv/powerlevel10k
@@ -73,3 +78,10 @@ eval "$(direnv hook zsh)"
 # fnm
 # https://github.com/Schniz/fnm#zsh
 eval "$(fnm env --use-on-cd)"
+
+# zsh-users/zsh-autosuggestions
+# set the text color for the suggested text
+# https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#configuration
+# https://stackoverflow.com/questions/47310537/how-to-change-zsh-autosuggestions-color
+# https://github.com/zsh-users/zsh-autosuggestions/issues/12
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
