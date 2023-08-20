@@ -1,6 +1,0 @@
-#!/bin/bash
-# alias cat='bat'
-# A cat(1) clone with syntax highlighting and Git integration
-# https://github.com/sharkdp/bat
-
-bat "$@"
