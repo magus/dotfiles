@@ -16,12 +16,6 @@ prepend_path /usr/local/share/npm/bin
 prepend_path /usr/local/bin
 prepend_path /usr/local/sbin
 
-# Added by the Heroku Toolbelt
-prepend_path /usr/local/heroku/bin
-
-# Added by RVM for scripting
-append_path $HOME/.rvm/bin
-
 # google cloud sdk
 append_path $HOME/google-cloud-sdk/bin
 
