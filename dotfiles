@@ -4,12 +4,12 @@
 # set up the initial zsh and some dependencies
 # make dem dotfiles
 
-VERSION="1.4";
+VERSION="2.0";
 
-function e_header()   { echo -e "\n\n\033[1;35m☆\033[0m  $@"; };
-function e_success()  { echo -e " \033[1;32m ✔\033[0m  $@"; };
-function e_error()    { echo -e " \033[1;31m ✖\033[0m  $@"; };
-function e_arrow()    { echo -e " \033[1;33m ➜\033[0m  $@"; };
+function e_header()   { echo -e "\n\n\033[1;35m☆\033[0m  $*"; };
+function e_success()  { echo -e " \033[1;32m ✔\033[0m  $*"; };
+function e_error()    { echo -e " \033[1;31m ✖\033[0m  $*"; };
+function e_arrow()    { echo -e " \033[1;33m ➜\033[0m  $*"; };
 
 e_header "dotfiles :: v$VERSION"
 
@@ -20,48 +20,144 @@ sudo -v
 # update existing sudo time stamp until script finishes
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-# Given a list of desired items and installed items, return a list
-# of uninstalled items. Arrays in bash are insane (not in a good way).
-function to_install() {
-  local debug desired installed i desired_s installed_s remain
-  if [[ "$1" == 1 ]]; then debug=1; shift; fi
-  # Convert args to arrays, handling both space- and newline-separated lists.
-  read -ra desired < <(echo "$1" | tr '\n' ' ')
-  read -ra installed < <(echo "$2" | tr '\n' ' ')
-  # Sort desired and installed arrays.
-  unset i; while read -r; do desired_s[i++]=$REPLY; done < <(
-    printf "%s\n" "${desired[@]}" | sort
-  )
-  unset i; while read -r; do installed_s[i++]=$REPLY; done < <(
-    printf "%s\n" "${installed[@]}" | sort
-  )
-  # Get the difference. comm is awesome.
-  unset i; while read -r; do remain[i++]=$REPLY; done < <(
-    comm -13 <(printf "%s\n" "${installed_s[@]}") <(printf "%s\n" "${desired_s[@]}")
-  )
-  [[ "$debug" ]] && for v in desired desired_s installed installed_s remain; do
-    echo "$v ($(eval echo "\${#$v[*]}")) $(eval echo "\${$v[*]}")"
-  done
-  echo "${remain[@]}"
-}
 
-# Offer the user a chance to skip something.
-function skip() {
-  REPLY=noskip
-  read -t 5 -n 1 -s -p "To skip, press X within 5 seconds. "
-  if [[ "$REPLY" =~ ^[Xx]$ ]]; then
-    echo "Skipping!"
-  else
-    echo "Continuing..."
-    return 1
+function do_setup() {
+  # ensure that we can actually, like, compile anything.
+  xcode-select -p > /dev/null 2>&1
+  if [[ $? -eq 2 && "$OSTYPE" =~ ^darwin ]]; then
+    e_error "The XCode Command Line Tools must be installed first."
+    /usr/bin/sudo /usr/sbin/softwareupdate -i "Command Line Tools for Xcode-12.0"
+    xcode-select --install
+    exit 1
+  fi
+
+  # install homebrew on osx
+  if [[ "$OSTYPE" =~ ^darwin ]]; then
+    # It's easiest to install things via Homebrew, so get that first.
+    if [[ ! -e "$(which brew)" ]]; then
+      e_header "Installing Homebrew"
+      eval "$(curl https://raw.githubusercontent.com/magus/dotfiles/master/homebrew/install.sh)"
+    fi
+  fi
+
+
+
+  # if git is not installed...
+  if [[ ! -e "$(which git)" ]]; then
+    # OSX
+    if [[ "$OSTYPE" =~ ^darwin ]]; then
+      e_header "Installing git"
+      brew install git
+    # Ubuntu.
+    elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+      e_header "Installing git"
+      sudo apt-get -qq install git-core
+    fi
+  fi
+
+  # zsh
+  # OSX
+  if [[ "$OSTYPE" =~ ^darwin ]]; then
+    # If zsh is not installed...
+    if [[ ! -e "$(which zsh)" ]]; then
+      e_header "Installing zsh"
+      brew install --disable-etcdir zsh
+    fi
+
+    # add zsh to /etc/shells && chsh
+    if [[ ! -e "$(grep /bin/zsh /etc/shells)" ]]; then
+      sudo sh -c "echo '\n#added by $0 ($(date))\n/bin/zsh' >> /etc/shells"
+    fi
+  # Ubuntu.
+  elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+    e_header "Installing zsh"
+    sudo apt-get install zsh
+  fi
+
+  # Change default shell to ZSH
+  sudo chsh -s /bin/zsh $USER
+
+  # If git isn't installed by now, something exploded. We gots to quit!
+  if [[ ! -e "$(which git)" ]]; then
+    e_error "git should be installed. It isn't. Aborting."
+    exit 1
   fi
 }
 
-# Link files.
-function link_header() { e_header "Linking files into home directory"; }
+function do_download() {
+  if [[ ! -d ~/.dotfiles ]]; then
+    new_dotfiles_install=1
+    # ~/.dotfiles doesn't exist? Clone it!
+    e_header "Downloading dotfiles"
+    git clone --recursive git@github.com:magus/dotfiles.git ~/.dotfiles
+    if [[ ! -d ~/.dotfiles ]]; then
+      e_error '🚨 Unable to clone dotfiles repo.'
+      exit 31
+    fi
+    cd ~/.dotfiles
+  else
+    cd ~/.dotfiles
+
+    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]]; then
+      # Make sure we have the latest files.
+      e_header "Updating dotfiles"
+      git pull
+      git submodule update --init --recursive --quiet
+    else
+      # ~/.dotfiles is not a valid git repository
+      e_error '🚨 ~/.dotfiles exists and is not a valid git repository.'
+      e_error 'Please backup or remove the directory before proceeding to run this command again.'
+      exit 21
+    fi
+  fi
+
+  # add binaries into the path
+  PATH=~/.dotfiles/bin:$PATH
+  export PATH
+
+  # if backups are needed, this is where they'll go.
+  backup_dir="$HOME/.dotfiles/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
+  backup=
+}
+
+function do_system() {
+  # if homebrew installed, install some initial bits
+  if [[ -e "$(which brew)" ]]; then
+    e_header "Installing some initial homebrew items ..."
+    # install homebrew packages
+    $HOME/.dotfiles/homebrew/setup.sh 2>&1
+  fi
+
+  # setup osx
+  if [[ "$OSTYPE" =~ ^darwin ]]; then
+    e_header "OSX Setup"
+    e_arrow "Setting OSX defaults ..."
+    $HOME/.dotfiles/osx/defaults.sh
+
+    e_arrow "Installing OSX profiles ..."
+    profiles -I -F $HOME/.dotfiles/osx/askforpassworddelay.mobileconfig
+
+    e_arrow "Installing some OSX apps"
+    $HOME/.dotfiles/osx/apps.sh
+  fi
+
+  # copy ~/.ssh/config
+  e_arrow "~/.ssh config..."
+  mkdir -p $HOME/.ssh
+  ln -sf $HOME/.dotfiles/ssh/config $HOME/.ssh
+
+  # link dotfiles script to bin
+  # shellcheck disable=SC2088
+  e_arrow "~/.dotfiles/bin/dotfiles..."
+  ln -sf $HOME/.dotfiles/dotfiles $HOME/.dotfiles/bin
+
+}
+
+
 function link_test() {
   [[ "$1" -ef "$2" ]] && echo "same file"
 }
+
 function link_stuff() {
   e_success "Linking ~/$1."
   ln -sf ${2#$HOME/} ~/$1
@@ -84,8 +180,7 @@ function do_symlinks() {
     # No files? abort.
     if (( ${#files[@]} == 0 )); then return; fi
 
-    # Run _header function only if declared.
-    [[ $(declare -f link_header) ]] && link_header
+    e_header "Linking files into home directory"
 
     # Iterate over files.
     for file in "${files[@]}"; do
@@ -119,7 +214,6 @@ function do_symlinks() {
 }
 
 # run .config.sh files
-function configs_header() { e_header "Running one-time configurations"; }
 function do_configs() {
   # find all .config.sh files (recursive glob with find)
   find $HOME/.dotfiles -iname '*.config.sh' | {
@@ -130,8 +224,7 @@ function do_configs() {
     # No files? abort.
     if (( ${#files[@]} == 0 )); then return; fi
 
-    # Run _header function only if declared.
-    [[ $(declare -f configs_header) ]] && configs_header
+    e_header "Running one-time configurations"
 
     # Iterate over files.
     for file in "${files[@]}"; do
@@ -143,157 +236,72 @@ function do_configs() {
   }
 }
 
-# Begin installation
 
-# Ensure that we can actually, like, compile anything.
-xcode-select -p > /dev/null 2>&1
-if [[ $? -eq 2 && "$OSTYPE" =~ ^darwin ]]; then
-  e_error "The XCode Command Line Tools must be installed first."
-  /usr/bin/sudo /usr/sbin/softwareupdate -i "Command Line Tools for Xcode-12.0"
-  xcode-select --install
-  exit 1
-fi
-
-# OSX Homebrew
-if [[ "$OSTYPE" =~ ^darwin ]]; then
-  # It's easiest to install things via Homebrew, so get that first.
-  if [[ ! -e "$(which brew)" ]]; then
-    e_header "Installing Homebrew"
-    eval "$(curl https://raw.githubusercontent.com/magus/dotfiles/master/homebrew/install.sh)"
-  fi
-fi
-
-# rvm
-if [[ ! -e "$(which rvm)" ]]; then
-  e_header "Installing rvm"
-  curl -sSL https://get.rvm.io | bash -s stable --ruby
-fi
-
-# If git is not installed...
-if [[ ! -e "$(which git)" ]]; then
-  # OSX
-  if [[ "$OSTYPE" =~ ^darwin ]]; then
-    e_header "Installing git"
-    brew install git
-  # Ubuntu.
-  elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
-    e_header "Installing git"
-    sudo apt-get -qq install git-core
-  fi
-fi
-
-# zsh
-# OSX
-if [[ "$OSTYPE" =~ ^darwin ]]; then
-  # If zsh is not installed...
-  if [[ ! -e "$(which zsh)" ]]; then
-    e_header "Installing zsh"
-    brew install --disable-etcdir zsh
+function do_finish() {
+  # alert if backups were made.
+  if [[ "$backup" ]]; then
+    e_header "Backups were moved to ~/${backup_dir#$HOME/}"
   fi
 
-  # add zsh to /etc/shells && chsh
-  if [[ ! -e "$(grep /bin/zsh /etc/shells)" ]]; then
-    sudo sh -c "echo '\n#added by $0 ($(date))\n/bin/zsh' >> /etc/shells"
-  fi
-# Ubuntu.
-elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
-  e_header "Installing zsh"
-  sudo apt-get install zsh
-fi
-
-# Change default shell to ZSH
-sudo chsh -s /bin/zsh $USER
-
-# If git isn't installed by now, something exploded. We gots to quit!
-if [[ ! -e "$(which git)" ]]; then
-  e_error "git should be installed. It isn't. Aborting."
-  exit 1
-fi
-
-# Initialize.
-if [[ ! -d ~/.dotfiles ]]; then
-  new_dotfiles_install=1
-  # ~/.dotfiles doesn't exist? Clone it!
-  e_header "Downloading dotfiles"
-  git clone --recursive git@github.com:magus/dotfiles.git ~/.dotfiles
-  if [[ ! -d ~/.dotfiles ]]; then
-    e_error '🚨 Unable to clone dotfiles repo.'
-    exit 31
-  fi
-  cd ~/.dotfiles
-else
-  cd ~/.dotfiles
-
-  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]]; then
-    # Make sure we have the latest files.
-    e_header "Updating dotfiles"
-    git pull
-    git submodule update --init --recursive --quiet
+  # lest I forget to do a few additional things...
+  if [[ "$new_dotfiles_install" && -e "conf/firsttime_reminder.sh" ]]; then
+    e_header "First-Time Reminders"
+    zsh -c 'source conf/firsttime_reminder.sh'
   else
-    # ~/.dotfiles is not a valid git repository
-    e_error '🚨 ~/.dotfiles exists and is not a valid git repository.'
-    e_error 'Please backup or remove the directory before proceeding to run this command again.'
-    exit 21
+    zsh -c 'source ~/.zshrc'
   fi
-fi
+
+  # All done!
+  e_header "All done!"
+}
 
 
-# Add binaries into the path
-PATH=~/.dotfiles/bin:$PATH
-export PATH
+#
+# main
+############################################################
 
-# If backups are needed, this is where they'll go.
-backup_dir="$HOME/.dotfiles/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
-backup=
+# allow easily running subsets of install script
+#
+#   dotfiles symlink
+#
+case "$1" in
+  setup)
+    do_setup
+    ;;
+  download)
+    do_download
+    ;;
+  system)
+    do_system
+    ;;
+  symlink|symlinks)
+    do_symlinks
+    ;;
+  config|configs)
+    do_configs
+    ;;
+  finish)
+    do_finish
+    ;;
+  *)
+    # run everything by default
 
+    # setup by checking we have things required for this script
+    do_setup
 
-# If Homebrew installed, install some initial bits
-if [[ -e "$(which brew)" ]]; then
-  e_header "Installing some initial homebrew items ..."
-  # Install homebrew packages
-  $HOME/.dotfiles/homebrew/setup.sh 2>&1
-fi
+    # download the dotfiles repo locally
+    do_download
 
-# setup osx
-if [[ "$OSTYPE" =~ ^darwin ]]; then
-  e_header "OSX Setup"
-  e_arrow "Setting OSX defaults ..."
-  $HOME/.dotfiles/osx/defaults.sh
+    # setup the system first, homebrew, osx, etc.
+    do_system
 
-  e_arrow "Installing OSX profiles ..."
-  profiles -I -F $HOME/.dotfiles/osx/askforpassworddelay.mobileconfig
+    # do the heavy lifting, copy dem weights
+    do_symlinks
 
-  e_arrow "Installing some OSX apps"
-  $HOME/.dotfiles/osx/apps.sh
-fi
+    # do one-time configurations, run .config.sh files
+    do_configs
 
-# copy ~/.ssh/config
-e_arrow "~/.ssh config..."
-mkdir -p $HOME/.ssh
-ln -sf $HOME/.dotfiles/ssh/config $HOME/.ssh
-
-# link dotfiles to bin
-e_arrow "~/.dotfiles/bin/dotfiles..."
-ln -sf $HOME/.dotfiles/dotfiles $HOME/.dotfiles/bin
-
-# do the heavy lifting, copy dem weights
-do_symlinks
-
-# do one-time configurations, run .config.sh files
-do_configs
-
-# Alert if backups were made.
-if [[ "$backup" ]]; then
-  e_header "Backups were moved to ~/${backup_dir#$HOME/}"
-fi
-
-# Lest I forget to do a few additional things...
-if [[ "$new_dotfiles_install" && -e "conf/firsttime_reminder.sh" ]]; then
-  e_header "First-Time Reminders"
-  zsh -c 'source conf/firsttime_reminder.sh'
-else
-  zsh -c 'source ~/.zshrc'
-fi
-
-# All done!
-e_header "All done!"
+    # finish up by running some closing commands
+    do_finish
+    ;;
+esac
