@@ -16,6 +16,14 @@ fpath=($ZSH/zsh/functions $fpath)
 # without this it will jump the entire path as one single word
 WORDCHARS=${WORDCHARS//[\/]}
 
+# set the titles to show the command name typed by the user while
+# the command is being executed and then the current directory
+# name after the command ended (i.e. before each prompt)
+# https://github.com/zimfw/termtitle
+zstyle ':zim:termtitle' hooks 'preexec' 'precmd'
+zstyle ':zim:termtitle:preexec' format '${${(A)=1}[1]}'
+zstyle ':zim:termtitle:precmd'  format '%~'
+
 # prompt for spelling correction of commands.
 setopt correct
 # customize spelling correction prompt.
