@@ -2,7 +2,23 @@
 
 # set -x
 
-FORMAT="%C(green)%h %C(white)%<(15,trunc)%cr %C(white)%<(12,trunc)%al %C(auto)%d %<(80,trunc)%s"
+# SHA hash - At least 9 characters wide, truncated
+SHA_FORMAT="%C(green)%<(9,trunc)%h"
 
-# View the SHA, description and history graph of last 20 commits
-git log --pretty=format:"$FORMAT" -n20 --graph --color $@ | nl -w3 -s' '
+# relative commit date - 15 characters wide, truncated
+DATE_FORMAT="%C(white)%<(15,trunc)%cr"
+
+# author's abbreviated name - 12 characters wide, truncated
+AUTHOR_FORMAT="%C(white)%<(12,trunc)%al"
+
+# decorative information like branch heads or tags
+DECORATION_FORMAT="%C(auto)%d"
+
+# commit subject - 80 characters wide, truncated
+SUBJECT_FORMAT="%<(80,trunc)%s"
+
+# combine all the above formats into one
+FORMAT="$SHA_FORMAT $DATE_FORMAT $AUTHOR_FORMAT $DECORATION_FORMAT $SUBJECT_FORMAT"
+
+# wiew the SHA, description and history graph of last 20 commits
+git log --pretty=format:"$FORMAT" -n20 --graph --color "$@" | nl -w3 -s' '
