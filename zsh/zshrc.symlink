@@ -1,54 +1,11 @@
 #!/bin/bash
 # shellcheck disable=SC1090,SC1091,SC2296,SC2034
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block, everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 
-# your project folder that we can `c [tab]` to
-export PROJECTS=~/Development
-
-export EDITOR="/usr/local/bin/code"
-
-# load antigen
-source "$ZSH"/zsh/antigen.zsh
-
-# configure antigen
-# may need to manually clone to fix plugins
-# https://github.com/zsh-users/zsh-autosuggestions/issues/673#issuecomment-1153309943
-#
-#   cd "$ANTIGEN_BUNDLES"
-#
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-history-substring-search
-antigen theme romkatv/powerlevel10k
-antigen bundle zsh-users/zsh-autosuggestions
-
-# tell antigen we are done configuring
-antigen apply
-
-# post antigen setup, configure plugins
-#
-# zsh-history-substring-search configuration
-# (put whatever configuration you want here!)
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-# used by zsh-history-substring-search
-HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
-
-# initialize autocomplete here, otherwise functions won't be loaded
-autoload -Uz compinit
-compinit
-
-#initialize bash completion (complete, compgen functions)
-autoload bashcompinit
-bashcompinit
+# load zimfw which initializes modules etc.
+source "$ZSH/zsh/zimfw.zsh"
 
 # load every completion after autocomplete loads
 for config_file in "$ZSH"/**/completion.sh; do
