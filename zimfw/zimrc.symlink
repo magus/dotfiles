@@ -58,5 +58,5 @@ zmodule zsh-users/zsh-autosuggestions
 
 
 # p10k theme
-zmodule romkatv/powerlevel10k
+zmodule romkatv/powerlevel10k --use degit
 
