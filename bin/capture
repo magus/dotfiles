@@ -1,0 +1,63 @@
+#!/bin/bash
+# shellcheck disable=SC1091
+
+SCRIPT_DIR="$(dirname "$0")"
+
+
+install_ffmpeg() {
+  if check_dep "ffmpeg"; then
+    return 0
+  fi
+
+  source "$SCRIPT_DIR"/install-ffmpeg.sh
+}
+
+install_keycastr() {
+  if check_dep "KeyCastr"; then
+    return 0
+  fi
+
+  echo "🧰 installing [KeyCastr]"
+
+  HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask keycastr
+
+  if ! check_dep "KeyCastr"; then
+    echo "❌ unable to install [KeyCastr]"
+    exit 5
+  fi
+}
+
+install_vid() {
+  if check_dep "vid"; then
+    return 0
+  fi
+
+  echo "🧰 installing [@magusn/vid]"
+  npm i -g @magusn/vid
+}
+
+main() {
+  install_ffmpeg
+  install_keycastr
+  install_vid
+
+  open -a "KeyCastr"
+
+  if [ -f tmp-capture-output.mov ]; then
+    rm tmp-capture-output.mov
+  fi
+
+  screencapture \
+    -v  \
+    tmp-capture-output.mov
+
+  echo ""
+  killall "KeyCastr"
+
+  vid --crop tmp-capture-output.mov
+
+  rm tmp-capture-output.mov
+}
+
+main
+
