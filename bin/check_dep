@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# test if first argument exists in path
+
+name="$1"
+
+if check_bin "$name"; then
+  exit 0
+fi
+
+if check_app "$name"; then
+  exit 0
+fi
+
+exit 1

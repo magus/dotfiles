@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# test if first argument exists as an app on osx
+
+name="$1"
+
+if ! osascript -e "id of app \"$name\"" > /dev/null 2>&1; then
+  exit 1
+fi
