@@ -2,11 +2,13 @@
 
 # set -x
 
-read -n1 -s -r -p $'\n\n🤔 Proceed? [Y/n] ' KEY
+PROMPT=${1:-"🤔 Proceed?"} # default but override with first arg
+
+read -n1 -s -r -p $"$PROMPT [Y/n] " KEY
 
 if ! echo "$KEY" | grep -E "[yY]" > /dev/null; then
-  echo -e "❌ Cancelled."
-  kill -s INT $$
+  echo -e "❌"
+  exit 1
 else
-  echo -e "✅ Confirmed."
+  echo -e "✅"
 fi
