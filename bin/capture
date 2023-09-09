@@ -12,6 +12,42 @@ install_ffmpeg() {
   source "$SCRIPT_DIR"/install-ffmpeg.sh
 }
 
+
+# https://github.com/deweller/switchaudio-osx
+install_switchaudio() {
+  if check_dep "SwitchAudioSource"; then
+    return 0
+  fi
+
+  echo "🧰 installing [switchaudio-osx]"
+
+  HOMEBREW_NO_AUTO_UPDATE=1 brew install switchaudio-osx
+
+  sleep 5
+
+  if ! check_dep "SwitchAudioSource"; then
+    echo "❌ unable to install [switchaudio-osx]"
+    exit 5
+  fi
+}
+
+install_blackhole() {
+  if regex_test "$(SwitchAudioSource -a)" "BlackHole 2ch"; then
+    return 0
+  fi
+
+  echo "🧰 installing [blackhole-2ch]"
+
+  HOMEBREW_NO_AUTO_UPDATE=1 brew install blackhole-2ch
+
+  sleep 5
+
+  if ! regex_test "$(SwitchAudioSource -a)" "BlackHole 2ch"; then
+    echo "❌ unable to install [blackhole-2ch]"
+    exit 5
+  fi
+}
+
 install_keycastr() {
   if check_dep "KeyCastr"; then
     return 0
@@ -20,6 +56,8 @@ install_keycastr() {
   echo "🧰 installing [KeyCastr]"
 
   HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask keycastr
+
+  sleep 5
 
   if ! check_dep "KeyCastr"; then
     echo "❌ unable to install [KeyCastr]"
@@ -37,26 +75,62 @@ install_vid() {
 }
 
 main() {
-  install_ffmpeg
+  # install_ffmpeg
+  # install_vid
   install_keycastr
-  install_vid
+  install_blackhole
+  install_switchaudio
 
   open -a "KeyCastr"
 
-  if [ -f tmp-capture-output.mov ]; then
-    rm tmp-capture-output.mov
+  # capture current audio device and switch to passthrough for capturing internal audio
+  restore_audio="$(SwitchAudioSource -c)"
+  SwitchAudioSource -s "Blackhole Passthrough"
+
+  output="$HOME/Desktop/$(date +%Y-%m-%d-%H-%M-%S).mov"
+
+  if [ -f "$output" ]; then
+    rm "$output"
   fi
 
-  screencapture \
-    -v  \
-    tmp-capture-output.mov
+  # 🚨 ffmpeg does not seem to capture audio correctly
+  #
+  #   ffmpeg -f avfoundation -pix_fmt yuyv422 -i "1:1" -t 10 -vf -r 60 "$output"
+  #   ffmpeg -f avfoundation -pix_fmt yuyv422 -i "1:0" -acodec pcm_f32le -ar 48000 -aq 0 "$output"
+  #   ffmpeg -f avfoundation -pix_fmt yuyv422 -i "1:0" -c:v libx264 -c:a aac -ar 96000 -r 60 "$output"
+  #
+  # using screencapture instead, audio device id discovered via swift
+  # https://apple.stackexchange.com/questions/380887/use-screencapture-command-to-record-screen-how-to-get-the-audio-source-id
+  #
+  #   import AVFoundation
+  #   import Cocoa
+  #
+  #   let session = AVCaptureDevice.DiscoverySession.init(
+  #     deviceTypes: [.builtInMicrophone, .externalUnknown], mediaType: nil, position: .unspecified)
+  #
+  #   let devices: [[String: Any]] = session.devices.map { device in
+  #     [
+  #       "deviceType": device.deviceType.rawValue,
+  #       "isConnected": device.isConnected,
+  #       "localizedName": device.localizedName,
+  #       "manufacturer": device.manufacturer,
+  #       "modelID": device.modelID,
+  #       "uniqueID": device.uniqueID,
+  #     ]
+  #   }
+  #
+  #   let devicesData = try JSONSerialization.data(
+  #     withJSONObject: devices, options: [.prettyPrinted, .sortedKeys])
+  #
+  #   print(String(data: devicesData, encoding: .utf8)!)
+  #
+  screencapture -vk -GBlackHole2ch_UID "$output"
 
   echo ""
   killall "KeyCastr"
 
-  vid --crop tmp-capture-output.mov
-
-  rm tmp-capture-output.mov
+  # restore original audio output device
+  SwitchAudioSource -s "$restore_audio"
 }
 
 main
