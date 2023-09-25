@@ -1,8 +1,16 @@
 #!/bin/bash
 
-# regex matching is undefined in POSIX
+# you might want to do something like below
+#
+#   if [ "$OSTYPE" =~ ^darwin ]; then
+#
+# but regex matching is undefined in POSIX
 # https://www.shellcheck.net/wiki/SC3015
-# e.g. if [ "$OSTYPE" =~ ^darwin ]; then
+#
+# so do this instead
+#
+#   if regex_test "$OSTYPE" "^darwin"; then
+#
 search="$1"
 regex="$2"
 
