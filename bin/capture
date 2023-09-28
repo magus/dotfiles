@@ -75,11 +75,11 @@ install_vid() {
 }
 
 main() {
-  # install_ffmpeg
-  # install_vid
+  install_switchaudio
   install_keycastr
   install_blackhole
-  install_switchaudio
+  # install_ffmpeg
+  # install_vid
 
   open -a "KeyCastr"
 
