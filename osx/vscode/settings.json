@@ -8,6 +8,11 @@
   "window.zoomLevel": 2,
   "workbench.colorTheme": "Palenight Operator",
   "workbench.sideBar.location": "right",
+  "workbench.tree.indent": 15,
+  "workbench.tree.renderIndentGuides": "always",
+  "workbench.colorCustomizations": {
+    "tree.indentGuidesStroke": "#05ef3c"
+  },
 
   "editor.accessibilitySupport": "off",
   "editor.fontFamily": "Ligconsolata-Regular, Menlo, Monaco, 'Courier New', monospace",
