@@ -2,8 +2,13 @@
 
 # set -x
 
+# get the number of characters in the short sha for this repo
+SHORT_SHA="$(git log -1 --format=%h)"
+SHORT_SHA_LENGTH=${#SHORT_SHA}
+SHA_COLUMN_SIZE=$((SHORT_SHA_LENGTH + 1))
+
 # SHA hash - At least 9 characters wide, truncated
-SHA_FORMAT="%C(green)%<(9,trunc)%h"
+SHA_FORMAT="%C(green)%<($SHA_COLUMN_SIZE,trunc)%h"
 
 # relative commit date - 15 characters wide, truncated
 DATE_FORMAT="%C(white)%<(15,trunc)%cr"
