@@ -48,6 +48,10 @@
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "tailwindCSS.experimental.classRegex": [
+    "classnames\\(([^\\)]*)\\)", // classnames(...)
+    "classNames\\(([^\\)]*)\\)" // classnames(...)
+  ],
 
   "[json][jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
