@@ -10,10 +10,13 @@ trap "exit" INT
 
 command="$*"          # command to run
 
-clear
+clear_screen() {
+  tput home
+  clear
+}
 
-
-old_lines=0         # initial line counts
+# move cursor to top left before running clear
+clear_screen
 
 while true; do
   # save cursor position
@@ -35,21 +38,21 @@ while true; do
   done
   IFS=$OLD_IFS # restore default delimiter
 
-   # if the new output is shorter than the old one, clear the remaining lines
-  if [ "$new_lines" -lt "$old_lines" ]; then
-    for ((i=new_lines; i<old_lines; i++)); do
-      tput el   # clear to the end of the line
-      tput cud1 # moves the cursor one line down
-    done
+  # remember cursor position at the end of new output
+  tput sc
 
-    tput home   # move the cursor back to the top
-  fi
+   # calculate the number of empty lines needed to fill the screen
+  total_lines=$(tput lines)
+  empty_lines=$((total_lines - new_lines - 1))
 
-  # restore cursor position
+  # output the empty lines to clear any lingering text
+  for ((i = 0; i < empty_lines; i++)); do
+    tput el   # clear to the end of the line
+    echo      # move the cursor one line down by echoing a newline
+  done
+
+  # restore cursor position at the end of new output
   tput rc
-
-  # remember line count for the next iteration
-  old_lines=$new_lines
 
   # reset key and wait 2 seconds for user to press a key
   # this is effectively our refresh interval for the output
@@ -58,7 +61,7 @@ while true; do
 
   # clear the screen if 'R' key is pressed
   if [ "$key" == "r" ] || [ "$key" == "R" ]; then
-    clear
+    clear_screen
   fi
 done
 
