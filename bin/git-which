@@ -14,5 +14,6 @@ git for-each-ref \
   --color=always \
   --sort=committerdate refs/heads/ \
   --format="$FORMAT" \
+  | awk -F "$SEP" -v OFS="$SEP" '{ $4 = substr($4, 1, 80) } 1' \
   | grep -i "$SEARCH" \
   | column -ts "$SEP"
