@@ -9,13 +9,13 @@ do
     dst=${path##*/}
 
     # find a filename that doesn't exist
-    while [[ -e ~/.Trash/"$dst" ]]
+    while [[ -e "$HOME/.Trash/$dst" ]]
     do
-      dst="$dst $(/bin/date +%H-%M-%S)"
+      dst="$dst-$(/bin/date +%H-%M-%S)"
     done
 
     if [[ -f "${path}" || -d "${path}" ]]; then
-      /bin/mv "${path}" ~/.Trash/"$dst"
+      /bin/mv "${path}" "$HOME/.Trash/$dst"
     fi
 
   fi
