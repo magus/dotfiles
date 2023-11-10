@@ -131,6 +131,10 @@ main() {
 
   # restore original audio output device
   SwitchAudioSource -s "$restore_audio"
+
+  # open the folder and recording
+  open "$(dirname "$output")"
+  open "$output"
 }
 
 main
