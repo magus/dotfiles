@@ -28,6 +28,7 @@ brew install direnv
 brew install vim
 brew install tmux
 brew install fzf
+brew install ripgrep
 
 # javascript
 brew install fnm
