@@ -158,6 +158,7 @@
     "exclude-utility-type",
     "required-utility-type",
     "awaited-utility-type",
-    "bigint"
+    "bigint",
+    "extract-utility-type"
   ]
 }
