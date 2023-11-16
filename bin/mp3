@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# URL is required
+URL="$1"
+if [ -z "$URL" ]; then
+   echo "Must specify a url"
+   exit 1
+fi
+
+if ! check_dep "yt-dlp"; then
+   echo "Must install yt-dlp"
+   exit 1
+fi
+
+yt-dlp -f ba "$URL" --extract-audio --audio-format="mp3" --audio-quality=0 -o "$HOME/Downloads/%(title)s.%(ext)s"
+
+
+
+
