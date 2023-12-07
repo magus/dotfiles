@@ -11,10 +11,14 @@ export LS_COLORS=$LSCOLORS
 
 fpath=($ZSH/zsh/functions $fpath)
 
-# remove path separator from WORDCHARS
-# this allows option + left and right arrow to jump folders in path
-# without this it will jump the entire path as one single word
-WORDCHARS=${WORDCHARS//[\/]}
+# remove characters from WORDCHARS
+# allows option + left and right arrow to break words by excluded characters
+# if we leave the characters in the WORDCHARS they will be included as part of the word
+# which means we will jump over them entirely and not stop between each one
+#   \/  removes path separator for folders in a path
+#   \.  removes period for file extensions, subdomains in urls, etc.
+WORDCHARS=${WORDCHARS//[\.\/]}
+
 
 # set the titles to show the command name typed by the user while
 # the command is being executed and then the current directory
