@@ -33,8 +33,8 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll": false,
-      "source.fixAll.eslint": true
+      "source.fixAll": "never",
+      "source.fixAll.eslint": "explicit"
     }
   },
   "importCost.timeout": 120000,
@@ -69,7 +69,7 @@
     "editor.formatOnType": true,
     "editor.inlineSuggest.enabled": true,
     "editor.codeActionsOnSave": {
-      "source.organizeImports": true
+      "source.organizeImports": "explicit"
     }
   },
   "python.analysis.typeCheckingMode": "basic",
