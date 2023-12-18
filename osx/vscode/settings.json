@@ -47,6 +47,7 @@
   "typescript.format.insertSpaceAfterCommaDelimiter": false,
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.tsdk": "./node_modules/typescript/lib",
+  "typescript.preferGoToSourceDefinition": true,
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "tailwindCSS.experimental.classRegex": [
     "classnames\\(([^\\)]*)\\)", // classnames(...)
