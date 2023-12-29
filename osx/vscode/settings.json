@@ -96,6 +96,11 @@
     "editor.wordWrap": "off" // Default Settings JSON has this set to on, need to override
   },
 
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "css.lint.unknownAtRules": "ignore",
+
   "shellcheck.executablePath": "/usr/local/bin/shellcheck",
 
   "git.autorefresh": false,
