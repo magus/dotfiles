@@ -93,7 +93,9 @@
   },
 
   "[markdown]": {
-    "editor.wordWrap": "off" // Default Settings JSON has this set to on, need to override
+    "editor.wordWrap": "off", // Default Settings JSON has this set to on, need to override
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
   },
 
   "[css]": {
