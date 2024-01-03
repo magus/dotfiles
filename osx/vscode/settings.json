@@ -65,7 +65,7 @@
   },
 
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
     "editor.inlineSuggest.enabled": true,
@@ -73,9 +73,8 @@
       "source.organizeImports": "explicit"
     }
   },
-  "python.analysis.typeCheckingMode": "basic",
-  "black-formatter.importStrategy": "fromEnvironment",
-  "black-formatter.args": ["--line-length", "100", "--exclude", "\"\""],
+  "mypy-type-checker.importStrategy": "fromEnvironment",
+  "mypy-type-checker.args": ["--explicit-package-bases"],
   "isort.check": true,
   "isort.args": ["--line-length", "100", "--profile", "black"],
   "ruff.organizeImports": false,
