@@ -57,5 +57,9 @@
       "value": 10
     },
     "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+i",
+    "command": "workbench.panel.chatSidebar"
   }
 ]
