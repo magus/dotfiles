@@ -7,6 +7,7 @@
   "window.newWindowDimensions": "maximized",
   "window.zoomLevel": 2,
   "workbench.colorTheme": "Palenight Operator",
+  "workbench.editor.wrapTabs": true,
   "workbench.sideBar.location": "right",
   "workbench.tree.indent": 15,
   "workbench.tree.renderIndentGuides": "always",
