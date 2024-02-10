@@ -24,6 +24,7 @@ brew update
 brew install grc coreutils grc nmap parallel iftop
 brew install fpp
 brew install git-delta
+brew install git-absorb
 brew install direnv
 brew install vim
 brew install tmux
