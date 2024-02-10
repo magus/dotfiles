@@ -42,3 +42,10 @@ eval "$(fnm env --use-on-cd)"
 # https://stackoverflow.com/questions/47310537/how-to-change-zsh-autosuggestions-color
 # https://github.com/zsh-users/zsh-autosuggestions/issues/12
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+
+# bun completions
+[ -s "/Users/noah/.bun/_bun" ] && source "/Users/noah/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
