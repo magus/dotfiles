@@ -18,7 +18,7 @@ SOURCE_BRANCH=${2:-$DEFAULT_MAIN_BRANCH}
 
 
 if [[ "$CURRENT_BRANCH" == "$SOURCE_BRANCH" ]]; then
-  git pull --no-tags origin "$SOURCE_BRANCH"
+  git rebase origin "$SOURCE_BRANCH"
   sync_result="$?"
 else
   git fetch --no-tags origin "$SOURCE_BRANCH":"$SOURCE_BRANCH"
