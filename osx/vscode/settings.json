@@ -26,6 +26,7 @@
   // disable abc output in autocomplete
   "editor.suggest.showWords": false,
   "editor.tabSize": 2,
+  "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
