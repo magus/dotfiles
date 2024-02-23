@@ -95,10 +95,37 @@ main() {
 
   # 🚨 ffmpeg does not seem to capture audio correctly
   #
-  #   ffmpeg -f avfoundation -pix_fmt yuyv422 -i "1:1" -t 10 -vf -r 60 "$output"
-  #   ffmpeg -f avfoundation -pix_fmt yuyv422 -i "1:0" -acodec pcm_f32le -ar 48000 -aq 0 "$output"
-  #   ffmpeg -f avfoundation -pix_fmt yuyv422 -i "1:0" -c:v libx264 -c:a aac -ar 96000 -r 60 "$output"
+  #   list video and audio device ids for `-i "video_id:audio_id"`
   #
+  #     ffmpeg -f avfoundation -list_devices true -i ""
+  #
+  #   capture video and audio
+  #
+  #     ffmpeg -y \
+  #     -f avfoundation \
+  #     -i "Capture screen 0:BlackHole 2ch" \
+  #     -r 30 \
+  #     -video_size 1920x1080 \
+  #     -c:v libx264 \
+  #     -pix_fmt yuv420p \
+  #     -crf 18 -preset ultrafast \
+  #     -profile:v high -level 4.2 \
+  #     -c:a aac -b:a 192k -ar 48000 \
+  #     out.mp4
+  #
+  # ffmpeg -y \
+  # -f avfoundation \
+  # -i "Capture screen 0:BlackHole 2ch" \
+  # -r 30 \
+  # -video_size 1920x1080 \
+  # -c:v libx264 \
+  # -pix_fmt yuv420p \
+  # -crf 18 -preset ultrafast \
+  # -profile:v high -level 4.2 \
+  # -ab 256k -ar 96000 \
+  # -async 1 -vsync 1 \
+  # "$output"
+
   # using screencapture instead, audio device id discovered via swift
   # https://apple.stackexchange.com/questions/380887/use-screencapture-command-to-record-screen-how-to-get-the-audio-source-id
   #
