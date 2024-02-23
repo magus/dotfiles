@@ -15,4 +15,5 @@ search="$1"
 regex="$2"
 
 # echo "expr \"$search\" : \"$regex\""
-expr "$search" : "$regex" >/dev/null
+# expr "$search" : "$regex" >/dev/null
+echo "$search" | grep -q "$regex" >/dev/null
