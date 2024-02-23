@@ -17,13 +17,14 @@ SOURCE_BRANCH=${2:-$DEFAULT_MAIN_BRANCH}
 
 
 
+# update local version of source branch
 if [[ "$CURRENT_BRANCH" == "$SOURCE_BRANCH" ]]; then
-  git rebase origin "$SOURCE_BRANCH"
-  sync_result="$?"
+  git fetch --no-tags origin "$SOURCE_BRANCH"
 else
   git fetch --no-tags origin "$SOURCE_BRANCH":"$SOURCE_BRANCH"
-  sync_result="$?"
 fi
+
+sync_result="$?"
 
 if [[ ! $sync_result -eq "0" ]]; then
   echo "🚨 Failure to update source branch [$SOURCE_BRANCH]"
@@ -33,8 +34,10 @@ fi
 target="$(git branch-grep "$TARGET_BRANCH")"
 
 if [ -z "$target" ]; then
-  echo "❌ $TARGET_BRANCH does not exist."
+  echo "❌ [$TARGET_BRANCH] does not match any existing branches."
   exit 1
 fi
 
+# rebase target branch onto the tip of source branch
+# effectively moves base of target branch to tip of source branch
 git rebase --apply "$SOURCE_BRANCH" "$target"
