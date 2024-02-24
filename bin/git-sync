@@ -15,21 +15,32 @@ fi
 TARGET_BRANCH=${1:-$CURRENT_BRANCH}
 SOURCE_BRANCH=${2:-$DEFAULT_MAIN_BRANCH}
 
+check_sync_exit_code() {
+   local exit_code="$1"
+
+  if [[ ! "$exit_code" -eq "0" ]]; then
+    echo "🚨 Failure to update source branch [$SOURCE_BRANCH]"
+    exit 1
+  fi
+}
 
 
-# update local version of source branch
+# handle special case when we are on the source branch
 if [[ "$CURRENT_BRANCH" == "$SOURCE_BRANCH" ]]; then
-  git fetch --no-tags origin "$SOURCE_BRANCH"
+  git rebase origin "$SOURCE_BRANCH"
+  check_sync_exit_code $?
 else
+  # otherwise update local source branch from origin
   git fetch --no-tags origin "$SOURCE_BRANCH":"$SOURCE_BRANCH"
+  check_sync_exit_code $?
 fi
 
-sync_result="$?"
 
-if [[ ! $sync_result -eq "0" ]]; then
-  echo "🚨 Failure to update source branch [$SOURCE_BRANCH]"
-  exit 1
+# early exit if we are already on the target branch
+if [[ "$TARGET_BRANCH" == "$SOURCE_BRANCH" && "$CURRENT_BRANCH" == "$SOURCE_BRANCH" ]]; then
+  exit 0
 fi
+
 
 target="$(git branch-grep "$TARGET_BRANCH")"
 
@@ -41,3 +52,7 @@ fi
 # rebase target branch onto the tip of source branch
 # effectively moves base of target branch to tip of source branch
 git rebase --apply "$SOURCE_BRANCH" "$target"
+
+
+
+
