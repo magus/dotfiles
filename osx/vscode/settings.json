@@ -110,6 +110,7 @@
   "git.autorefresh": false,
   "git.autoRepositoryDetection": false,
   "git.enableStatusBarSync": false,
+  "github.copilot.editor.enableCodeActions": false,
   "gitlens.advanced.messages": {
     "suppressCommitHasNoPreviousCommitWarning": false,
     "suppressCommitNotFoundWarning": false,
