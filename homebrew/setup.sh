@@ -21,7 +21,7 @@ fi
 brew update
 
 # Install homebrew packages
-brew install grc coreutils grc nmap parallel iftop
+brew install coreutils nmap parallel iftop
 brew install fpp
 brew install git-delta
 brew install git-absorb
