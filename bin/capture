@@ -1,7 +1,34 @@
 #!/bin/bash
 # shellcheck disable=SC1091
+#
+# Usage: capture [+keys]
+#
+# Description:
+#   This script captures the screen and saves it as a movie file. It can optionally
+#   open the KeyCastr app to display keystrokes during the recording.
+#
+# Options:
+#   +keys   Opens the KeyCastr app to display keystrokes during recording.
+#
+# Dependencies:
+#   - ffmpeg
+#   - SwitchAudioSource
+#   - BlackHole 2ch
+#   - KeyCastr
+#
+
 
 SCRIPT_DIR="$(dirname "$0")"
+
+capture_keys=false
+
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    +keys) capture_keys=true;;
+    *) echo "unknown parameter [$1]"; exit 1;;
+  esac
+  shift
+done
 
 
 install_ffmpeg() {
@@ -76,12 +103,18 @@ install_vid() {
 
 main() {
   install_switchaudio
-  install_keycastr
+
+  if $capture_keys; then
+    install_keycastr
+  fi
+
   install_blackhole
   # install_ffmpeg
   # install_vid
 
-  open -a "KeyCastr"
+  if $capture_keys; then
+    open -a "KeyCastr"
+  fi
 
   # capture current audio device and switch to passthrough for capturing internal audio
   restore_audio="$(SwitchAudioSource -c)"
