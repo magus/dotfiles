@@ -245,6 +245,7 @@
     "required-utility-type",
     "awaited-utility-type",
     "bigint",
-    "extract-utility-type"
+    "extract-utility-type",
+    "uppercase-utility-type"
   ]
 }
