@@ -111,6 +111,12 @@
   },
   "css.lint.unknownAtRules": "ignore",
 
+  "[toml]": {
+    "files.trimTrailingWhitespace": true,
+    "editor.defaultFormatter": "tamasfe.even-better-toml",
+    "editor.formatOnSave": true
+  },
+
   "shellcheck.executablePath": "/usr/local/bin/shellcheck",
 
   "git.autorefresh": false,
