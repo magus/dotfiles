@@ -67,7 +67,11 @@
   },
 
   "[python]": {
-    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.defaultFormatter": "Jota0222.multi-formatter",
+    "multiFormatter.formatterList": [
+      "charliermarsh.ruff",
+      "ms-python.black-formatter"
+    ],
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
     "editor.inlineSuggest.enabled": true,
@@ -77,6 +81,8 @@
   },
   "mypy-type-checker.importStrategy": "fromEnvironment",
   "mypy-type-checker.args": ["--explicit-package-bases"],
+  "black-formatter.path": ["black"],
+  "black-formatter.args": ["--line-length", "100", "--exclude=\"\""],
   "isort.check": true,
   "isort.args": ["--line-length", "100", "--profile", "black"],
   "ruff.organizeImports": false,
