@@ -79,6 +79,8 @@
       "source.organizeImports": "explicit"
     }
   },
+  "notebook.formatOnCellExecution": true,
+  "notebook.formatOnSave.enabled": true,
   "mypy-type-checker.importStrategy": "fromEnvironment",
   "mypy-type-checker.args": ["--explicit-package-bases"],
   "black-formatter.path": ["black"],
