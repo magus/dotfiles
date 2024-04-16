@@ -81,6 +81,8 @@
   },
   "notebook.formatOnCellExecution": true,
   "notebook.formatOnSave.enabled": true,
+  "notebook.output.scrolling": true,
+  "notebook.output.wordWrap": true,
   "mypy-type-checker.importStrategy": "fromEnvironment",
   "mypy-type-checker.args": ["--explicit-package-bases"],
   "black-formatter.path": ["black"],
