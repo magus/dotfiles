@@ -1,0 +1,47 @@
+#!/bin/bash
+
+relative_number=$1
+
+if [ -z "$relative_number" ]; then
+  echo "❗️ Usage: git fixup <relative-commit-number>"
+  echo ""
+  echo "This script automates the process of adding staged changes as a fixup commit"
+  echo "and the subsequent git rebase to flatten the commits based on relative commit number"
+  echo "You can use a \`git log\` like below to get the relative commit number"
+  echo ""
+  echo "    ❯ git log --pretty=oneline -n10 | nl"
+  echo "    1	e329794d5f881cbf0fc3f26d2108cf6f3fdebabe enable drop_error_subtask test param"
+  echo "    2	57f43b596e5c6b97bc47e2a591f82ccc81651156 test drop_error_subtask baseline"
+  echo "    3	838e878d483c6a2d5393063fc59baf2407225c6d ErrorSubtask test baseline"
+  echo ""
+  echo "To target \`838e87\` above, you would call \`fixup 3\`"
+  exit 1
+fi
+
+# calculate commit SHA based on the relative commit number
+# e.g., HEAD~10 is 11th commit from top
+adjusted_number=$((relative_number - 1))
+
+# get the commit SHA of the target commit
+commit_sha=$(git rev-parse HEAD~$adjusted_number)
+
+echo "🛠️ fixup [$commit_sha] ($relative_number)"
+git commit --fixup "$commit_sha"
+
+# check if stash required
+if git diff-index --quiet HEAD --; then
+  save_stash=false
+else
+  save_stash=true
+  git stash -q
+  echo "📦 Changes saved to stash"
+fi
+
+# rebase target needs to account for new commit created above
+rebase_target=$((relative_number + 1))
+git rebase -i --autosquash HEAD~"$rebase_target"
+
+if [ "$save_stash" = true ]; then
+  git stash pop -q
+  echo "✅ Changes restored from stash"
+fi
