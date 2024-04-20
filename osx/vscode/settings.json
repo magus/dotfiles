@@ -122,6 +122,7 @@
   },
 
   "shellcheck.executablePath": "/usr/local/bin/shellcheck",
+  "shellcheck.customArgs": ["-x"],
 
   "git.autorefresh": false,
   "git.autoRepositoryDetection": false,
