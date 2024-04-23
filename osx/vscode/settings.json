@@ -76,6 +76,7 @@
     "editor.formatOnType": true,
     "editor.inlineSuggest.enabled": true,
     "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
       "source.organizeImports": "explicit"
     }
   },
