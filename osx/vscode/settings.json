@@ -53,7 +53,9 @@
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "tailwindCSS.experimental.classRegex": [
     "classnames\\(([^\\)]*)\\)", // classnames(...)
-    "classNames\\(([^\\)]*)\\)" // classnames(...)
+    "classNames\\(([^\\)]*)\\)", // classNames(...)
+    "cn\\(([^\\)]*)\\)", // cn(...)
+    "clsx\\(([^\\)]*)\\)" // clsx(...)
   ],
 
   "[json][jsonc]": {
