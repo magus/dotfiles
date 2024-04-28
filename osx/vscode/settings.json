@@ -124,6 +124,10 @@
     "editor.formatOnSave": true
   },
 
+  "[prisma]": {
+    "editor.formatOnSave": true
+  },
+
   "shellcheck.executablePath": "/usr/local/bin/shellcheck",
   "shellcheck.customArgs": ["-x"],
 
