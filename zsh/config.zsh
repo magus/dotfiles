@@ -25,7 +25,7 @@ WORDCHARS=${WORDCHARS//[\.\/]}
 # name after the command ended (i.e. before each prompt)
 # https://github.com/zimfw/termtitle
 zstyle ':zim:termtitle' hooks 'preexec' 'precmd'
-zstyle ':zim:termtitle:preexec' format '${${(A)=1}[1]}'
+zstyle ':zim:termtitle:preexec' format '${1}'
 zstyle ':zim:termtitle:precmd'  format '%~'
 
 # prompt for spelling correction of commands.
