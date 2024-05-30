@@ -14,7 +14,7 @@ do
       dst="$dst-$(/bin/date +%H-%M-%S)"
     done
 
-    if [[ -f "${path}" || -d "${path}" ]]; then
+    if [[ -f "${path}" || -d "${path}" || -h "${path}" ]]; then
       /bin/mv "${path}" "$HOME/.Trash/$dst"
     fi
 
