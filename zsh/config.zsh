@@ -3,7 +3,7 @@
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Development
 
-export EDITOR="/usr/local/bin/code"
+export EDITOR="/usr/local/bin/code --wait"
 
 export CLICOLOR=true
 export LSCOLORS="exfxcxdxbxegedabagacad"
