@@ -1,3 +1,22 @@
 #!/bin/bash
 
-open ~/.Trash
+# set -x
+
+for path in "$@"
+do
+  if [[ "${path}" != -* ]]
+  then
+    dst=${path##*/}
+
+    # find a filename that doesn't exist
+    while [[ -e "$HOME/.Trash/$dst" ]]
+    do
+      dst="$dst-$(/bin/date +%H-%M-%S)"
+    done
+
+    if [[ -f "${path}" || -d "${path}" || -h "${path}" ]]; then
+      /bin/mv "${path}" "$HOME/.Trash/$dst"
+    fi
+
+  fi
+done
