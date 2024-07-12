@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# set -x
+
+REPO="$1"
+PR_NUMBER="$2"
+PR_URL="https://github.com/$REPO/pull/$PR_NUMBER"
+
+if [[ -z "$PR_NUMBER" ]] || [[ -z "$REPO" ]]; then
+  script_name="$(basename "$0")"
+  echo "Usage: $script_name <repo> <pr_number>"
+  echo ""
+  echo "Example"
+  echo "  $script_name openai/openai 126250"
+  exit 1
+fi
+
+echo "⏳ removing all reviewers for $PR_URL"
+
+PR_REVIEW_JSON="$(gh pr view "$PR_NUMBER" --repo "$REPO" --json reviewRequests,assignees)"
+
+review_request_user_list="$(echo "$PR_REVIEW_JSON" | jq -r '.reviewRequests[] | select(.login) | .login')"
+# we must extract the team name from the team slug, sending full slug will not work with the API
+review_request_team_list="$(echo "$PR_REVIEW_JSON" | jq -r '.reviewRequests[] | select(.slug) | .slug | split("/")[-1]')"
+
+if [[ -z "$review_request_user_list" ]] && [[ -z "$review_request_team_list" ]]; then
+  echo "✅ no reviewers to remove"
+else
+  gh_args=()
+
+  while IFS= read -r user; do
+    if [ -n "$user" ]; then
+      echo "❌ $user"
+      gh_args+=("-f" "reviewers[]=$user")
+    fi
+  done <<< "$review_request_user_list"
+
+  while IFS= read -r team; do
+    if [ -n "$team" ]; then
+      echo "❌ $team"
+      gh_args+=("-f" "team_reviewers[]=$team")
+    fi
+  done <<< "$review_request_team_list"
+
+  resp="$(gh api -X DELETE "repos/$REPO/pulls/$PR_NUMBER/requested_reviewers" -f "reviewers[]=" "${gh_args[@]}")"
+
+  remaining=$(echo "$resp" | jq ".reviewRequests | length")
+  if [ "$remaining" -eq 0 ]; then
+    echo "✅ cleared all review requests"
+  else
+    echo "❌ failed to clear all review requests"
+    remaining_list=$(echo "$resp" | jq -r '[.reviewRequests[] | .slug, .login | select(. != null)] | join(", ")')
+    echo "$remaining review requests remaining ($remaining_list)"
+  fi
+fi
+
+
+assignee_list="$(echo "$PR_REVIEW_JSON" | jq -r '.assignees[] | .login')"
+
+if [ -n "$assignee_list" ]; then
+  gh_args=()
+
+while IFS= read -r user; do
+    if [ -n "$user" ]; then
+      echo "❌ $user"
+      gh_args+=("-f" "assignees[]=$user")
+    fi
+  done <<< "$assignee_list"
+
+  resp="$(gh api -X DELETE "repos/$REPO/issues/$PR_NUMBER/assignees" "${gh_args[@]}")"
+
+  remaining=$(echo "$resp" | jq ".assignees | length")
+  if [ "$remaining" -eq 0 ]; then
+    echo "✅ cleared all assignees"
+  else
+    echo "❌ failed to clear all assignees"
+    remaining_list=$(echo "$resp" | jq '[.assignees[] | .login] | join(", ")')
+    echo "$remaining assignees remaining ($remaining_list)"
+  fi
+fi
