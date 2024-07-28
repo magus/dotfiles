@@ -125,5 +125,8 @@
 [difftool "kitty.gui"]
     cmd = kitty kitty +kitten diff $LOCAL $REMOTE
 
+[interactive]
+    diffFilter = delta --color-only
+
 [absorb]
     maxStack=50
