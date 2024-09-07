@@ -83,12 +83,26 @@
       "source.organizeImports": "explicit"
     }
   },
+  "python.analysis.typeCheckingMode": "off",
+  // pyright configured like ci
+  // "python.analysis.typeCheckingMode": "standard",
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportFunctionMemberAccess": false,
+    "reportPrivateImportUsage": false,
+    "reportPossiblyUnboundVariable": false,
+    "reportIncompatibleMethodOverride": false,
+    "reportIncompatibleVariableOverride": false
+  },
+  // display inferred types inline
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.inlayHints.variableTypes": true,
   "notebook.formatOnCellExecution": true,
   "notebook.formatOnSave.enabled": true,
   "notebook.output.scrolling": true,
   "notebook.output.wordWrap": true,
-  "mypy-type-checker.importStrategy": "fromEnvironment",
-  "mypy-type-checker.args": ["--explicit-package-bases"],
+  "mypy.enabled": true,
+  "mypy.debugLogging": true,
+  "mypy.runUsingActiveInterpreter": true,
   "black-formatter.importStrategy": "fromEnvironment",
   "black-formatter.args": ["--line-length=100", "--exclude=\"\""],
   "black-formatter.path": ["black"],
