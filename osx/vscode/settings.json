@@ -15,6 +15,7 @@
     "tree.indentGuidesStroke": "#05ef3c"
   },
 
+  "editor.defaultFormatter": null,
   "editor.accessibilitySupport": "off",
   "editor.fontFamily": "Ligconsolata-Regular, Menlo, Monaco, 'Courier New', monospace",
   "editor.fontLigatures": true,
