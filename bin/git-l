@@ -32,5 +32,5 @@ SUBJECT_FORMAT="%<(60,trunc)%s"
 # combine all the above formats into one
 FORMAT="$SHA_FORMAT $DATE_FORMAT $AUTHOR_FORMAT $DECORATION_FORMAT $SUBJECT_FORMAT"
 
-# wiew the SHA, description and history graph of last 20 commits
+# view the SHA, description and history graph of last 20 commits
 git log --pretty=format:"$FORMAT" -n20 --graph --color "$@" | cut -c 1-"$truncation_width" | nl -w3 -s' '
