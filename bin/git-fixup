@@ -1,8 +1,8 @@
 #!/bin/bash
 
-relative_number=$1
+first_arg=$1
 
-if [ -z "$relative_number" ]; then
+usage() {
   echo "❗️ Usage: git fixup <relative-commit-number>"
   echo ""
   echo "This script automates the process of adding staged changes as a fixup commit"
@@ -15,8 +15,27 @@ if [ -z "$relative_number" ]; then
   echo "    3	838e878d483c6a2d5393063fc59baf2407225c6d ErrorSubtask test baseline"
   echo ""
   echo "To target \`838e87\` above, you would call \`fixup 3\`"
+}
+
+if [[ "$first_arg" =~ "help" ]]; then
+  usage
+  exit 0
+fi
+
+if git diff --cached --quiet; then
+  usage
+  echo
+  echo "🚨 Stage changes before calling fixup"
+  exit 2
+fi
+
+relative_number=${first_arg:-1}
+
+if [ -z "$relative_number" ]; then
+  usage
   exit 1
 fi
+
 
 # calculate commit SHA based on the relative commit number
 # e.g., HEAD~10 is 11th commit from top
