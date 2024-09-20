@@ -12,5 +12,7 @@ if [[ -z "$*" ]]; then
 fi
 
 # prefer exact match (first) over loose wildcard match (second)
+grep_results=$(blnc "$*"; blnc "*$**")
+
 # filter results to the first returned branch
-(blnc "$*"; blnc "*$**") | head -n1 | awk '{ print $NF }';
+$grep_results | head -n1 | awk '{ print $NF }';
