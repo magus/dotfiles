@@ -36,26 +36,6 @@
 
   pr = !sh -c 'git branch $@ origin/$@ && git checkout $@' -
 
-  # Checkout branch > Checkout PR > Create PR
-  go = "!f() { \
-    local branch=$(git branch-grep $@); \
-    if [[ $branch ]]; then \
-      git checkout $branch; \
-    else \
-      git checkout -b dev/noah/$1; \
-    fi \
-  }; f"
-
-  # Delete branch > Delete PR
-  rb = "!f() { \
-    local branch=$(git branch-grep $@); \
-    if [[ $branch ]]; then \
-      git branch -D $branch; \
-    else \
-      echo \"Cannot find branch ($@)\"; \
-    fi \
-  }; f"
-
 # so much color
 [color]
   # Use colors in git output where capable

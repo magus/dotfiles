@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Delete branch > Delete PR
+
+# set -x
+
+branch=$(git branch-grep "$@");
+
+if [[ -n $branch ]]; then
+  git branch -D "$branch";
+else
+  echo "Cannot find branch ($*)";
+fi

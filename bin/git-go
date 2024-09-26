@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Checkout branch > Checkout PR > Create PR
+
+# set -x
+
+branch=$(git branch-grep "$@");
+
+if [[ -n $branch ]]; then
+  git checkout "$branch"
+else
+  git checkout -b "dev/noah/$1"
+fi
