@@ -15,4 +15,4 @@ fi
 grep_results=$(blnc "$*"; blnc "*$**")
 
 # filter results to the first returned branch
-$grep_results | head -n1 | awk '{ print $NF }';
+echo "$grep_results" | head -n1 | awk '{ print $NF }';
