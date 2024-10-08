@@ -18,7 +18,8 @@ fpath=($ZSH/zsh/functions $fpath)
 #   \/  removes path separator for folders in a path
 #   \.  removes period for file extensions, subdomains in urls, etc.
 #   \=  removes equals character for cli arguments
-WORDCHARS=${WORDCHARS//[\.\/\=]}
+#   \-  removes dash character for cli kebab case
+WORDCHARS=${WORDCHARS//[\.\/\=\-]}
 
 
 # set the titles to show the command name typed by the user while
