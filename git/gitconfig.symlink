@@ -6,6 +6,8 @@
   editor = vim
   excludesfile = ~/.gitignore
   pager = delta --dark
+  ; uncomment below to test all syntax themes
+  ; pager = delta --dark --show-syntax-themes
   ignorecase = false
 
 [alias]
@@ -38,20 +40,8 @@
 
 # so much color
 [color]
-  # Use colors in git output where capable
+  # use colors in git output where capable
   ui = always
-[color "diff"]
-  meta = yellow bold
-  commit = green bold
-  frag = magenta bold
-  old = red bold
-  new = green bold
-  whitespace = red reverse
-[color "diff-highlight"]
-  oldNormal = red bold
-  oldHighlight = "red bold 52"
-  newNormal = "green bold"
-  newHighlight = "green bold 22"
 [color "branch"]
   current = yellow reverse
   local = yellow
@@ -94,20 +84,11 @@
 [url "git@github.com:magus/"]
   insteadOf = "git://github.com/magus/"
 
-[diff]
-    tool = kitty
-    guitool = kitty.gui
-    colorMoved = default
-[difftool]
-    prompt = false
-    trustExitCode = true
-[difftool "kitty"]
-    cmd = kitty +kitten diff $LOCAL $REMOTE
-[difftool "kitty.gui"]
-    cmd = kitty kitty +kitten diff $LOCAL $REMOTE
-
 [interactive]
     diffFilter = delta --color-only
 
 [absorb]
     maxStack=50
+
+[delta]
+  syntax-theme = "gruvbox-dark"
