@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # detect x86 vs arm4 homebrew installations
 # arm64 is new apply silicon (e.g. m1, m2, etc.)
@@ -12,10 +12,12 @@
 if [[ "$(which brew)" == "/usr/local/bin/brew" ]]; then
   # x86
   # no op, brew path is fine
+  # echo "x86"
+  true
 else
   # arm64
   # if [[ "arm64" == "$(uname -m)" ]]; then
-  echo "arm64"
+  # echo "arm64"
 
   # this `brew shellenv` command sets $HOMEBREW_PREFIX to the correct value
   # it also updates the $PATH with the path to the `brew` executable
