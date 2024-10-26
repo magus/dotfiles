@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "🔐 setting up touchid for sudo"
+sed "s/^#auth/auth/" /etc/pam.d/sudo_local.template | sudo tee /etc/pam.d/sudo_local
+
+echo "🔐 clearing touchid history to speed it up"
+sudo dscl . deletepl "/Users/${USER}" accountPolicyData history
