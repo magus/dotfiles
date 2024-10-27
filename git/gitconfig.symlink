@@ -89,6 +89,3 @@
 
 [absorb]
     maxStack=50
-
-[delta]
-  syntax-theme = "gruvbox-dark"
