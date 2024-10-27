@@ -1,0 +1,43 @@
+#!/bin/bash
+
+set -euo pipefail
+
+echo "📚 Starting jupyter in tmux session…"
+
+session_name="jupy"
+log_file="/tmp/jupy.log"
+port="8888"
+
+if tmux has-session -t "$session_name" 2>/dev/null; then
+    echo "✅ Reusing existing $session_name session"
+else
+    # clear log
+    echo "" >$log_file
+
+    tmux -vv new-session -d -s "$session_name" \
+        "jupyter notebook \
+        --allow-root \
+        --no-browser \
+        --ip='0.0.0.0' \
+        --port $port \
+        --NotebookApp.token=$JUPY_TOKEN \
+        --NotebookApp.port_retries=0 \
+        2>&1 | tee $log_file"
+
+    echo "✅ $session_name started"
+fi
+
+echo
+echo "To attach to session"
+echo
+echo "   tmux a -t $session_name"
+echo
+echo "To kill this session"
+echo
+echo "   tmux kill-session -t $session_name"
+echo
+
+# wait a bit for session to start before tailing
+sleep 2
+echo "❯ tail -F $log_file"
+tail -F $log_file
