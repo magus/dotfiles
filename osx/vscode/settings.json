@@ -31,6 +31,7 @@
   "explorer.confirmDragAndDrop": false,
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
+  "search.useIgnoreFiles": true,
 
   "[javascript][typescript][typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
