@@ -4,7 +4,7 @@
 
 # set -x
 
-branch=$(git branch-grep "$@");
+branch=$(git branch-grep -e "$@");
 
 if [[ -n $branch ]]; then
   git branch -D "$branch";

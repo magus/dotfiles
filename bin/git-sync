@@ -16,7 +16,7 @@ TARGET_BRANCH=${1:-$CURRENT_BRANCH}
 SOURCE_BRANCH=${2:-$DEFAULT_MAIN_BRANCH}
 
 check_sync_exit_code() {
-   local exit_code="$1"
+  local exit_code="$1"
 
   if [[ ! "$exit_code" -eq "0" ]]; then
     echo "🚨 Failure to update source branch [$SOURCE_BRANCH]"
@@ -35,7 +35,6 @@ else
   git fetch --no-tags origin "$SOURCE_BRANCH":"$SOURCE_BRANCH"
   check_sync_exit_code $?
 fi
-
 
 # early exit if we are already on the target branch
 if [[ "$TARGET_BRANCH" == "$SOURCE_BRANCH" && "$CURRENT_BRANCH" == "$SOURCE_BRANCH" ]]; then

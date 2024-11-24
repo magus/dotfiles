@@ -2,19 +2,74 @@
 
 # set -x
 
+usage() {
+  stderr "Usage: git branch-grep [OPTIONS] <pattern>"
+  stderr
+  stderr "Options:"
+  stderr "  -e, --exclude-current    Exclude the current branch from the results"
+  stderr "  -h, --help               Display this help message"
+  stderr
+  stderr "Arguments:"
+  stderr "  <pattern>                Branch name pattern to search for"
+  exit 1
+}
+
+stderr() {
+  echo "$@" >&2
+}
+
 # branch list no color, sorted by commit date descending (`-committerdate`)
 blnc() {
   git branch --no-color --list --sort=-committerdate "$@"
 }
 
-if [[ -z "$*" ]]; then
-  exit 1
+exclude_current=false
+
+while [[ "$#" -gt 0 ]]; do
+  case "$1" in
+    -e|--exclude-current)
+      exclude_current=true
+      shift
+      ;;
+    -h|--help)
+      usage
+      ;;
+    --) # End of options
+      shift
+      break
+      ;;
+    -*)
+      stderr "Unknown option: $1"
+      usage
+      ;;
+    *)
+      # Assume it's the pattern and stop parsing options
+      break
+      ;;
+  esac
+done
+
+if [[ -z "$1" ]]; then
+  stderr "Error: No pattern provided."
+  usage
 fi
 
+pattern="$1"
 
 # prefer exact match (first) over loose wildcard match (second)
-grep_results=$(blnc "$*"; blnc "*$**")
+grep_results=$(blnc "$pattern"; blnc "*$pattern*")
 
-# filter results to exclude current branch and return first match
-current_branch=$(git rev-parse --abbrev-ref HEAD)
-echo "$grep_results" | grep -v "$current_branch$" | head -n1 | awk '{ print $NF }';
+# optionally exclude current branch
+if $exclude_current; then
+  current_branch=$(git rev-parse --abbrev-ref HEAD)
+  grep_results=$(echo "$grep_results" | grep -v "$current_branch$")
+fi
+
+first_match=$(echo "$grep_results" | head -n1 | awk '{ print $NF }';)
+
+if [[ -z "$first_match" ]]; then
+  stderr "No matching branch found."
+  exit 2
+fi
+
+echo "$first_match"
