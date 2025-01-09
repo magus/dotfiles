@@ -1,0 +1,9 @@
+#!/bin/bash
+# On M1 macs, gives you a new shell reset to default arm64
+
+if [ "$(uname -m)" = 'x86_64' ]; then
+    echo "🧰 Changing to arm64 architecture"
+    arch -arm64 zsh
+else
+    echo "✅ arm64 architecture detected"
+fi
