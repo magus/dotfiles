@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AddNewTabAtEndOfTabs</key>
+	<false/>
 	<key>Default Bookmark Guid</key>
 	<string>3E948C0B-981E-45E1-8BAE-0421DA7602C2</string>
 	<key>GlobalKeyMap</key>
