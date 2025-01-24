@@ -36,6 +36,13 @@ eval "$(direnv hook zsh)"
 # https://github.com/Schniz/fnm#zsh
 eval "$(fnm env --use-on-cd)"
 
+if [ "$(uname -m)" = 'arm64' ]; then
+    export FNM_ARCH="arm64"
+else
+    export FNM_ARCH="x64"
+fi
+
+
 # zsh-users/zsh-autosuggestions
 # set the text color for the suggested text
 # https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#configuration
