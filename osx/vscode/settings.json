@@ -113,7 +113,6 @@
     "--settings-path=.isort.cfg"
   ],
   "ruff.importStrategy": "fromEnvironment",
-  "ruff.lint.args": ["--fix", "--unsafe-fixes", "--fix-only"],
   "ruff.organizeImports": false,
   "flake8.args": [
     "--config",
