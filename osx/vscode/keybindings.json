@@ -61,5 +61,9 @@
   {
     "key": "ctrl+shift+i",
     "command": "workbench.panel.chatSidebar"
+  },
+  {
+    "key": "shift+cmd+l",
+    "command": "-aichat.insertselectionintochat"
   }
 ]
