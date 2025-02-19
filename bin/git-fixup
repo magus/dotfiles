@@ -22,7 +22,7 @@ if [[ "$first_arg" =~ "help" ]]; then
   exit 0
 fi
 
-if git diff --cached --quiet; then
+if git diff --text --cached --quiet; then
   usage
   echo
   echo "🚨 Stage changes before calling fixup"
@@ -48,7 +48,7 @@ echo "🛠️ fixup [$commit_sha] ($relative_number)"
 git commit --fixup "$commit_sha"
 
 # check if stash required
-if git diff-index --quiet HEAD --; then
+if git diff-index --text --quiet HEAD --; then
   save_stash=false
 else
   save_stash=true
