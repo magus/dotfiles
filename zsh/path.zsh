@@ -21,3 +21,6 @@ append_path "$HOME/.fastlane/bin"
 
 # homebrew
 eval "$(cat $HOME/.dotfiles/homebrew/path.sh)"
+
+# go
+append_path "/usr/local/go/bin"
