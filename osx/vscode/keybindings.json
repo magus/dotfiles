@@ -65,5 +65,10 @@
   {
     "key": "shift+cmd+l",
     "command": "-aichat.insertselectionintochat"
+  },
+  {
+    "key": "shift+cmd+e",
+    "command": "-aichat.fixerrormessage",
+    "when": "(arbitrary function)"
   }
 ]
