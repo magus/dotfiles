@@ -20,6 +20,7 @@ stderr() {
 
 # branch list no color, sorted by commit date descending (`-committerdate`)
 blnc() {
+  # stderr git branch --no-color --list --sort=-committerdate "$@" 1>&2
   git branch --no-color --list --sort=-committerdate "$@"
 }
 
@@ -57,13 +58,17 @@ fi
 pattern="$1"
 
 # prefer exact match (first) over loose wildcard match (second)
-grep_results=$(blnc "$pattern"; blnc "*$pattern*")
+grep_results=$(blnc "$pattern"; blnc "*$pattern*";)
+# shellcheck disable=SC2001
+grep_results=$(echo "$grep_results" | sed 's/[* ]*//g')
+# stderr "grep_results=$grep_results" 1>&2
 
 # optionally exclude current branch
 if $exclude_current; then
   current_branch=$(git rev-parse --abbrev-ref HEAD)
-  grep_results=$(echo "$grep_results" | grep -v "$current_branch$")
+  grep_results=$(echo "$grep_results" | grep -v "^$current_branch$")
 fi
+# stderr "grep_results=$grep_results" 1>&2
 
 first_match=$(echo "$grep_results" | head -n1 | awk '{ print $NF }';)
 
