@@ -1,24 +1,33 @@
 #!/bin/bash
 # shellcheck disable=SC1090,SC1091,SC2296,SC2034
 
+# mark "START"
+
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 
 # load zimfw which initializes modules etc.
 source "$ZSH/zsh/zimfw.zsh"
+# mark "zimfw"
 
 # load every completion after autocomplete loads
 for config_file in "$ZSH"/**/completion.sh; do
   source "$config_file"
+  # mark "completion - $config_file"
 done
+# mark "completions"
 
 # source zsh/path.zsh first to ensure paths are correct
 source "$ZSH/zsh/path.zsh"
+# mark "path"
 
-# source every .zsh file in this rep
-for config_file in "$ZSH"/**/*.zsh; do
+# source every .autoload.zsh file in this repo
+# this allows us to skip the explicitly loaded zsh files above
+for config_file in "$ZSH"/**/*.autoload.zsh; do
   source "$config_file"
+  # mark "zsh - $config_file"
 done
+# mark "zsh"
 
 # use .private for defining SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
@@ -26,22 +35,24 @@ if [[ -a "$HOME"/.private ]]
 then
   source "$HOME"/.private
 fi
+# mark "private"
 
 eval "$(direnv hook zsh)"
+# mark "direnv"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source "$HOME"/.p10k.zsh
+# mark "p10k"
 
 # fnm
 # https://github.com/Schniz/fnm#zsh
 eval "$(fnm env --use-on-cd)"
+# mark "fnm"
 
 if [ "$(uname -m)" = 'arm64' ]; then
     export FNM_ARCH="arm64"
 else
     export FNM_ARCH="x64"
 fi
-
 
 # zsh-users/zsh-autosuggestions
 # set the text color for the suggested text
@@ -52,15 +63,10 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
 # bun completions
 [ -s "/Users/noah/.bun/_bun" ] && source "/Users/noah/.bun/_bun"
+# mark "bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# pnpm
-export PNPM_HOME="/Users/noah/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
+# mark "END"
