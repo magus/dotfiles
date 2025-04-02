@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 function copy-command-line {
     echo -n $BUFFER | pbcopy
 }
