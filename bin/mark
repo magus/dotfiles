@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -eo pipefail
+
+last_ms_file="/tmp/last_ms"
+
+label="$1"
+delta=0
+now=$(nanos --ms)
+
+if [ ! -f "$last_ms_file" ]; then
+  echo "$now" > "$last_ms_file"
+fi
+
+if [ "$label" == "START" ]; then
+  echo "$now" > "$last_ms_file"
+fi
+
+last_ms=$(cat "$last_ms_file")
+delta=$(( now - last_ms ))
+echo "$now" > "$last_ms_file"
+
+printf "%4dms zsh.rc %s\n" "$delta" "$label" >&2
