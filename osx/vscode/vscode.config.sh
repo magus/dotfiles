@@ -10,5 +10,10 @@ link_file() {
   ln -sf "$src" "$tgt"
 }
 
-link_file "$HOME/.dotfiles/osx/vscode/settings.json" "$HOME/Library/Application Support/Code/User"
-link_file "$HOME/.dotfiles/osx/vscode/keybindings.json" "$HOME/Library/Application Support/Code/User"
+settings_json="$HOME/.dotfiles/osx/vscode/settings.json"
+link_file "$settings_json" "$HOME/Library/Application Support/Code/User"
+link_file "$settings_json" "$HOME/Library/Application Support/Cursor/User"
+
+keybindings_json="$HOME/.dotfiles/osx/vscode/keybindings.json"
+link_file "$keybindings_json" "$HOME/Library/Application Support/Code/User"
+link_file "$keybindings_json" "$HOME/Library/Application Support/Cursor/User"
