@@ -13,9 +13,6 @@ prepend_path /usr/local/sbin
 # google cloud sdk
 append_path $HOME/google-cloud-sdk/bin
 
-# yarn
-append_path "$HOME/.yarn/bin"
-
 # fastlane
 append_path "$HOME/.fastlane/bin"
 
