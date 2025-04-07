@@ -21,3 +21,6 @@ eval "$(cat $HOME/.dotfiles/homebrew/path.sh)"
 
 # go
 append_path "/usr/local/go/bin"
+
+# ensure dotfiles bin are preferred
+prepend_path $HOME/.dotfiles/bin
