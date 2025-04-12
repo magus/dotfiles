@@ -74,5 +74,9 @@
   {
     "key": "ctrl+shift+cmd+g",
     "command": "workbench.view.extension.github-pull-requests"
+  },
+  {
+    "key": "cmd+i",
+    "command": "composerMode.agent"
   }
 ]
