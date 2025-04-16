@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+"""
+Based on one-liner from tweet
+https://x.com/seldo/status/1823126087423099192?lang=en
+
+sudo lsof -iTCP -sTCP:LISTEN -n -P | awk 'NR>1 {print $9, $1, $2}' | sed 's/.*://' | while read port process pid; do echo "Port $port: $(ps -p $pid -o command= | sed 's/^-//') (PID: $pid)"; done | sort -n
+"""
+import os
+import sys
+import subprocess
+
+def ensure_root():
+    if os.geteuid() != 0:
+        print("Elevating privileges to root for complete results…")
+        os.execvp("sudo", ["sudo", sys.executable] + sys.argv)
+
+def get_listening_sockets():
+    proc = subprocess.run(
+        ["lsof", "-nP", "-iTCP", "-sTCP:LISTEN"],
+        stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, check=True
+    )
+    lines = proc.stdout.splitlines()[1:]
+    entries = []
+    for line in lines:
+        parts = line.split()
+        name, cmd, pid = parts[8], parts[0], parts[1]
+        entries.append((name, cmd, pid))
+    return entries
+
+def resolve_full_command(pid):
+    try:
+        out = subprocess.check_output(
+            ["ps", "-p", pid, "-o", "command="],
+            text=True
+        ).strip()
+        return out.lstrip("-")
+    except subprocess.CalledProcessError:
+        return ""
+
+def format_and_print(entries):
+    parsed = []
+    for name, cmd, pid in entries:
+        port = name.rsplit(":", 1)[-1]
+        full_cmd = resolve_full_command(pid)
+        parsed.append((int(port), pid, full_cmd))
+    parsed.sort(key=lambda x: x[0])
+
+    # header
+    print(f"{'PORT':>6}  {'PID':>6}  COMMAND")
+    print(f"{'----':>6}  {'----':>6}  -------")
+
+    for port, pid, cmd in parsed:
+        print(f"{port:>6}  {pid:>6}  {cmd}")
+
+def main():
+    ensure_root()
+    sockets = get_listening_sockets()
+    format_and_print(sockets)
+
+if __name__ == "__main__":
+    main()
