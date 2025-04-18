@@ -5,7 +5,7 @@
 [core]
   editor = vim
   excludesfile = ~/.gitignore
-  pager = delta --dark
+  pager = delta --dark --max-line-length 0
   ; uncomment below to test all syntax themes
   ; pager = delta --dark --show-syntax-themes
   ignorecase = false
