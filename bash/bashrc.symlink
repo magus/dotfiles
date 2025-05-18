@@ -1,0 +1,11 @@
+#!/bin/bash
+# shellcheck disable=SC1090,SC1091,SC2296,SC2034
+#
+# manually link this file to ~/.bashrc
+#   ln -s ~/.dotfiles/bash/bashrc.symlink ~/.bashrc
+#
+# ~/.bashrc  (or source it manually after pasting)
+# Simple prompt: newline, then a bright-green “❯”
+export PS1="\n\[\e[1;32m\]❯\[\e[0m\] "
+
+
