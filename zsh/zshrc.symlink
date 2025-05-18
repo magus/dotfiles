@@ -1,10 +1,13 @@
 #!/bin/bash
 # shellcheck disable=SC1090,SC1091,SC2296,SC2034
 
-# mark "START"
-
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
+
+# ensure binaries exist in path (e.g. mark)
+export PATH="$ZSH/bin:$PATH"
+
+# mark "START"
 
 # load zimfw which initializes modules etc.
 source "$ZSH/zsh/zimfw.zsh"
