@@ -1,5 +1,14 @@
 #!/bin/bash
 
+stderr() {
+   printf '%s\n' "$*" >&2
+}
+
+run() {
+   stderr '❯' "$@"
+   "$@"
+}
+
 # URL is required
 URL="$1"
 if [ -z "$URL" ]; then
@@ -12,4 +21,17 @@ if ! check_dep "yt-dlp"; then
    exit 1
 fi
 
-yt-dlp -k -f "bestaudio[ext=m4a]/bestaudio[ext=mp3]" "$URL" -o "$HOME/Downloads/%(title)s.%(ext)s"
+output="$HOME/Downloads/%(title)s.%(ext)s"
+
+# first try to download m4a/mp3 audio format
+if run yt-dlp -k -f "bestaudio[ext=m4a]/bestaudio[ext=mp3]" -o "$output" "$URL"; then
+   exit 0
+fi
+
+stderr
+stderr "⚠️ Failed to download m4a/mp3 audio format"
+stderr "Trying to extract mp3 instead…"
+stderr
+
+# use built-in audio extraction
+run yt-dlp -x --audio-format mp3 --audio-quality 0 --no-playlist -o "$output" "$URL"
