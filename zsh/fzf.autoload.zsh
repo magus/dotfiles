@@ -1,16 +1,18 @@
 # Setup fzf
 # ---------
-if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
-  PATH="${PATH:+${PATH}:}/usr/local/opt/fzf/bin"
+# find fzf from brew prefix
+BREW_PREFIX=$(brew --prefix)
+if [[ ! "$PATH" == */${BREW_PREFIX}/opt/fzf/bin* ]]; then
+  PATH="${PATH:+${PATH}:}${BREW_PREFIX}/opt/fzf/bin"
 fi
 
 # Auto-completion
 # ---------------
-[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
+[[ $- == *i* ]] && source "${BREW_PREFIX}/opt/fzf/shell/completion.zsh" 2> /dev/null
 
 # Key bindings
 # ------------
-source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+source "${BREW_PREFIX}/opt/fzf/shell/key-bindings.zsh"
 
 # respect gitignore by feeding fzf with ripgrep
 export FZF_DEFAULT_COMMAND="rg --files --hidden"
