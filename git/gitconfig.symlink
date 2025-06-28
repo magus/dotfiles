@@ -76,3 +76,5 @@
 
 [absorb]
     maxStack=50
+[fetch]
+	prune = true
