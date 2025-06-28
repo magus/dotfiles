@@ -7,7 +7,7 @@
 branch=$(git branch-grep -e "$@");
 
 if [[ -n $branch ]]; then
-  git checkout "$branch"
+  git switch --force "$branch"
 else
-  git checkout -b "dev/noah/$1"
+  git switch -c "noah/$1"
 fi
