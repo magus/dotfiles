@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# set -x
+
+# run this to delete all local remote refs
+
+# usage
+# > deletegitrefs
+# attempts to delete all remote refs
+
+rm -rf "$(git rev-parse --git-dir)/refs/remotes/origin"
