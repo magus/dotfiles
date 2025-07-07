@@ -24,6 +24,14 @@ blnc() {
   git branch --no-color --list --sort=-committerdate "$@"
 }
 
+# strip common branch prefixes so everything is comparable
+# - refs/heads/
+# - heads/
+# - remotes/
+normalize_branch() {
+  sed -e 's#^refs/heads/##' -e 's#^heads/##' -e 's#^remotes/##'
+}
+
 exclude_current=false
 
 while [[ "$#" -gt 0 ]]; do
@@ -60,12 +68,13 @@ pattern="$1"
 # prefer exact match (first) over loose wildcard match (second)
 grep_results=$(blnc "$pattern"; blnc "*$pattern*";)
 # shellcheck disable=SC2001
-grep_results=$(echo "$grep_results" | sed 's/[* ]*//g')
+grep_results=$(echo "$grep_results" | sed 's/[* ]*//g' | normalize_branch)
 # stderr "grep_results=$grep_results" 1>&2
 
 # optionally exclude current branch
 if $exclude_current; then
-  current_branch=$(git rev-parse --abbrev-ref HEAD)
+  current_branch=$(git rev-parse --abbrev-ref HEAD | normalize_branch)
+  # stderr "current_branch=$current_branch" 1>&2
   grep_results=$(echo "$grep_results" | grep -v "^$current_branch$")
 fi
 # stderr "grep_results=$grep_results" 1>&2
