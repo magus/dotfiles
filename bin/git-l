@@ -20,8 +20,13 @@ SHA_FORMAT="%C(green)%<($SHA_COLUMN_SIZE,trunc)%h"
 # relative commit date - 15 characters wide, truncated
 DATE_FORMAT="%C(white)%<(15,trunc)%cr"
 
-# author's abbreviated name - 12 characters wide, truncated
-AUTHOR_FORMAT="%C(white)%<(8,trunc)%al"
+# find the longest author email local part for the commits we'll show
+max_author_len=$(git log -n20 "$@" --format='%al' 2>/dev/null | awk '{if(length>m) m=length} END{print m}')
+if [[ -z "$max_author_len" ]]; then
+  max_author_len=8
+fi
+# author's abbreviated name - dynamically sized based on the longest author
+AUTHOR_FORMAT="%C(white)%<(${max_author_len},trunc)%al"
 
 # decorative information like branch heads or tags
 DECORATION_FORMAT="%C(auto)%d"
