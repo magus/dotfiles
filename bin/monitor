@@ -2,6 +2,8 @@
 # monitor output of a command, refresh every 2 seconds
 # press 'R' key to manually refresh entire screen buffer
 
+set -uo pipefail
+
 # quietly exit from keyboard interrupts (CTRL+C)
 # disables echo for interrupt signal and restores when script ends
 stty -echoctl
@@ -22,21 +24,28 @@ clear_screen() {
   fi
 }
 
-# command to run
-command="$*"
+# preserve the original command and arguments exactly
+COMMAND=( "$@" )
+REFRESH_PERIOD_SECONDS=2
+
+# basic usage guard
+if [[ ${#COMMAND[@]} -eq 0 ]]; then
+  stderr "usage: monitor <command> [args...]"
+  exit 2
+fi
 
 while true; do
   # run the command, redirecting all output to stdout
   # in order to ensure we capture everything
-  output=$($command 2>&1)
+  output=$(${COMMAND[@]} 2>&1)
   clear_screen
   stderr "$(date +"%Y-%m-%d %H:%M:%S")"
   stderr "$output"
 
-  # reset key and wait 2 seconds for user to press a key
+  # reset key and wait REFRESH_PERIOD_SECONDS seconds for user to press a key
   # this is effectively our refresh interval for the output
   key=""
-  read -rsn1 -t 2 key
+  read -rsn1 -t $REFRESH_PERIOD_SECONDS key
 
   # clear the screen if 'R' key is pressed
   if [ "$key" == "r" ] || [ "$key" == "R" ]; then
