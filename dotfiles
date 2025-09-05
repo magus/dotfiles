@@ -89,7 +89,7 @@ function do_download() {
     new_dotfiles_install=1
     # ~/.dotfiles doesn't exist? Clone it!
     e_header "Downloading dotfiles"
-    git clone --recursive git@github.com:magus/dotfiles.git ~/.dotfiles
+    git clone --recursive https://github.com/magus/dotfiles.git ~/.dotfiles
     if [[ ! -d ~/.dotfiles ]]; then
       e_error '🚨 Unable to clone dotfiles repo.'
       exit 31
