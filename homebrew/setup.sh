@@ -33,8 +33,3 @@ brew install ripgrep
 
 # javascript
 brew install fnm
-
-# kitty terminal
-if [ ! -e "$(which kitty)" ]; then
-  brew install --cask kitty
-fi
