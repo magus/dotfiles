@@ -30,6 +30,7 @@ brew install vim
 brew install tmux
 brew install fzf
 brew install ripgrep
+brew install magus/git-stack/git-stack
 
 # javascript
 brew install fnm
