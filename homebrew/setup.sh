@@ -33,7 +33,6 @@ brew install ripgrep
 
 # javascript
 brew install fnm
-brew install yarn --ignore-dependencies
 
 # kitty terminal
 if [ ! -e "$(which kitty)" ]; then
