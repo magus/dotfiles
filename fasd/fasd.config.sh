@@ -18,5 +18,3 @@ echo " "
 echo " "
 echo "  ✅ done, run \`fasd\` to confirm installation"
 echo " "
-# shellcheck disable=SC2034
-HOMEBREW_NO_INSTALL_FROM_API=1 HOMEBREW_NO_AUTO_UPDATE=1 brew install fasd
