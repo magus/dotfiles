@@ -43,9 +43,6 @@ fi
 eval "$(direnv hook zsh)"
 # mark "direnv"
 
-[[ ! -f ~/.p10k.zsh ]] || source "$HOME"/.p10k.zsh
-# mark "p10k"
-
 # fnm
 # https://github.com/Schniz/fnm#zsh
 eval "$(fnm env --use-on-cd)"
@@ -71,5 +68,8 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+[[ ! -f ~/.p10k.zsh ]] || source "$HOME"/.p10k.zsh
+# mark "p10k"
 
 # mark "END"
