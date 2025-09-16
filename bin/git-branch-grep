@@ -32,7 +32,13 @@ normalize_branch() {
   sed -e 's#^refs/heads/##' -e 's#^heads/##' -e 's#^remotes/##'
 }
 
+color_enabled=false
+if [ -t 2 ] && [ -z "$NO_COLOR" ]; then
+  color_enabled=true
+fi
+
 exclude_current=false
+quiet=false
 
 while [[ "$#" -gt 0 ]]; do
   case "$1" in
@@ -43,9 +49,9 @@ while [[ "$#" -gt 0 ]]; do
     -h|--help)
       usage
       ;;
-    --) # End of options
+    -q|--quiet)
+      quiet=true
       shift
-      break
       ;;
     -*)
       stderr "Unknown option: $1"
@@ -82,8 +88,14 @@ fi
 first_match=$(echo "$grep_results" | head -n1 | awk '{ print $NF }';)
 
 if [[ -z "$first_match" ]]; then
-  stderr "No matching branch found."
+  if ! $quiet; then
+    stderr "$(color -f dim "No matching branch found.")"
+  fi
   exit 2
+fi
+
+if ! $quiet; then
+  stderr "$(color -f dim "git branch-grep") $(color -f dim "$pattern") $(color -f dim "→") $(color -f yellow "$first_match")"
 fi
 
 echo "$first_match"
