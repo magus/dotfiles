@@ -1,0 +1,156 @@
+#!/usr/bin/env bash
+
+# Prints text with ANSI color/style
+# Disables color if NO_COLOR is set or stdout is not a TTY, unless `-f` or FORCE_COLOR is set
+
+usage() {
+  stderr "Usage: color [-f] [-n] <color> [style ...] <text>"
+  stderr
+  stderr "Options:"
+  stderr "  -f, --force              Force color output"
+  stderr "  -n, --newline            Print newline after text"
+  stderr "  -v, --verbose            Show verbose output"
+  stderr "  -h, --help               Display this help message"
+  stderr
+  stderr "Examples:"
+  stderr "  color red bold \"error\""
+  stderr "  color yellow underline \"warning\""
+  stderr "  echo \"prefix \$(color -f -n blue underline \"link\") suffix\""
+  stderr
+  stderr "Colors:"
+  stderr "  black red green yellow blue magenta cyan white"
+  stderr "Bright:"
+  stderr "  bright_black bright_red bright_green bright_yellow bright_blue bright_magenta bright_cyan bright_white"
+  stderr "Styles:"
+  stderr "  bold dim underline"
+  exit 1
+}
+
+stderr() {
+  echo "$@" >&2
+}
+
+sgr() {
+  printf '\033[%sm' "$1"
+}
+
+to_sgr_code() {
+  case "$1" in
+    black) echo 30 ;;
+    red) echo 31 ;;
+    green) echo 32 ;;
+    yellow) echo 33 ;;
+    blue) echo 34 ;;
+    magenta) echo 35 ;;
+    cyan) echo 36 ;;
+    white) echo 37 ;;
+    gray|grey) echo "90" ;;
+    bright_black) echo "90" ;;
+    bright_red) echo "91" ;;
+    bright_green) echo "92" ;;
+    bright_yellow) echo "93" ;;
+    bright_blue) echo "94" ;;
+    bright_magenta) echo "95" ;;
+    bright_cyan) echo "96" ;;
+    bright_white) echo "97" ;;
+    bold) echo 1 ;;
+    dim) echo 2 ;;
+    underline) echo 4 ;;
+    *) echo "" ;;
+  esac
+}
+
+# stderr "tokens=${tokens[*]}"
+# stderr "text=${text}"
+
+enable_color=true
+if [[ -n "$NO_COLOR" ]]; then
+  enable_color=false
+elif [[ ! -t 1 && -z "$FORCE_COLOR" ]]; then
+  enable_color=false
+fi
+
+newline=false
+verbose=false
+
+while [[ "$#" -gt 0 ]]; do
+  case "$1" in
+    -f|--force)
+      enable_color=true
+      shift
+      ;;
+    -n|--newline)
+      newline=true
+      shift
+      ;;
+    -v|--verbose)
+      verbose=true
+      shift
+      ;;
+    -h|--help)
+      usage
+      ;;
+    -*)
+      stderr "Unknown option: $1"
+      usage
+      ;;
+    *)
+      # Assume it's the pattern and stop parsing options
+      break
+      ;;
+  esac
+done
+
+
+# ensure there is at least one color and text
+if [[ $# -lt 2 ]]; then
+  usage
+fi
+
+# collets all color tokens and final text argument
+token_list=("$@")
+text="${token_list[-1]}"
+unset 'token_list[${#token_list[@]}-1]'
+
+# build sgr codes from tokens
+code_list=()
+for token in "${token_list[@]}"; do
+  code="$(to_sgr_code "$token")"
+  if [[ -z "$code" ]]; then
+    stderr "Unknown color/style: $token"
+    exit 2
+  fi
+  code_list+=("$code")
+done
+
+
+if $verbose; then
+  stderr "code_list=${code_list[*]}"
+fi
+
+# if code list is empty exit with usage
+if [[ "${#code_list[@]}" -eq 0 ]]; then
+  usage
+fi
+
+# join code list with `;`
+printf -v joined_codes '%s;' "${code_list[@]}"
+# strip trailing ';'
+joined_codes="${joined_codes%;}"
+
+if $verbose; then
+  stderr "joined_codes=$joined_codes"
+fi
+
+prefix=""
+suffix=""
+if $enable_color; then
+  prefix="$(sgr "$joined_codes")"
+  suffix="$(sgr 0)"
+fi
+
+# print color text with optional newline
+printf "${prefix}${text}${suffix}"
+if $newline; then
+  printf "\n"
+fi
