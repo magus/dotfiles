@@ -1,6 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # set -x
+
+if [[ $# -lt 1 ]]; then
+  args=("$@")
+else
+  token_list=("$@")
+  last_token="${token_list[-1]}"
+  unset 'token_list[${#token_list[@]}-1]'
+
+  maybe_branch=$(git branch-grep "$last_token")
+  if [[ -n "$maybe_branch" ]]; then
+    args=("${token_list[@]}" "$maybe_branch")
+  fi
+fi
 
 terminal_width=$(tput cols)
 
@@ -33,4 +46,4 @@ SUBJECT_FORMAT="%<(60,trunc)%s"
 FORMAT="$SHA_FORMAT $DATE_FORMAT $AUTHOR_FORMAT $DECORATION_FORMAT $SUBJECT_FORMAT"
 
 # view the SHA, description and history graph of last 20 commits
-git log --pretty=format:"$FORMAT" -n20 --graph --color "$@" | cut -c 1-"$truncation_width" | nl -w3 -s' '
+git log --pretty=format:"$FORMAT" -n20 --graph --color ${args[*]} | cut -c 1-"$truncation_width" | nl -w3 -s' '
