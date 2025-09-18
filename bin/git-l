@@ -2,15 +2,20 @@
 
 # set -x
 
-if [[ $# -lt 1 ]]; then
-  args=("$@")
-else
+stderr() {
+  echo "$@" >&2
+}
+
+args=("$@")
+
+if [[ $# -gt 0 ]]; then
   token_list=("$@")
   last_token="${token_list[-1]}"
   unset 'token_list[${#token_list[@]}-1]'
 
-  maybe_branch=$(git branch-grep "$last_token")
+  maybe_branch=$(git branch-grep -q "$last_token")
   if [[ -n "$maybe_branch" ]]; then
+    stderr "$(color -f dim "git b") $(color -f dim "$last_token") $(color -f dim "→") $(color -f yellow "$maybe_branch")"
     args=("${token_list[@]}" "$maybe_branch")
   fi
 fi
