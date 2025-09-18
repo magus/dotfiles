@@ -15,7 +15,9 @@ usage() {
 }
 
 stderr() {
-  echo "$@" >&2
+  if ! $quiet; then
+    echo "$@" >&2
+  fi
 }
 
 # branch list no color, sorted by commit date descending (`-committerdate`)
@@ -39,6 +41,15 @@ fi
 
 exclude_current=false
 quiet=false
+
+# parse quiet first so we can silence output below
+for arg in "$@"; do
+  case "$arg" in
+    -q|--quiet)
+      quiet=true
+      ;;
+  esac
+done
 
 while [[ "$#" -gt 0 ]]; do
   case "$1" in
