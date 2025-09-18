@@ -106,7 +106,7 @@ if [[ -z "$first_match" ]]; then
 fi
 
 if ! $quiet; then
-  stderr "$(color -f dim "git branch-grep") $(color -f dim "$pattern") $(color -f dim "→") $(color -f yellow "$first_match")"
+  stderr "$(color -f dim "git b") $(color -f dim "$pattern") $(color -f dim "→") $(color -f yellow "$first_match")"
 fi
 
 echo "$first_match"
