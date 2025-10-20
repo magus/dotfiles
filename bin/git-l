@@ -13,10 +13,25 @@ if [[ $# -gt 0 ]]; then
   last_token="${token_list[-1]}"
   unset 'token_list[${#token_list[@]}-1]'
 
-  maybe_branch=$(git branch-grep -q "$last_token")
-  if [[ -n "$maybe_branch" ]]; then
-    stderr "$(color -f dim "git b") $(color -f dim "$last_token") $(color -f dim "→") $(color -f yellow "$maybe_branch")"
-    args=("${token_list[@]}" "$maybe_branch")
+  # stderr "token_list=${token_list[*]}"
+  # stderr "last_token=$last_token"
+
+  # check for special "." and ".."
+  if [[ "$last_token" == "." || "$last_token" == ".." ]]; then
+    stderr "$(color -f dim "git l") $(color -f dim "$last_token")"
+    args=("${token_list[@]}" "$last_token")
+  # check for exact file
+  elif [[ -f "$last_token" ]]; then
+    stderr "$(color -f dim "git l") $(color -f dim "$last_token")"
+    args=("${token_list[@]}" "$last_token")
+  else
+    # check for branch match
+    maybe_branch=$(git branch-grep -q "$last_token")
+    git branch-grep -q "$last_token"
+    if [[ -n "$maybe_branch" ]]; then
+      stderr "$(color -f dim "git b") $(color -f dim "$last_token") $(color -f dim "→") $(color -f yellow "$maybe_branch")"
+      args=("${token_list[@]}" "$maybe_branch")
+    fi
   fi
 fi
 
