@@ -65,7 +65,19 @@ install_blackhole() {
 
   echo "🧰 installing [blackhole-2ch]"
 
+
   HOMEBREW_NO_AUTO_UPDATE=1 brew install blackhole-2ch
+  sudo killall coreaudiod
+
+  echo ""
+  echo "🚨 IMPORTANT"
+  echo ""
+  echo "1. Open Audio Midi Setup and create a Multi-Output Device device that combines:"
+  echo "   - BlackHole 2ch (virtual sink for capture)"
+  echo "   - MacBook Pro Speakers (or whatever you actually listen on)"
+  echo ""
+  echo "2. Rename the device \"Blackhole Passthrough\""
+  echo ""
 
   sleep 5
 
