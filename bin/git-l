@@ -10,11 +10,14 @@ args=("$@")
 
 if [[ $# -gt 0 ]]; then
   token_list=("$@")
-  last_token="${token_list[-1]}"
-  unset 'token_list[${#token_list[@]}-1]'
-
-  # stderr "token_list=${token_list[*]}"
+  stderr "token_list[*]=${token_list[*]}"
+  last_index=$((${#token_list[@]} - 1))
+  # stderr "last_index=$last_index"
+  last_token="${token_list[$last_index]}"
   # stderr "last_token=$last_token"
+
+  unset 'token_list[${#token_list[@]}-1]'
+  # stderr "token_list[*]=${token_list[*]}"
 
   # check for special "." and ".."
   if [[ "$last_token" == "." || "$last_token" == ".." ]]; then
@@ -34,6 +37,8 @@ if [[ $# -gt 0 ]]; then
     fi
   fi
 fi
+
+# stderr "args[*]=${args[*]}"
 
 terminal_width=$(tput cols)
 

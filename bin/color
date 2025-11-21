@@ -109,8 +109,14 @@ fi
 
 # collets all color tokens and final text argument
 token_list=("$@")
-text="${token_list[-1]}"
+# stderr "token_list[*]=${token_list[*]}"
+last_index=$((${#token_list[@]} - 1))
+# stderr "last_index=$last_index"
+text="${token_list[$last_index]}"
+# stderr "text=$text"
+
 unset 'token_list[${#token_list[@]}-1]'
+# stderr "token_list[*]=${token_list[*]}"
 
 # build sgr codes from tokens
 code_list=()
