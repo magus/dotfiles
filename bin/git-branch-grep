@@ -31,7 +31,7 @@ blnc() {
 # - heads/
 # - remotes/
 normalize_branch() {
-  sed -e 's#^refs/heads/##' -e 's#^heads/##' -e 's#^remotes/##'
+  sed -e 's#^refs/heads/##' -e 's#^heads/##' -e 's#^remotes/##' -e 's#^[+* ] ##'
 }
 
 color_enabled=false
@@ -85,7 +85,7 @@ pattern="$1"
 # prefer exact match (first) over loose wildcard match (second)
 grep_results=$(blnc "$pattern"; blnc "*$pattern*";)
 # shellcheck disable=SC2001
-grep_results=$(echo "$grep_results" | sed 's/[* ]*//g' | normalize_branch)
+grep_results=$(echo "$grep_results" | normalize_branch)
 # stderr "grep_results=$grep_results" 1>&2
 
 # optionally exclude current branch
