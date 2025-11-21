@@ -125,6 +125,12 @@
   },
   {
     "key": "alt+tab",
-    "command": "editor.action.acceptCursorTabSuggestion"
+    "command": "editor.action.inlineSuggest.commit",
+    "when": "inlineSuggestionVisible && editorTextFocus"
+  },
+  {
+    "key": "alt+tab",
+    "command": "editor.action.acceptCursorTabSuggestion",
+    "when": "cpp.shouldAcceptTab && editorTextFocus"
   }
 ]
