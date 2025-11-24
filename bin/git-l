@@ -10,7 +10,7 @@ args=("$@")
 
 if [[ $# -gt 0 ]]; then
   token_list=("$@")
-  stderr "token_list[*]=${token_list[*]}"
+  # stderr "token_list[*]=${token_list[*]}"
   last_index=$((${#token_list[@]} - 1))
   # stderr "last_index=$last_index"
   last_token="${token_list[$last_index]}"
