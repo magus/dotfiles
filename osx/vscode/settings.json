@@ -30,7 +30,7 @@
   "editor.tabSize": 2,
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
-  "extensions.gallery.serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery",
+  // "extensions.gallery.serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery",
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
   "search.useIgnoreFiles": true,
