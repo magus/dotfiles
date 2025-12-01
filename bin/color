@@ -15,6 +15,7 @@ usage() {
   stderr "Examples:"
   stderr "  color red bold \"error\""
   stderr "  color yellow underline \"warning\""
+  stderr "  color black bright_red underline bold git l some other stuff \"hi\""
   stderr "  echo \"prefix \$(color -f -n blue underline \"link\") suffix\""
   stderr
   stderr "Colors:"
@@ -101,43 +102,53 @@ while [[ "$#" -gt 0 ]]; do
   esac
 done
 
-
-# ensure there is at least one color and text
+# now $@ is: <color/style...> <text...>
+# ensure there is at least one code and text
 if [[ $# -lt 2 ]]; then
   usage
 fi
 
-# collets all color tokens and final text argument
+# collets all code and text tokens
 token_list=("$@")
 # stderr "token_list[*]=${token_list[*]}"
-last_index=$((${#token_list[@]} - 1))
-# stderr "last_index=$last_index"
-text="${token_list[$last_index]}"
-# stderr "text=$text"
 
-unset 'token_list[${#token_list[@]}-1]'
-# stderr "token_list[*]=${token_list[*]}"
-
-# build sgr codes from tokens
+# parse code tokens until we hit text tokens
+parsing_styles=true
 code_list=()
-for token in "${token_list[@]}"; do
-  code="$(to_sgr_code "$token")"
-  if [[ -z "$code" ]]; then
-    stderr "Unknown color/style: $token"
-    exit 2
-  fi
-  code_list+=("$code")
-done
+text_list=()
 
+for token in "${token_list[@]}"; do
+  if $parsing_styles; then
+    code="$(to_sgr_code "$token")"
+    if [[ -n "$code" ]]; then
+      code_list+=("$code")
+      continue
+    else
+      # handle edge case if code_list is empty
+      # show clear error about unknown code
+      if [[ "${#code_list[@]}" -eq 0 ]]; then
+        stderr "Unknown color/style: $token"
+        usage
+      fi
+
+      parsing_styles=false
+    fi
+  fi
+
+  text_list+=("$token")
+done
 
 if $verbose; then
   stderr "code_list=${code_list[*]}"
+  stderr "text_list[*]=${text_list[*]}"
 fi
 
-# if code list is empty exit with usage
-if [[ "${#code_list[@]}" -eq 0 ]]; then
+# if text_list is empty exit with usage
+if [[ "${#text_list[@]}" -eq 0 ]]; then
   usage
 fi
+
+text="${text_list[*]}"
 
 # join code list with `;`
 printf -v joined_codes '%s;' "${code_list[@]}"
@@ -156,7 +167,8 @@ if $enable_color; then
 fi
 
 # print color text with optional newline
-printf "${prefix}${text}${suffix}"
+out="${prefix}${text}${suffix}"
+printf '%s' "$out"
 if $newline; then
   printf "\n"
 fi
