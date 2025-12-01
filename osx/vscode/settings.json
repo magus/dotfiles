@@ -166,6 +166,9 @@
   "shellcheck.executablePath": "/usr/local/bin/shellcheck",
   "shellcheck.customArgs": ["-x"],
 
+  "zig.path": "zig",
+  "zig.zls.enabled": "on",
+
   "git.autorefresh": false,
   "git.autoRepositoryDetection": false,
   "git.enableStatusBarSync": false,
