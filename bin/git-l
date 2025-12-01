@@ -71,4 +71,6 @@ SUBJECT_FORMAT="%<(60,trunc)%s"
 FORMAT="$SHA_FORMAT $DATE_FORMAT $AUTHOR_FORMAT $DECORATION_FORMAT $SUBJECT_FORMAT"
 
 # view the SHA, description and history graph of last 20 commits
-git log --pretty=format:"$FORMAT" -n20 --graph --color ${args[*]} | cut -c 1-"$truncation_width" | nl -w3 -s' '
+# quoted "${args[@]}" to prevent shell splitting / globbing
+# example `git l -n5 --since "2 weeks ago"` breaks without quotes here
+git log --pretty=format:"$FORMAT" -n20 --graph --color "${args[@]}" | cut -c 1-"$truncation_width" | nl -w3 -s' '
