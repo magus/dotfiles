@@ -24,3 +24,7 @@ append_path "/usr/local/go/bin"
 
 # ensure dotfiles bin are preferred
 prepend_path $HOME/.dotfiles/bin
+
+# zig
+# https://ziglang.org/download/
+prepend_path "/opt/zig/0.16.0"
