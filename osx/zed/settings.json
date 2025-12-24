@@ -1,0 +1,34 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "vim_mode": false,
+  "base_keymap": "VSCode",
+  "search": {
+    "include_ignored": true,
+  },
+  "sticky_scroll": {
+    "enabled": true,
+  },
+  "buffer_font_fallbacks": ["Menlo", "Monaco", "Courier New", "monospace"],
+  "buffer_font_family": "Ligconsolata-Regular",
+  "completions": {
+    "words": "disabled",
+  },
+  "show_whitespaces": "all",
+  "show_edit_predictions": true,
+  "ensure_final_newline_on_save": true,
+  "tab_size": 2,
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  "theme": {
+    "mode": "system",
+    "light": "Ayu Light",
+    "dark": "Catppuccin Mocha",
+  },
+}
