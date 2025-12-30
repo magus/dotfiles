@@ -23,6 +23,8 @@
     "bindings": {
       "ctrl-tab": "pane::ActivateNextItem",
       "shift-ctrl-tab": "pane::ActivatePreviousItem",
+      "ctrl->": "pane::SwapItemRight",
+      "ctrl-<": "pane::SwapItemLeft",
     },
   },
   {
