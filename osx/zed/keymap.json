@@ -25,4 +25,10 @@
       "shift-ctrl-tab": "pane::ActivatePreviousItem",
     },
   },
+  {
+    "context": "Editor",
+    "bindings": {
+      "cmd-y": "editor::Redo",
+    },
+  },
 ]
