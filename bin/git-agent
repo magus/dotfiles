@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+stderr() {
+  echo "$@" >&2
+}
+
+usage() {
+  stderr "usage: git agent <name>"
+  exit 2
+}
+
+worktree_name="${1:-}"
+
+if [[ -z "$worktree_name" ]]; then
+  usage
+fi
+
+worktrees_root="${GIT_AGENT_WORKTREES_ROOT:-"$HOME/code/worktrees"}"
+git_agent_binary="${GIT_AGENT_BINARY:-"opencode"}"
+
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  usage
+fi
+
+repo_root="$(git rev-parse --show-toplevel)"
+repo_origin="$(git -C "$repo_root" remote get-url origin 2>/dev/null || true)"
+repo_origin="${repo_origin%.git}"
+
+repo_path=""
+case "$repo_origin" in
+  git@github.com:*)          repo_path="${repo_origin#git@github.com:}" ;;
+  https://github.com/*)      repo_path="${repo_origin#https://github.com/}" ;;
+  ssh://git@github.com/*)    repo_path="${repo_origin#ssh://git@github.com/}" ;;
+esac
+
+if [[ -z "$repo_path" ]]; then
+  repo_path="$(basename $repo_root)"
+  stderr "⚠️ fallback to repository directory name ($repo_path)"
+fi
+
+# ensure branch exists
+head_commit="$(git -C "$repo_root" rev-parse HEAD)"
+if ! git -C "$repo_root" show-ref --verify --quiet "refs/heads/$worktree_name"; then
+  stderr "create branch ($worktree_name)"
+  git -C "$repo_root" branch -f "$worktree_name" "$head_commit"
+else
+  stderr "reuse existing branch ($worktree_name)"
+fi
+
+worktree_path="$worktrees_root/$repo_path/$worktree_name"
+
+# create worktree if it does not exist
+if [[ ! -d "$worktree_path" ]]; then
+  stderr "create worktree ($worktree_path)"
+  git -C "$repo_root" worktree add "$worktree_path" "$worktree_name"
+else
+  stderr "reuse existing worktree ($worktree_path)"
+fi
+
+# ensure dir is an actual worktree
+if ! git -C "$worktree_path" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  stderr "🚨 worktree path exists but is not a git worktree ($worktree_path)"
+  exit 3
+fi
+
+if ! command -v $git_agent_binary >/dev/null 2>&1; then
+  stderr "⚠️ unable to run agent ($git_agent_binary)"
+else
+  cd "$worktree_path"
+  exec $git_agent_binary
+fi
