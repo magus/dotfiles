@@ -21,6 +21,7 @@ usage() {
   stderr "$(color -f bright_white "OPTIONS")"
   stderr "  --shell            Enter an interactive shell in the worktree after the agent exits."
   stderr "  --no-shell         Never enter a shell (default when not attached to a TTY)."
+  stderr "  -R, --reset        Reset the worktree to the current repo HEAD (hard reset + clean)."
   stderr "  -D, --rm, --delete Remove the worktree for <name> and exit."
   stderr "  -h, --help         Show this help."
   stderr
@@ -44,11 +45,13 @@ usage() {
 
 shell_mode="auto"
 delete_mode="no"
+reset_mode="no"
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --shell) shell_mode="yes"; shift ;;
     --no-shell) shell_mode="no"; shift ;;
     -D|--rm|--delete) delete_mode="yes"; shift ;;
+    -R|--reset) reset_mode="yes"; shift ;;
     -h|--help) usage ;;
     --) shift; break ;;
     -*) stderr "unknown option: $1"; usage ;;
@@ -111,6 +114,13 @@ if [[ "$delete_mode" == "yes" ]]; then
   stderr "❌ delete worktree ($(color -f dim $worktree_path))"
   run git -C "$repo_root" worktree remove --force "$worktree_path"
   exit 0
+fi
+
+if [[ "$reset_mode" == "yes" ]]; then
+  stderr "🔄 reset worktree to repo HEAD ($(color -f dim $head_commit))"
+  run git -C "$worktree_path" checkout --detach --force "$head_commit"
+  run git -C "$worktree_path" reset --hard "$head_commit"
+  run git -C "$worktree_path" clean -fd
 fi
 
 # create worktree if it does not exist
