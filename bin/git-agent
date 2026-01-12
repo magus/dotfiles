@@ -16,6 +16,26 @@ usage() {
   exit 2
 }
 
+shell_mode="auto"
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --shell) shell_mode="yes"; shift ;;
+    --no-shell) shell_mode="no"; shift ;;
+    -h|--help) usage ;;
+    --) shift; break ;;
+    -*) stderr "unknown option: $1"; usage ;;
+    *) break ;;
+  esac
+done
+
+# bash test for "am I running interactively in a terminal?"
+# -t FD is true if file descriptor FD points at a TTY (terminal)
+# 0 = stdin, 1 = stdout, so true when stdin and stdout are a TTY
+# e.g. `echo $(git agent --shell opencode-a)` will trip this safeguard
+if [[ ! -t 0 || ! -t 1 ]]; then
+  shell_mode="no"
+fi
+
 worktree_name="${1:-}"
 
 if [[ -z "$worktree_name" ]]; then
@@ -24,6 +44,9 @@ fi
 
 worktrees_root="${GIT_AGENT_WORKTREES_ROOT:-"$HOME/code/worktrees"}"
 git_agent_binary="${GIT_AGENT_BINARY:-"opencode"}"
+
+# stderr "shell_mode=$shell_mode"
+# exit 99
 
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   usage
@@ -75,4 +98,8 @@ else
   stderr "starting $git_agent_binary ($(color -f dim $worktree_path))"
   run cd "$worktree_path"
   run $git_agent_binary
+fi
+
+if [[ "$shell_mode" == "yes" ]]; then
+  exec "${SHELL:-bash}"
 fi
