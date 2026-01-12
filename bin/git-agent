@@ -34,6 +34,10 @@ done
 # e.g. `echo $(git agent --shell opencode-a)` will trip this safeguard
 if [[ ! -t 0 || ! -t 1 ]]; then
   shell_mode="no"
+else
+  if [[ "$shell_mode" == "auto" ]]; then
+    shell_mode="yes"
+  fi
 fi
 
 worktree_name="${1:-}"
