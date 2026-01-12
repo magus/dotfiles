@@ -1,3 +1,20 @@
 {
-
+  "model": "openai/gpt-5.2",
+  "agent": {
+    "plan": {
+      "model": "openai/gpt-5.2",
+      "options": {
+        "reasoningEffort": "xhigh"
+      },
+      "permission": {}
+    },
+    "build": {
+      "model": "openai/gpt-5.2",
+      "options": {
+        "reasoningEffort": "xhigh"
+      },
+      "permission": {}
+    }
+  },
+  "$schema": "https://opencode.ai/config.json"
 }
