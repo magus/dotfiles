@@ -10,6 +10,12 @@
     "context": "Workspace",
     "bindings": {
       // "shift shift": "file_finder::Toggle"
+      // zed binds cmd+b to toggle left dock
+      // but I prefer dock to be right side
+      // zed uses cmd+r for this but my muscle memory is cmd+b from vscode
+      // swap the toggle keybinds for convenience
+      "cmd-b": "workspace::ToggleRightDock",
+      "cmd-r": "workspace::ToggleLeftDock",
     },
   },
   {
