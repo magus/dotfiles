@@ -12,7 +12,33 @@ run() {
 }
 
 usage() {
-  stderr "usage: git agent <name>"
+  stderr
+  stderr "$(color -f bright_white "git agent") — create/reuse a worktree for the current repo and run an agent inside it."
+  stderr
+  stderr "$(color -f bright_white "USAGE")"
+  stderr "  git agent [options] <name> [-- <agent args>...]"
+  stderr
+  stderr "$(color -f bright_white "OPTIONS")"
+  stderr "  --shell            Enter an interactive shell in the worktree after the agent exits."
+  stderr "  --no-shell         Never enter a shell (default when not attached to a TTY)."
+  stderr "  -D, --rm, --delete Remove the worktree for <name> and exit."
+  stderr "  -h, --help         Show this help."
+  stderr
+  stderr "$(color -f bright_white "ARGS")"
+  stderr "  <name>             Worktree name (also used as the new worktree branch name)."
+  stderr "  <agent args>       Passed through to the agent binary (after '--')."
+  stderr
+  stderr "$(color -f bright_white "ENV")"
+  stderr "  GIT_AGENT_WORKTREES_ROOT   Root directory for worktrees (default: ~/code/worktrees)"
+  stderr "  GIT_AGENT_BINARY           Agent command to run (default: opencode)"
+  stderr
+  stderr "$(color -f bright_white "EXAMPLES")"
+  stderr "  git agent opencode-a"
+  stderr "  git agent --shell opencode-a"
+  stderr "  git agent -- opencode --model gpt-4.1 --temperature 0"
+  stderr "  git agent --delete opencode-a"
+  stderr
+  stderr "$(color -f dim "Notes: '--shell' is forced off when stdin/stdout aren't TTYs.")"
   exit 2
 }
 
