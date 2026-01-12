@@ -8,7 +8,7 @@ stderr() {
 
 run() {
   stderr $(color -f bright_green '❯') "$@"
-   "$@"
+  "$@"
 }
 
 usage() {
@@ -72,20 +72,12 @@ if [[ -z "$repo_path" ]]; then
   stderr "⚠️ $(color -f yellow WARN): fallback to repository directory name ($(color -f dim $repo_path))"
 fi
 
-# ensure branch exists
 head_commit="$(git -C "$repo_root" rev-parse HEAD)"
-if ! git -C "$repo_root" show-ref --verify --quiet "refs/heads/$worktree_name"; then
-  stderr "create branch ($worktree_name)"
-  run git -C "$repo_root" branch -f "$worktree_name" "$head_commit"
-else
-  stderr "reuse existing branch ($(color -f dim $worktree_name))"
-fi
-
 worktree_path="$worktrees_root/$repo_path/$worktree_name"
 
 # create worktree if it does not exist
 if [[ ! -d "$worktree_path" ]]; then
-  run git -C "$repo_root" worktree add "$worktree_path" "$worktree_name"
+  run git -C "$repo_root" worktree add --detach "$worktree_path" "$head_commit"
 else
   stderr "reuse existing worktree ($(color -f dim $worktree_path))"
 fi
