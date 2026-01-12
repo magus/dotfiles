@@ -21,6 +21,7 @@ usage() {
   stderr "$(color -f bright_white "OPTIONS")"
   stderr "  --shell            Enter an interactive shell in the worktree after the agent exits."
   stderr "  --no-shell         Never enter a shell (default when not attached to a TTY)."
+  stderr "  --binary <cmd>     Agent command to run (overrides GIT_AGENT_BINARY)."
   stderr "  -R, --reset        Reset the worktree to the current repo HEAD (hard reset + clean)."
   stderr "  -D, --rm, --delete Remove the worktree for <name> and exit."
   stderr "  -h, --help         Show this help."
@@ -36,6 +37,7 @@ usage() {
   stderr "$(color -f bright_white "EXAMPLES")"
   stderr "  git agent opencode-a"
   stderr "  git agent --shell opencode-a"
+  stderr "  git agent --binary codex opencode-a"
   stderr "  git agent -- opencode --model gpt-4.1 --temperature 0"
   stderr "  git agent --delete opencode-a"
   stderr
@@ -46,10 +48,27 @@ usage() {
 shell_mode="auto"
 delete_mode="no"
 reset_mode="no"
+git_agent_binary="${GIT_AGENT_BINARY:-"opencode"}"
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --shell) shell_mode="yes"; shift ;;
     --no-shell) shell_mode="no"; shift ;;
+    --binary)
+      if [[ $# -lt 2 || -z "${2:-}" ]]; then
+        stderr "missing argument for --binary"
+        usage
+      fi
+      git_agent_binary="$2"
+      shift 2
+      ;;
+    --binary=*)
+      git_agent_binary="${1#--binary=}"
+      if [[ -z "$git_agent_binary" ]]; then
+        stderr "missing argument for --binary"
+        usage
+      fi
+      shift
+      ;;
     -D|--rm|--delete) delete_mode="yes"; shift ;;
     -R|--reset) reset_mode="yes"; shift ;;
     -h|--help) usage ;;
@@ -81,9 +100,11 @@ fi
 shift
 
 worktrees_root="${GIT_AGENT_WORKTREES_ROOT:-"$HOME/code/worktrees"}"
-git_agent_binary="${GIT_AGENT_BINARY:-"opencode"}"
 
 # stderr "shell_mode=$shell_mode"
+# stderr "delete_mode=$delete_mode"
+# stderr "reset_mode=$reset_mode"
+# stderr "git_agent_binary=$git_agent_binary"
 # stderr "agent_args=$*"
 # exit 99
 
