@@ -42,10 +42,14 @@ if [[ -z "$worktree_name" ]]; then
   usage
 fi
 
+# shift out worktree name so `$@` correct capturing agent binary args
+shift
+
 worktrees_root="${GIT_AGENT_WORKTREES_ROOT:-"$HOME/code/worktrees"}"
 git_agent_binary="${GIT_AGENT_BINARY:-"opencode"}"
 
 # stderr "shell_mode=$shell_mode"
+# stderr "agent_args=$*"
 # exit 99
 
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
@@ -92,12 +96,12 @@ if ! git -C "$worktree_path" rev-parse --is-inside-work-tree >/dev/null 2>&1; th
   exit 3
 fi
 
-if ! command -v $git_agent_binary >/dev/null 2>&1; then
+if ! command -v "$git_agent_binary" >/dev/null 2>&1; then
   stderr "⚠️ $(color -f yellow WARN): missing agent binary ($(color -f dim $git_agent_binary))"
 else
   stderr "starting $git_agent_binary ($(color -f dim $worktree_path))"
   run cd "$worktree_path"
-  run $git_agent_binary
+  run "$git_agent_binary" "$@"
 fi
 
 if [[ "$shell_mode" == "yes" ]]; then
