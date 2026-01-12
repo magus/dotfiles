@@ -10,10 +10,17 @@ link_file() {
   ln -sf "$src" "$tgt"
 }
 
-settings_json="$HOME/.dotfiles/osx/vscode/settings.json"
-link_file "$settings_json" "$HOME/Library/Application Support/Code/User"
-link_file "$settings_json" "$HOME/Library/Application Support/Cursor/User"
+src_dir="$HOME/.dotfiles/osx/vscode"
+dst_dir=(
+  "$HOME/Library/Application Support/Code/User"
+  "$HOME/Library/Application Support/Cursor/User"
+)
 
-keybindings_json="$HOME/.dotfiles/osx/vscode/keybindings.json"
-link_file "$keybindings_json" "$HOME/Library/Application Support/Code/User"
-link_file "$keybindings_json" "$HOME/Library/Application Support/Cursor/User"
+for dir in "${dst_dir[@]}"; do
+  mkdir -p "$dir"
+done
+
+for dir in "${dst_dir[@]}"; do
+  link_file "$src_dir/settings.json" "$dir"
+  link_file "$src_dir/keybindings.json" "$dir"
+done

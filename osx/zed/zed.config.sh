@@ -10,6 +10,9 @@ link_file() {
   ln -sf "$src" "$tgt"
 }
 
-zed_dotfiles="$HOME/.dotfiles/osx/zed"
-link_file "$zed_dotfiles/settings.json" "$HOME/.config/zed"
-link_file "$zed_dotfiles/keymap.json" "$HOME/.config/zed"
+src_dir="$HOME/.dotfiles/osx/zed"
+dst_dir="$HOME/.config/zed"
+mkdir -p "$dst_dir"
+
+link_file "$src_dir/settings.json" "$dst_dir"
+link_file "$src_dir/keymap.json" "$dst_dir"
