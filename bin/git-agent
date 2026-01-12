@@ -7,7 +7,7 @@ stderr() {
 }
 
 run() {
-  stderr $(color -f bright_green '❯') "$@"
+  stderr "$(color -f bright_green '❯')" "$@"
   "$@"
 }
 
@@ -103,21 +103,21 @@ case "$repo_origin" in
 esac
 
 if [[ -z "$repo_path" ]]; then
-  repo_path="$(basename $repo_root)"
-  stderr "⚠️ $(color -f yellow WARN): fallback to repository directory name ($(color -f dim $repo_path))"
+  repo_path="$(basename "$repo_root")"
+  stderr "⚠️ $(color -f yellow WARN): fallback to repository directory name ($(color -f dim "$repo_path"))"
 fi
 
 head_commit="$(git -C "$repo_root" rev-parse HEAD)"
 worktree_path="$worktrees_root/$repo_path/$worktree_name"
 
 if [[ "$delete_mode" == "yes" ]]; then
-  stderr "❌ delete worktree ($(color -f dim $worktree_path))"
+  stderr "❌ delete worktree ($(color -f dim "$worktree_path"))"
   run git -C "$repo_root" worktree remove --force "$worktree_path"
   exit 0
 fi
 
 if [[ "$reset_mode" == "yes" ]]; then
-  stderr "🔄 reset worktree to repo HEAD ($(color -f dim $head_commit))"
+  stderr "🔄 reset worktree to repo HEAD ($(color -f dim "$head_commit"))"
   run git -C "$worktree_path" checkout --detach --force "$head_commit"
   run git -C "$worktree_path" reset --hard "$head_commit"
   run git -C "$worktree_path" clean -fd
@@ -127,19 +127,19 @@ fi
 if [[ ! -d "$worktree_path" ]]; then
   run git -C "$repo_root" worktree add --detach "$worktree_path" "$head_commit"
 else
-  stderr "reuse existing worktree ($(color -f dim $worktree_path))"
+  stderr "reuse existing worktree ($(color -f dim "$worktree_path"))"
 fi
 
 # ensure dir is an actual worktree
 if ! git -C "$worktree_path" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-  stderr "🚨 $(color -f red ERROR): worktree path exists but is not a git worktree ($(color -f dim $worktree_path))"
+  stderr "🚨 $(color -f red ERROR): worktree path exists but is not a git worktree ($(color -f dim "$worktree_path"))"
   exit 3
 fi
 
 if ! command -v "$git_agent_binary" >/dev/null 2>&1; then
-  stderr "⚠️ $(color -f yellow WARN): missing agent binary ($(color -f dim $git_agent_binary))"
+  stderr "⚠️ $(color -f yellow WARN): missing agent binary ($(color -f dim "$git_agent_binary"))"
 else
-  stderr "starting $(color -f cyan $git_agent_binary) ($(color -f dim $worktree_path))"
+  stderr "starting $(color -f cyan "$git_agent_binary") ($(color -f dim "$worktree_path"))"
   run cd "$worktree_path"
   run "$git_agent_binary" "$@"
   stderr "agent exited"
