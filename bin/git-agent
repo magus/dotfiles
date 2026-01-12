@@ -17,10 +17,12 @@ usage() {
 }
 
 shell_mode="auto"
+delete_mode="no"
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --shell) shell_mode="yes"; shift ;;
     --no-shell) shell_mode="no"; shift ;;
+    -D|--rm|--delete) delete_mode="yes"; shift ;;
     -h|--help) usage ;;
     --) shift; break ;;
     -*) stderr "unknown option: $1"; usage ;;
@@ -78,6 +80,12 @@ fi
 
 head_commit="$(git -C "$repo_root" rev-parse HEAD)"
 worktree_path="$worktrees_root/$repo_path/$worktree_name"
+
+if [[ "$delete_mode" == "yes" ]]; then
+  stderr "❌ delete worktree ($(color -f dim $worktree_path))"
+  run git -C "$repo_root" worktree remove --force "$worktree_path"
+  exit 0
+fi
 
 # create worktree if it does not exist
 if [[ ! -d "$worktree_path" ]]; then
