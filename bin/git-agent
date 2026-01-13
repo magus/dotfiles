@@ -142,9 +142,22 @@ fi
 head_commit="$(git -C "$repo_root" rev-parse HEAD)"
 worktree_path="$worktrees_root/$repo_path/$worktree_name"
 
+# if dir exists, ensure it is an actual worktree
+if [[ -d "$worktree_path" ]]; then
+  if ! git -C "$worktree_path" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    stderr "🚨 $(color -f red ERROR): worktree path exists but is not a git worktree ($(color -f dim "$worktree_path"))"
+    exit 3
+  fi
+fi
+
 if [[ "$delete_mode" == "yes" ]]; then
-  stderr "❌ delete worktree ($(color -f dim "$worktree_path"))"
-  run git -C "$repo_root" worktree remove --force "$worktree_path"
+  if [[ ! -d "$worktree_path" ]]; then
+    stderr "✅ worktree does not exist ($(color -f dim "$worktree_path"))"
+  else
+    stderr "❌ delete worktree ($(color -f dim "$worktree_path"))"
+    run git -C "$repo_root" worktree remove --force "$worktree_path"
+  fi
+
   exit 0
 fi
 
@@ -160,12 +173,6 @@ if [[ ! -d "$worktree_path" ]]; then
   run git -C "$repo_root" worktree add --detach "$worktree_path" "$head_commit"
 else
   stderr "reuse existing worktree ($(color -f dim "$worktree_path"))"
-fi
-
-# ensure dir is an actual worktree
-if ! git -C "$worktree_path" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-  stderr "🚨 $(color -f red ERROR): worktree path exists but is not a git worktree ($(color -f dim "$worktree_path"))"
-  exit 3
 fi
 
 if ! command -v "$git_agent_binary" >/dev/null 2>&1; then
