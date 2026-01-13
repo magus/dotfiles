@@ -21,6 +21,7 @@ usage() {
   stderr "$(color -f bright_white "OPTIONS")"
   stderr "  -n, --name <name>  Worktree name (overrides GIT_AGENT_WORKTREE_NAME)."
   stderr "  --binary <cmd>     Agent command to run (overrides GIT_AGENT_BINARY)."
+  stderr "  -l, --ls, --list   List all worktrees in this repo."
   stderr "  --shell            Enter an interactive shell in the worktree after the agent exits."
   stderr "  --no-shell         Never enter a shell (default when not attached to a TTY)."
   stderr "  -R, --reset        Reset the worktree to the current repo HEAD (hard reset + clean)."
@@ -41,6 +42,7 @@ usage() {
   stderr "  git agent --delete --name opencode-a"
   stderr "  git agent --binary codex --name codex-a"
   stderr "  git agent --name opencode-a -- --model gpt-4.1 --temperature 0"
+  stderr "  git agent --list"
   stderr "  git agent --shell"
   stderr
   stderr "$(color -f dim "Notes: '--shell' is forced off when stdin/stdout aren't TTYs.")"
@@ -50,10 +52,12 @@ usage() {
 shell_mode="auto"
 delete_mode="no"
 reset_mode="no"
+list_mode="no"
 git_agent_binary="${GIT_AGENT_BINARY:-"opencode"}"
 worktree_name="git-agent"
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    -l|--ls|--list) list_mode="yes"; shift ;;
     --shell) shell_mode="yes"; shift ;;
     --no-shell) shell_mode="no"; shift ;;
     --binary)
@@ -123,9 +127,15 @@ if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   usage
 fi
 
+
 repo_root="$(git rev-parse --show-toplevel)"
 repo_origin="$(git -C "$repo_root" remote get-url origin 2>/dev/null || true)"
 repo_origin="${repo_origin%.git}"
+
+if [[ "$list_mode" == "yes" ]]; then
+  run git -C "$repo_root" worktree list --porcelain
+  exit 0
+fi
 
 repo_path=""
 case "$repo_origin" in
