@@ -16,30 +16,32 @@ usage() {
   stderr "$(color -f bright_white "git agent") — create/reuse a worktree for the current repo and run an agent inside it."
   stderr
   stderr "$(color -f bright_white "USAGE")"
-  stderr "  git agent [options] <name> [-- <agent args>...]"
+  stderr "  git agent [options] [--name <name>] [-- <agent args>...]"
   stderr
   stderr "$(color -f bright_white "OPTIONS")"
+  stderr "  -n, --name <name>  Worktree name (overrides GIT_AGENT_WORKTREE_NAME)."
+  stderr "  --binary <cmd>     Agent command to run (overrides GIT_AGENT_BINARY)."
   stderr "  --shell            Enter an interactive shell in the worktree after the agent exits."
   stderr "  --no-shell         Never enter a shell (default when not attached to a TTY)."
-  stderr "  --binary <cmd>     Agent command to run (overrides GIT_AGENT_BINARY)."
   stderr "  -R, --reset        Reset the worktree to the current repo HEAD (hard reset + clean)."
-  stderr "  -D, --rm, --delete Remove the worktree for <name> and exit."
+  stderr "  -D, --rm, --delete Remove the worktree for --name and exit."
   stderr "  -h, --help         Show this help."
   stderr
   stderr "$(color -f bright_white "ARGS")"
-  stderr "  <name>             Worktree name (also used as the new worktree branch name)."
   stderr "  <agent args>       Passed through to the agent binary (after '--')."
   stderr
   stderr "$(color -f bright_white "ENV")"
-  stderr "  GIT_AGENT_WORKTREES_ROOT   Root directory for worktrees (default: ~/code/worktrees)"
   stderr "  GIT_AGENT_BINARY           Agent command to run (default: opencode)"
+  stderr "  GIT_AGENT_WORKTREE_NAME    Worktree name (default: git-agent)"
+  stderr "  GIT_AGENT_WORKTREES_ROOT   Root directory for worktrees (default: ~/code/worktrees)"
   stderr
   stderr "$(color -f bright_white "EXAMPLES")"
-  stderr "  git agent opencode-a"
-  stderr "  git agent --shell opencode-a"
-  stderr "  git agent --binary codex opencode-a"
-  stderr "  git agent -- opencode --model gpt-4.1 --temperature 0"
-  stderr "  git agent --delete opencode-a"
+  stderr "  git agent"
+  stderr "  git agent --name opencode-a"
+  stderr "  git agent --delete --name opencode-a"
+  stderr "  git agent --binary codex --name codex-a"
+  stderr "  git agent --name opencode-a -- --model gpt-4.1 --temperature 0"
+  stderr "  git agent --shell"
   stderr
   stderr "$(color -f dim "Notes: '--shell' is forced off when stdin/stdout aren't TTYs.")"
   exit 2
@@ -49,6 +51,7 @@ shell_mode="auto"
 delete_mode="no"
 reset_mode="no"
 git_agent_binary="${GIT_AGENT_BINARY:-"opencode"}"
+worktree_name="git-agent"
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --shell) shell_mode="yes"; shift ;;
@@ -69,6 +72,22 @@ while [[ $# -gt 0 ]]; do
       fi
       shift
       ;;
+    -n|--name)
+      if [[ $# -lt 2 || -z "${2:-}" ]]; then
+        stderr "missing argument for --name"
+        usage
+      fi
+      worktree_name="$2"
+      shift 2
+      ;;
+    --name=*)
+      worktree_name="${1#--name=}"
+      if [[ -z "$worktree_name" ]]; then
+        stderr "missing argument for --name"
+        usage
+      fi
+      shift
+      ;;
     -D|--rm|--delete) delete_mode="yes"; shift ;;
     -R|--reset) reset_mode="yes"; shift ;;
     -h|--help) usage ;;
@@ -81,7 +100,7 @@ done
 # bash test for "am I running interactively in a terminal?"
 # -t FD is true if file descriptor FD points at a TTY (terminal)
 # 0 = stdin, 1 = stdout, so true when stdin and stdout are a TTY
-# e.g. `echo $(git agent --shell opencode-a)` will trip this safeguard
+# e.g. `echo $(git agent)` will trip this safeguard
 if [[ ! -t 0 || ! -t 1 ]]; then
   shell_mode="no"
 else
@@ -90,21 +109,13 @@ else
   fi
 fi
 
-worktree_name="${1:-}"
-
-if [[ -z "$worktree_name" ]]; then
-  usage
-fi
-
-# shift out worktree name so `$@` correct capturing agent binary args
-shift
-
 worktrees_root="${GIT_AGENT_WORKTREES_ROOT:-"$HOME/code/worktrees"}"
 
 # stderr "shell_mode=$shell_mode"
 # stderr "delete_mode=$delete_mode"
 # stderr "reset_mode=$reset_mode"
 # stderr "git_agent_binary=$git_agent_binary"
+# stderr "worktree_name=$worktree_name"
 # stderr "agent_args=$*"
 # exit 99
 
