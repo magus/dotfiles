@@ -1,6 +1,10 @@
 model = "gpt-5.2-codex"
 model_reasoning_effort = "high"
 
+[history]
+persistence = "save-all"
+max_bytes = 104857600
+
 [projects."/Users/noah/code/openai"]
 trust_level = "trusted"
 
