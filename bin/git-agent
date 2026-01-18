@@ -171,18 +171,43 @@ if [[ "$delete_mode" == "yes" ]]; then
   exit 0
 fi
 
+maybe_prepare_worktree() {
+  # create worktree if it does not exist
+  if [[ ! -d "$worktree_path" ]]; then
+    stderr "creating new worktree ($(color -f dim "$worktree_path"))"
+    reset_mode="no"
+    run git -C "$repo_root" worktree add --detach "$worktree_path" "$head_commit"
+    return
+  fi
+
+  stderr "reuse existing worktree ($(color -f dim "$worktree_path"))"
+
+  # proceed to reset when explicitly requested
+  [[ "$reset_mode" == "yes" ]] && return
+
+  # already in sync, no need to reset
+  current_commit="$(git -C "$worktree_path" rev-parse HEAD)"
+  if [[ "$current_commit" == "$head_commit" ]]; then
+    return
+  fi
+
+  # proceed to reset to keep clean worktree in sync
+  if [[ -z "$(git -C "$worktree_path" status --porcelain)" ]]; then
+    reset_mode="yes"
+    return
+  fi
+
+  # warn when worktree has local changes and is not updated
+  stderr "⚠️ $(color -f yellow WARN): worktree has local changes; leaving at $(color -f dim "$current_commit")"
+  stderr "    use $(color -f cyan -- "--reset") to force reset to $(color -f dim "$head_commit")"
+}
+
+maybe_prepare_worktree
+
 if [[ "$reset_mode" == "yes" ]]; then
   stderr "🔄 reset worktree to repo HEAD ($(color -f dim "$head_commit"))"
   run git -C "$worktree_path" checkout --detach --force "$head_commit"
-  run git -C "$worktree_path" reset --hard "$head_commit"
   run git -C "$worktree_path" clean -fd
-fi
-
-# create worktree if it does not exist
-if [[ ! -d "$worktree_path" ]]; then
-  run git -C "$repo_root" worktree add --detach "$worktree_path" "$head_commit"
-else
-  stderr "reuse existing worktree ($(color -f dim "$worktree_path"))"
 fi
 
 if ! command -v "$git_agent_binary" >/dev/null 2>&1; then
