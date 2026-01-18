@@ -32,16 +32,16 @@ usage() {
   stderr "  <agent args>       Passed through to the agent binary (after '--')."
   stderr
   stderr "$(color -f bright_white "ENV")"
-  stderr "  GIT_AGENT_BINARY           Agent command to run (default: opencode)"
+  stderr "  GIT_AGENT_BINARY           Agent command to run (default: codex)"
   stderr "  GIT_AGENT_WORKTREE_NAME    Worktree name (default: git-agent)"
   stderr "  GIT_AGENT_WORKTREES_ROOT   Root directory for worktrees (default: ~/code/worktrees)"
   stderr
   stderr "$(color -f bright_white "EXAMPLES")"
   stderr "  git agent"
-  stderr "  git agent --name opencode-a"
-  stderr "  git agent --delete --name opencode-a"
-  stderr "  git agent --binary codex --name codex-a"
-  stderr "  git agent --name opencode-a -- --model gpt-4.1 --temperature 0"
+  stderr "  git agent --name a"
+  stderr "  git agent --delete --name a"
+  stderr "  git agent --binary opencode --name b"
+  stderr "  git agent --name a -- --yolo"
   stderr "  git agent --list"
   stderr "  git agent --shell"
   stderr
@@ -53,7 +53,7 @@ shell_mode="auto"
 delete_mode="no"
 reset_mode="no"
 list_mode="no"
-git_agent_binary="${GIT_AGENT_BINARY:-"opencode"}"
+git_agent_binary="${GIT_AGENT_BINARY:-"codex"}"
 worktree_name="git-agent"
 while [[ $# -gt 0 ]]; do
   case "$1" in
