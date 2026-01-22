@@ -199,7 +199,7 @@ maybe_prepare_worktree() {
 
   # warn when worktree has local changes and is not updated
   stderr "⚠️ $(color -f yellow WARN): worktree has local changes; leaving at $(color -f dim "$current_commit")"
-  stderr "    use $(color -f cyan -- "--reset") to force reset to $(color -f dim "$head_commit")"
+  stderr "    use $(color -f cyan "--reset") to force reset to $(color -f dim "$head_commit")"
 }
 
 maybe_prepare_worktree
