@@ -94,7 +94,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     -D|--rm|--delete) delete_mode="yes"; shift ;;
     -R|--reset) reset_mode="yes"; shift ;;
-    -h|--help) usage ;;
+    -h|--help|help) usage ;;
     --) shift; break ;;
     -*) stderr "unknown option: $1"; usage ;;
     *) break ;;
