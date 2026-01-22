@@ -22,7 +22,7 @@ usage() {
   stderr "  -n, --name <name>  Worktree name (overrides GIT_AGENT_WORKTREE_NAME)."
   stderr "  --binary <cmd>     Agent command to run (overrides GIT_AGENT_BINARY)."
   stderr "  -l, --ls, --list   List all worktrees in this repo."
-  stderr "  --shell            Enter an interactive shell in the worktree after the agent exits."
+  stderr "  --shell            Enter an interactive shell in the worktree (default \$SHELL)."
   stderr "  --no-shell         Never enter a shell (default when not attached to a TTY)."
   stderr "  -R, --reset        Reset the worktree to the current repo HEAD (hard reset + clean)."
   stderr "  -D, --rm, --delete Remove the worktree for --name and exit."
@@ -107,10 +107,6 @@ done
 # e.g. `echo $(git agent)` will trip this safeguard
 if [[ ! -t 0 || ! -t 1 ]]; then
   shell_mode="no"
-else
-  if [[ "$shell_mode" == "auto" ]]; then
-    shell_mode="yes"
-  fi
 fi
 
 worktrees_root="${GIT_AGENT_WORKTREES_ROOT:-"$HOME/code/worktrees"}"
@@ -210,6 +206,19 @@ if [[ "$reset_mode" == "yes" ]]; then
   run git -C "$worktree_path" clean -fd
 fi
 
+enter_worktree_shell() {
+  stderr "starting shell in worktree"
+  run cd "$worktree_path"
+  shell_cmd="${SHELL:-bash}"
+  stderr "$(color -f bright_green '❯')" "$shell_cmd"
+  stderr "run $(color -f bold cyan exit) to leave worktree"
+  exec "$shell_cmd"
+}
+
+if [[ "$shell_mode" == "yes" ]]; then
+  enter_worktree_shell
+fi
+
 if ! command -v "$git_agent_binary" >/dev/null 2>&1; then
   stderr "⚠️ $(color -f yellow WARN): missing agent binary ($(color -f dim "$git_agent_binary"))"
 else
@@ -217,9 +226,9 @@ else
   run cd "$worktree_path"
   run "$git_agent_binary" "$@"
   stderr "agent exited"
+
+  if [[ "$shell_mode" != "no" ]]; then
+    enter_worktree_shell
+  fi
 fi
 
-if [[ "$shell_mode" == "yes" ]]; then
-  stderr "⚠️ entering shell in worktree, type $(color -f cyan exit) to leave worktree"
-  exec "${SHELL:-bash}"
-fi
