@@ -211,7 +211,7 @@ enter_worktree_shell() {
   run cd "$worktree_path"
   shell_cmd=("${SHELL:-bash}" -i)
   stderr "$(color -f bright_green '❯')" "${shell_cmd[@]}"
-  stderr "run $(color -f bold cyan exit) to leave worktree"
+  stderr "💡 run $(color -f bold cyan exit) to leave worktree"
   exec "${shell_cmd[@]}"
 }
 
