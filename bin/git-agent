@@ -27,6 +27,7 @@ usage() {
   stderr "  --shell            Enter an interactive shell in the worktree (default $(color -f bright_white \$SHELL))."
   stderr "                     Note: $(color -f bright_white --shell) is forced off when stdin/stdout are not TTYs."
   stderr "  --no-shell         Never enter a shell (default when not attached to a TTY)."
+  stderr "  --setup            Optional shell script to $(color -f bold source) into agent shell (overrides $(color -f dim \$GIT_AGENT_SETUP_HOOK))."
   stderr "  -R, --reset        Reset the worktree to the current repo HEAD (hard reset + clean)."
   stderr "  -D, --rm, --delete Remove the worktree for $(color -f bright_white --name) and exit."
   stderr "  -h, --help         Show this help."
@@ -35,9 +36,10 @@ usage() {
   stderr "  [agent args]       Passed through to the agent binary (after $(color -f bold --))."
   stderr
   stderr "$(color -f bright_white "ENV")"
-  stderr "  GIT_AGENT_BINARY           Agent command to run (default: $(color -f bold codex))"
-  stderr "  GIT_AGENT_WORKTREE_NAME    Worktree name (default: $(color -f bold git-agent))"
-  stderr "  GIT_AGENT_WORKTREES_ROOT   Root directory for worktrees (default: $(color -f bright_white ~/code/worktrees))"
+  stderr "  GIT_AGENT_BINARY            Agent command to run (default: $(color -f bold codex))"
+  stderr "  GIT_AGENT_SETUP_HOOK        Optional shell script to $(color -f bold source) into agent shell (default: $(color -f dim none))"
+  stderr "  GIT_AGENT_WORKTREE_NAME     Worktree name (default: $(color -f bold git-agent))"
+  stderr "  GIT_AGENT_WORKTREES_ROOT    Root directory for worktrees (default: $(color -f bright_white ~/code/worktrees))"
   stderr
   stderr "$(color -f bright_white "EXAMPLES")"
   stderr "  git agent"
@@ -47,6 +49,7 @@ usage() {
   stderr "  git agent --binary codex -- --yolo"
   stderr "  git agent --list"
   stderr "  git agent --shell"
+  stderr "  git agent --name yolo --shell --setup $(which oai-venv)"
   stderr
 }
 
@@ -55,6 +58,7 @@ delete_mode="no"
 reset_mode="no"
 list_mode="no"
 git_agent_binary="${GIT_AGENT_BINARY:-"codex"}"
+git_agent_setup_hook="${GIT_AGENT_SETUP_HOOK:-""}"
 worktree_name="git-agent"
 
 while [[ $# -gt 0 ]]; do
@@ -76,6 +80,24 @@ while [[ $# -gt 0 ]]; do
       if [[ -z "$git_agent_binary" ]]; then
         usage
         stderr "missing argument for $(color -f dim --binary)"
+        exit 2
+      fi
+      shift
+      ;;
+    --setup)
+      if [[ $# -lt 2 || -z "${2:-}" ]]; then
+        usage
+        stderr "missing argument for $(color -f dim --setup)"
+        exit 2
+      fi
+      git_agent_setup_hook="$2"
+      shift 2
+      ;;
+    --setup=*)
+      git_agent_setup_hook="${1#--setup=}"
+      if [[ -z "$git_agent_setup_hook" ]]; then
+        usage
+        stderr "missing argument for $(color -f dim --setup)"
         exit 2
       fi
       shift
@@ -130,6 +152,7 @@ worktrees_root="${GIT_AGENT_WORKTREES_ROOT:-"$HOME/code/worktrees"}"
 # stderr "git_agent_binary=$git_agent_binary"
 # stderr "worktree_name=$worktree_name"
 # stderr "agent_args=$*"
+# stderr "git_agent_setup_hook=$git_agent_setup_hook"
 # exit 99
 
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
@@ -181,12 +204,15 @@ if [[ "$delete_mode" == "yes" ]]; then
   exit 0
 fi
 
+worktree_created="no"
+
 maybe_prepare_worktree() {
   # create worktree if it does not exist
   if [[ ! -d "$worktree_path" ]]; then
     stderr "creating new worktree ($(color -f dim "$worktree_path"))"
     reset_mode="no"
     run git -C "$repo_root" worktree add --detach "$worktree_path" "$head_commit"
+    worktree_created="yes"
     return
   fi
 
@@ -220,9 +246,41 @@ if [[ "$reset_mode" == "yes" ]]; then
   run git -C "$worktree_path" clean -fd
 fi
 
+maybe_setup_hook() {
+  local hook="$git_agent_setup_hook"
+
+  # no-op if empty
+  [[ -z "$hook" ]] && return
+
+  if [[ ! -e "$hook" ]]; then
+    stderr "⚠️ $(color -f yellow WARN): hook script not found ($(color -f dim "$hook"))"
+    return
+  fi
+
+  if [[ ! -r "$hook" ]]; then
+    stderr "⚠️ $(color -f yellow WARN): hook script not readable ($(color -f dim "$hook"))"
+    return
+  fi
+
+  # hook is sourced so it can export env vars before the agent/shell starts
+  # preferred interface: read context from env vars (no positional args required)
+  export GIT_AGENT_BINARY="$git_agent_binary"
+  export GIT_AGENT_HEAD_COMMIT="$head_commit"
+  export GIT_AGENT_REPO_ORIGIN="$repo_origin"
+  export GIT_AGENT_REPO_PATH="$repo_path"
+  export GIT_AGENT_REPO_ROOT="$repo_root"
+  export GIT_AGENT_RESET_MODE="$reset_mode"
+  export GIT_AGENT_WORKTREE_CREATED="$worktree_created"
+  export GIT_AGENT_WORKTREE_NAME="$worktree_name"
+  export GIT_AGENT_WORKTREE_PATH="$worktree_path"
+  export GIT_AGENT_WORKTREES_ROOT="$worktrees_root"
+  # shellcheck disable=SC1090
+  run source "$hook"
+  stderr "done sourcing setup hook ($(color -f dim "$hook"))"
+}
+
 enter_worktree_shell() {
-  stderr "starting shell in worktree"
-  run cd "$worktree_path"
+  stderr "starting shell in worktree ($(color -f dim "$worktree_path"))"
   shell_cmd=("${SHELL:-bash}" -i)
   stderr "$(color -f bright_green '❯')" "${shell_cmd[@]}"
   stderr "💡 run $(color -f bold cyan exit) to leave worktree"
@@ -230,6 +288,8 @@ enter_worktree_shell() {
 }
 
 if [[ "$shell_mode" == "yes" ]]; then
+  run cd "$worktree_path"
+  maybe_setup_hook
   enter_worktree_shell
 fi
 
@@ -238,6 +298,7 @@ if ! command -v "$git_agent_binary" >/dev/null 2>&1; then
 else
   stderr "starting $(color -f cyan "$git_agent_binary") ($(color -f dim "$worktree_path"))"
   run cd "$worktree_path"
+  maybe_setup_hook
   run "$git_agent_binary" "$@"
   stderr "agent exited"
 
@@ -245,4 +306,3 @@ else
     enter_worktree_shell
   fi
 fi
-
