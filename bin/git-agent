@@ -13,28 +13,31 @@ run() {
 
 usage() {
   stderr
-  stderr "$(color -f bright_white "git agent") — create/reuse a worktree for the current repo and run an agent inside it."
+  stderr "$(color -f bold "git agent")"
+  stderr
+  stderr "create/reuse a worktree for the current repo and run an agent inside it."
   stderr
   stderr "$(color -f bright_white "USAGE")"
-  stderr "  git agent [options] [--name <name>] [-- <agent args>...]"
+  stderr "  git agent [options] [-- <agent args>…]"
   stderr
   stderr "$(color -f bright_white "OPTIONS")"
-  stderr "  -n, --name <name>  Worktree name (overrides GIT_AGENT_WORKTREE_NAME)."
-  stderr "  --binary <cmd>     Agent command to run (overrides GIT_AGENT_BINARY)."
+  stderr "  -n, --name <name>  Worktree name (overrides $(color -f bright_white \$GIT_AGENT_WORKTREE_NAME))."
+  stderr "  --binary <cmd>     Agent command to run (overrides $(color -f bright_white \$GIT_AGENT_BINARY))."
   stderr "  -l, --ls, --list   List all worktrees in this repo."
-  stderr "  --shell            Enter an interactive shell in the worktree (default \$SHELL)."
+  stderr "  --shell            Enter an interactive shell in the worktree (default $(color -f bright_white \$SHELL))."
+  stderr "                     Note: $(color -f bright_white --shell) is forced off when stdin/stdout are not TTYs."
   stderr "  --no-shell         Never enter a shell (default when not attached to a TTY)."
   stderr "  -R, --reset        Reset the worktree to the current repo HEAD (hard reset + clean)."
-  stderr "  -D, --rm, --delete Remove the worktree for --name and exit."
+  stderr "  -D, --rm, --delete Remove the worktree for $(color -f bright_white --name) and exit."
   stderr "  -h, --help         Show this help."
   stderr
   stderr "$(color -f bright_white "ARGS")"
-  stderr "  <agent args>       Passed through to the agent binary (after '--')."
+  stderr "  [agent args]       Passed through to the agent binary (after $(color -f bold --))."
   stderr
   stderr "$(color -f bright_white "ENV")"
-  stderr "  GIT_AGENT_BINARY           Agent command to run (default: codex)"
-  stderr "  GIT_AGENT_WORKTREE_NAME    Worktree name (default: git-agent)"
-  stderr "  GIT_AGENT_WORKTREES_ROOT   Root directory for worktrees (default: ~/code/worktrees)"
+  stderr "  GIT_AGENT_BINARY           Agent command to run (default: $(color -f bold codex))"
+  stderr "  GIT_AGENT_WORKTREE_NAME    Worktree name (default: $(color -f bold git-agent))"
+  stderr "  GIT_AGENT_WORKTREES_ROOT   Root directory for worktrees (default: $(color -f bright_white ~/code/worktrees))"
   stderr
   stderr "$(color -f bright_white "EXAMPLES")"
   stderr "  git agent"
@@ -45,7 +48,6 @@ usage() {
   stderr "  git agent --list"
   stderr "  git agent --shell"
   stderr
-  stderr "$(color -f dim "Notes: '--shell' is forced off when stdin/stdout aren't TTYs.")"
   exit 2
 }
 
