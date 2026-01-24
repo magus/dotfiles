@@ -43,8 +43,8 @@ usage() {
   stderr "  git agent"
   stderr "  git agent --name a"
   stderr "  git agent --delete --name a"
-  stderr "  git agent --binary opencode --name b"
-  stderr "  git agent --name a -- --yolo"
+  stderr "  git agent --binary opencode -- --model openai/gpt-5.2-codex"
+  stderr "  git agent --binary codex -- --yolo"
   stderr "  git agent --list"
   stderr "  git agent --shell"
   stderr
