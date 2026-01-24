@@ -48,7 +48,6 @@ usage() {
   stderr "  git agent --list"
   stderr "  git agent --shell"
   stderr
-  exit 2
 }
 
 shell_mode="auto"
@@ -57,6 +56,7 @@ reset_mode="no"
 list_mode="no"
 git_agent_binary="${GIT_AGENT_BINARY:-"codex"}"
 worktree_name="git-agent"
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
     -l|--ls|--list) list_mode="yes"; shift ;;
@@ -64,8 +64,9 @@ while [[ $# -gt 0 ]]; do
     --no-shell) shell_mode="no"; shift ;;
     --binary)
       if [[ $# -lt 2 || -z "${2:-}" ]]; then
-        stderr "missing argument for --binary"
         usage
+        stderr "missing argument for $(color -f dim --binary)"
+        exit 2
       fi
       git_agent_binary="$2"
       shift 2
@@ -73,15 +74,17 @@ while [[ $# -gt 0 ]]; do
     --binary=*)
       git_agent_binary="${1#--binary=}"
       if [[ -z "$git_agent_binary" ]]; then
-        stderr "missing argument for --binary"
         usage
+        stderr "missing argument for $(color -f dim --binary)"
+        exit 2
       fi
       shift
       ;;
     -n|--name)
       if [[ $# -lt 2 || -z "${2:-}" ]]; then
-        stderr "missing argument for --name"
         usage
+        stderr "missing argument for $(color -f dim --name)"
+        exit 3
       fi
       worktree_name="$2"
       shift 2
@@ -89,16 +92,24 @@ while [[ $# -gt 0 ]]; do
     --name=*)
       worktree_name="${1#--name=}"
       if [[ -z "$worktree_name" ]]; then
-        stderr "missing argument for --name"
         usage
+        stderr "missing argument for $(color -f dim --name)"
+        exit 3
       fi
       shift
       ;;
     -D|--rm|--delete) delete_mode="yes"; shift ;;
     -R|--reset) reset_mode="yes"; shift ;;
-    -h|--help|help) usage ;;
+    -h|--help|help)
+      usage
+      exit 0
+      ;;
     --) shift; break ;;
-    -*) stderr "unknown option: $1"; usage ;;
+    -*)
+      usage
+      stderr "unknown option: $(color -f dim $1)";
+      exit 4
+      ;;
     *) break ;;
   esac
 done
@@ -123,6 +134,7 @@ worktrees_root="${GIT_AGENT_WORKTREES_ROOT:-"$HOME/code/worktrees"}"
 
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   usage
+  exit 5
 fi
 
 
@@ -154,7 +166,7 @@ worktree_path="$worktrees_root/$repo_path/$worktree_name"
 if [[ -d "$worktree_path" ]]; then
   if ! git -C "$worktree_path" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     stderr "🚨 $(color -f red ERROR): worktree path exists but is not a git worktree ($(color -f dim "$worktree_path"))"
-    exit 3
+    exit 4
   fi
 fi
 
