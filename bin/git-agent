@@ -209,10 +209,10 @@ fi
 enter_worktree_shell() {
   stderr "starting shell in worktree"
   run cd "$worktree_path"
-  shell_cmd="${SHELL:-bash}"
-  stderr "$(color -f bright_green '❯')" "$shell_cmd"
+  shell_cmd=("${SHELL:-bash}" -i)
+  stderr "$(color -f bright_green '❯')" "${shell_cmd[@]}"
   stderr "run $(color -f bold cyan exit) to leave worktree"
-  exec "$shell_cmd"
+  exec "${shell_cmd[@]}"
 }
 
 if [[ "$shell_mode" == "yes" ]]; then
