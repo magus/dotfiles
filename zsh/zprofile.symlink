@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# source zsh/path.zsh first to ensure paths are correct
+# shellcheck disable=SC1091
+source "$HOME/.dotfiles/zsh/path.zsh"
