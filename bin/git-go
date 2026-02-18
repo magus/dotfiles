@@ -7,7 +7,7 @@
 branch=$(git branch-grep -e "$@");
 
 if [[ -n $branch ]]; then
-  git switch --force "$branch"
+  git switch "$branch"
 else
   git switch -c "noah/$1"
 fi
