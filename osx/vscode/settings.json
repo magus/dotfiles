@@ -17,6 +17,7 @@
   "workbench.secondarySideBar.defaultVisibility": "hidden",
 
   "editor.defaultFormatter": null,
+  "editor.detectIndentation": false,
   "editor.accessibilitySupport": "off",
   "editor.fontFamily": "Ligconsolata-Regular, Menlo, Monaco, 'Courier New', monospace",
   "editor.fontLigatures": true,
