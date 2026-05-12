@@ -3,6 +3,12 @@
 # set -x
 
 # special characters to actually clear terminal
-# \033[H  move to top left of screen
-# \033[2J clear entire screen
-printf "\033[H\033[2J"
+if [[ $TERM_PROGRAM == "iTerm.app" ]]; then
+  # iterm2 specific scrollback wipe
+  printf '\033]1337;ClearScrollback\a\033[H\033[2J'
+else
+  # \033[3J clear scrollback
+  # \033[H  move to top left of screen
+  # \033[2J clear entire screen
+  printf '\033[3J\033[H\033[2J'
+fi
