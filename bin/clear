@@ -11,4 +11,9 @@ else
   # \033[H  move to top left of screen
   # \033[2J clear entire screen
   printf '\033[3J\033[H\033[2J'
+
+  # tmux owns pane history; terminal scrollback escapes may not pass through
+  if [[ -n ${TMUX:-} ]] && command -v tmux >/dev/null 2>&1; then
+    tmux clear-history 2>/dev/null || true
+  fi
 fi
