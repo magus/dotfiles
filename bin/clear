@@ -7,10 +7,10 @@ if [[ $TERM_PROGRAM == "iTerm.app" ]]; then
   # iterm2 specific scrollback wipe
   printf '\033]1337;ClearScrollback\a\033[H\033[2J'
 else
-  # \033[3J clear scrollback
   # \033[H  move to top left of screen
   # \033[2J clear entire screen
-  printf '\033[3J\033[H\033[2J'
+  # \033[3J clear scrollback
+  printf '\033[H\033[2J\033[3J'
 
   # tmux owns pane history; terminal scrollback escapes may not pass through
   if [[ -n ${TMUX:-} ]] && command -v tmux >/dev/null 2>&1; then
