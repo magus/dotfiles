@@ -78,3 +78,5 @@
     maxStack=50
 [fetch]
 	prune = true
+[maintenance "prefetch"]
+	enabled = false
