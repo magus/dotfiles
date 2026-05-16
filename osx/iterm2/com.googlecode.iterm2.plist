@@ -4,6 +4,8 @@
 <dict>
 	<key>AddNewTabAtEndOfTabs</key>
 	<false/>
+	<key>AllowClipboardAccess</key>
+	<true/>
 	<key>Default Bookmark Guid</key>
 	<string>3E948C0B-981E-45E1-8BAE-0421DA7602C2</string>
 	<key>GlobalKeyMap</key>
