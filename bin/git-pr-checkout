@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+# set -x
+
+stderr() {
+  echo "$@" >&2
+}
+
+run() {
+  stderr "$(color -f bright_green '❯')" "$@"
+  "$@"
+}
+
+branch="${1:?usage: git pr-checkout <branch>}"
+
+run git fetch --no-tags origin "$branch"
+commit="$(run git rev-parse FETCH_HEAD)"
+run git switch -c "$branch" --no-track "$commit"
