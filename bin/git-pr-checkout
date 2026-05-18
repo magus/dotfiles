@@ -12,8 +12,26 @@ run() {
   "$@"
 }
 
-branch="${1:?usage: git pr-checkout <branch>}"
+usage() {
+  stderr "usage: git pr-checkout $(color -f yellow "<branch>")"
+}
 
-run git fetch --no-tags origin "$branch"
+if [[ $# -lt 1 || -z "${1:-}" ]]; then
+  stderr "$(color -f bright_red "ERROR"): missing $(color -f yellow "<branch>")"
+  usage
+  exit 2
+fi
+
+branch="$1"
+
+if ! run git fetch --no-tags origin "$branch"; then
+  stderr
+  stderr "$(color -f bright_red "ERROR"): could not fetch $(color -f yellow "$branch") from $(color -f cyan origin)"
+  stderr "       pass a branch name, not a PR number or numeric id."
+  stderr "       $(color -f dim "example:")"
+  stderr "       git pr-checkout $(color -f yellow "users/name/my-branch")"
+  exit 1
+fi
+
 commit="$(run git rev-parse FETCH_HEAD)"
 run git switch -c "$branch" --no-track "$commit"
