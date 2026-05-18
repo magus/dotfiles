@@ -36,8 +36,6 @@
             git config --global alias.\"$1\" \"$2\"; \
           }; f"
 
-  pr = !sh -c 'git branch $@ origin/$@ && git checkout $@' -
-
 # so much color
 [color]
   # use colors in git output where capable
