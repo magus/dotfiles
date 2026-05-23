@@ -1,0 +1,15 @@
+{
+  "version": 3,
+  "skills": {
+    "make-interfaces-feel-better": {
+      "source": "jakubkrehel/make-interfaces-feel-better",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/jakubkrehel/make-interfaces-feel-better.git",
+      "skillPath": "skills/make-interfaces-feel-better/SKILL.md",
+      "skillFolderHash": "320672d06e899682d8923286d864efe3719d9c77",
+      "installedAt": "2026-05-23T11:58:01.058Z",
+      "updatedAt": "2026-05-23T12:49:32.442Z"
+    }
+  },
+  "dismissed": {}
+}
