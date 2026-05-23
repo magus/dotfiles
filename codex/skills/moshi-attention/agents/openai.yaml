@@ -1,0 +1,3 @@
+display_name: Moshi Attention
+short_description: Send Moshi attention and approval pushes from Codex.
+default_prompt: Send Noah a Moshi attention push.
