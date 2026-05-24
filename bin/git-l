@@ -42,6 +42,7 @@ fi
 
 terminal_width=$(tput cols)
 
+# allow extra room for ANSI color codes before cutting to terminal width
 # estimate the number of color characters per line
 # assuming an average of 5 color changes per line and 5 characters per color code
 color_buffer=$((12 * 5))
@@ -52,25 +53,23 @@ SHORT_SHA="$(git log -1 --format=%h)"
 SHORT_SHA_LENGTH=${#SHORT_SHA}
 SHA_COLUMN_SIZE=$((SHORT_SHA_LENGTH + 1))
 
-# SHA hash - At least 9 characters wide, truncated
+# short SHA - repo's current abbreviation width plus padding, truncated
 SHA_FORMAT="%C(green)%<($SHA_COLUMN_SIZE,trunc)%h"
 
 # relative commit date - 15 characters wide, truncated
 DATE_FORMAT="%C(white)%<(15,trunc)%cr"
 
-# author's abbreviated name - 12 characters wide, truncated
+# author's abbreviated name - 8 characters wide, truncated
 AUTHOR_FORMAT="%C(white)%<(8,trunc)%al"
 
-# decorative information like branch heads or tags
-DECORATION_FORMAT="%C(auto)%d"
-
-# commit subject - 80 characters wide, truncated
-SUBJECT_FORMAT="%<(60,trunc)%s"
+# commit subject - 60 characters wide, truncated
+# decorative information like branch heads or tags - 20 characters wide, truncated
+SUBJECT_FORMAT="%<(60,trunc)%s%C(auto)%<(20,trunc)%D%C(reset)"
 
 # combine all the above formats into one
 FORMAT="$SHA_FORMAT $DATE_FORMAT $AUTHOR_FORMAT $DECORATION_FORMAT $SUBJECT_FORMAT"
 
-# view the SHA, description and history graph of last 20 commits
+# view FORMAT above and graph for the last 20 commits
 # quoted "${args[@]}" to prevent shell splitting / globbing
 # example `git l -n5 --since "2 weeks ago"` breaks without quotes here
 git log --pretty=format:"$FORMAT" -n20 --graph --color "${args[@]}" \
