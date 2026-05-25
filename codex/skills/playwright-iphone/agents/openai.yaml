@@ -1,0 +1,4 @@
+interface:
+  display_name: "Playwright iPhone"
+  short_description: "Check sites in iPhone-sized Playwright viewports"
+  default_prompt: "Use $playwright-iphone to open this site in the iPhone 17 Playwright viewport."
