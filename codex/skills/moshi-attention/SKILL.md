@@ -23,7 +23,7 @@ Do not use this for routine status chatter. Still send the normal final answer o
 - Do not include secrets, tokens, transcript paths, transcript contents, command output dumps, or sensitive data in the push message.
 - Keep the push message short and human-readable.
 - Use the push only after the task is actually complete, or when the next step truly needs Noah.
-- If connecting to the Moshi socket requires sandbox escalation, request it with this justification:
+- In Codex workspace sandboxing, always run Moshi send commands with sandbox escalation. The command needs to connect to Moshi's local Unix socket outside the workspace, so an un-escalated first attempt usually fails with `EPERM` and only adds noise. Use this justification:
 
 ```text
 Allow connecting to Moshi's local Unix socket to send an attention/approval push notification.
@@ -75,6 +75,8 @@ node /Users/noah/.codex/skills/moshi-attention/scripts/moshi-attention.js \
 
 The script sends the push first, then waits for Noah to approve/deny from Moshi. It waits up to 30 seconds by default; adjust this with `--timeout <seconds>` when a longer or shorter response window is useful.
 
+For task-completion pushes, prefer a short timeout such as `--timeout 2`. Treat completion sends as an attention push, not as an approval flow that needs the model to wait for a response. For questions or approvals, use a longer timeout that matches the decision being requested.
+
 ```sh
 node /Users/noah/.codex/skills/moshi-attention/scripts/moshi-attention.js \
   --title "Codex question" \
@@ -109,7 +111,7 @@ Timeout does not necessarily mean the push failed. It means Codex did not receiv
 
 ## Troubleshooting
 
-In Codex workspace sandboxing, connecting to Moshi's local Unix socket can fail with:
+If a Moshi send command was accidentally run without escalation, connecting to Moshi's local Unix socket can fail with:
 
 ```text
 connect EPERM /Users/noah/Library/Application Support/Moshi/moshi-hook.sock
