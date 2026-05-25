@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create PR"
+  short_description: "Open precise GitHub PRs with gh"
+  default_prompt: "Use $create-pr to create a GitHub pull request for these changes."
