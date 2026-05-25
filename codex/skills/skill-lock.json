@@ -18,6 +18,15 @@
       "skillFolderHash": "0e6f8d7223a0abe73f81e890b3ec76257029a834",
       "installedAt": "2026-05-23T12:53:31.403Z",
       "updatedAt": "2026-05-23T12:53:31.403Z"
+    },
+    "playwright": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/playwright/SKILL.md",
+      "skillFolderHash": "74888f3c1d5581aea6415e78d5fbd760a8ab2a41",
+      "installedAt": "2026-05-25T06:46:46.536Z",
+      "updatedAt": "2026-05-25T06:46:46.536Z"
     }
   },
   "dismissed": {}
