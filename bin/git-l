@@ -62,9 +62,9 @@ DATE_FORMAT="%C(white)%<(15,trunc)%cr"
 # author's abbreviated name - 8 characters wide, truncated
 AUTHOR_FORMAT="%C(white)%<(8,trunc)%al"
 
-# commit subject - 60 characters wide, truncated
-# decorative information like branch heads or tags - 20 characters wide, truncated
-SUBJECT_FORMAT="%<(60,trunc)%s%C(auto)%<(20,trunc)%D%C(reset)"
+# commit subject - 80 characters wide, truncated keeping decorations visible
+# decorative information like branch heads or tags - keep full text and let the line cap trim only if needed
+SUBJECT_FORMAT="%<(80,trunc)%s%C(auto) %D%C(reset)"
 
 # combine all the above formats into one
 FORMAT="$SHA_FORMAT $DATE_FORMAT $AUTHOR_FORMAT $DECORATION_FORMAT $SUBJECT_FORMAT"
