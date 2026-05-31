@@ -19,6 +19,24 @@ link_path() {
   ln -sfn "$src" "$tgt"
 }
 
+cleanup_broken_skill_links() {
+  skills_dir="$1"
+
+  [ -d "$skills_dir" ] || return
+
+  find "$skills_dir" -maxdepth 1 -type l | while read -r link; do
+    target="$(readlink "$link")"
+    case "$target" in
+      "$src_dir"/skills/*)
+        if [ ! -e "$link" ]; then
+          stderr "removing broken skill link [$link] → [$target]"
+          rm "$link"
+        fi
+        ;;
+    esac
+  done
+}
+
 stderr "symlink codex config"
 
 src_dir="$HOME/.dotfiles/codex"
@@ -27,9 +45,14 @@ agents_dir="$HOME/.agents"
 
 mkdir -p "$codex_dir"
 mkdir -p "$agents_dir"
+mkdir -p "$codex_dir/skills"
+mkdir -p "$agents_dir/skills"
 
 link_path "$src_dir/config.toml" "$codex_dir/config.toml"
 link_path "$src_dir/skills/skill-lock.json" "$agents_dir/.skill-lock.json"
+
+cleanup_broken_skill_links "$codex_dir/skills"
+cleanup_broken_skill_links "$agents_dir/skills"
 
 for skill_dir in "$src_dir"/skills/*; do
   [ -d "$skill_dir" ] || continue
