@@ -166,7 +166,7 @@ repo_origin="$(git -C "$repo_root" remote get-url origin 2>/dev/null || true)"
 repo_origin="${repo_origin%.git}"
 
 if [[ "$list_mode" == "yes" ]]; then
-  run git -C "$repo_root" worktree list --porcelain
+  run git -C "$repo_root" worktree list
   exit 0
 fi
 
