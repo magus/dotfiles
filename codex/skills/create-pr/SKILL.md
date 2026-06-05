@@ -1,11 +1,13 @@
 ---
 name: create-pr
-description: Use when Noah asks Codex to create, open, publish, or draft a GitHub pull request for him, including requests like "create a PR for me", "open a PR", "ship this branch as a PR", or "turn these changes into a PR". Prefer the gh CLI, write reviewer-first PR summaries using ## Problem, ## Solution, and optional ## Test sections, preserve useful implementation context in code comments, and add GitHub inline comments on changed code when they help reviewers understand key concepts.
+description: Use when Noah asks Codex to create, open, publish, draft, or prepare GitHub pull request text for him, including requests like "create a PR for me", "open a PR", "ship this branch as a PR", "turn these changes into a PR", "write a PR summary", "draft the PR body", or "help with the PR title". Prefer the gh CLI, write reviewer-first PR summaries using ## Problem, ## Solution, and optional ## Test sections, preserve useful implementation context in code comments, and add GitHub inline comments on changed code when they help reviewers understand key concepts.
 ---
 
 # Create PR
 
-Use this skill when Noah asks to create a GitHub pull request from local or already-pushed changes.
+Use this skill when Noah asks to create a GitHub pull request from local or
+already-pushed changes, or asks for PR-facing text such as a title, summary,
+body, description, or reviewer note for those changes.
 
 Prefer `gh` for GitHub operations. Use the GitHub app or web only when `gh` is unavailable, unauthenticated, or missing a capability needed for the task.
 
