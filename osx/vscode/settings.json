@@ -7,6 +7,9 @@
   "window.newWindowDimensions": "maximized",
   "window.zoomLevel": 2,
   "workbench.editor.wrapTabs": true,
+  "workbench.editorAssociations": {
+    "git-rebase-todo": "default",
+  },
   "workbench.sideBar.location": "right",
   "workbench.tree.indent": 15,
   "workbench.tree.renderIndentGuides": "always",
