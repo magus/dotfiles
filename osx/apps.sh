@@ -16,6 +16,9 @@ open "https://chromewebstore.google.com/detail/the-great-suspender-reloa/hlofigc
 open "https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh"
 open "https://chrome.google.com/webstore/detail/go-back-with-backspace/eekailopagacbcdloonjhbiecobagjci/related?hl=en"
 
+# Tailscale
+open "https://tailscale.com/download/mac"
+
 # Visual Studio Code
 open "https://code.visualstudio.com/"
 
