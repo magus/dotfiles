@@ -1,13 +1,14 @@
 ---
 name: moshi-attention
-description: Send Noah an attention-getting Moshi iOS push from Codex through the local moshi-hook daemon. Use when Codex needs Noah's attention for task completion, acknowledgement, clarification, approval, a blocking question, or any other user-visible interruption where an inbox-only Moshi event is not enough.
+description: Send Noah an attention-getting Moshi iOS push from Codex through the Moshi HTTPS webhook. Use when Codex needs Noah's attention for task completion, acknowledgement, clarification, approval, a blocking question, or any other user-visible interruption where an inbox-only Moshi event is not enough.
 ---
 
 # Moshi Attention
 
 Use this skill to get Noah's attention through Moshi on iPhone.
 
-The tested reliable visible push path is a synthetic Moshi `approval.request` event. Normal `task_complete` events can appear only in the Moshi inbox without a banner or sound; `approval_required` events produce the audible/visible push and can return Noah's approve/deny response.
+The preferred visible push path is the Moshi HTTPS webhook. It does not require
+the local `moshi-hook` socket or the bundled Node helper.
 
 ## Use Cases
 
@@ -23,15 +24,87 @@ Do not use this for routine status chatter. Still send the normal final answer o
 - Do not include secrets, tokens, transcript paths, transcript contents, command output dumps, or sensitive data in the push message.
 - Keep the push message short and human-readable.
 - Use the push only after the task is actually complete, or when the next step truly needs Noah.
-- In Codex workspace sandboxing, always run Moshi send commands with sandbox escalation. The command needs to connect to Moshi's local Unix socket outside the workspace, so an un-escalated first attempt usually fails with `EPERM` and only adds noise. Use this justification:
+- The webhook token identifies Noah's Moshi destination. Do not print it in final
+  responses, logs, screenshots, or user-visible summaries.
+- In Codex workspace sandboxing, outbound HTTPS may require sandbox escalation.
+  If a webhook send is blocked by network permissions, rerun it with this
+  justification:
 
 ```text
-Allow connecting to Moshi's local Unix socket to send an attention/approval push notification.
+Allow sending an HTTPS request to Moshi's webhook to deliver an attention push notification.
 ```
 
-## Quick Check
+## Send A Push
 
-Before relying on this, confirm Moshi is paired:
+Prefer this curl form:
+
+```sh
+curl -X POST https://api.getmoshi.app/api/webhook \
+  -H "Content-Type: application/json" \
+  -d '{"token":"kaCTeOCfDWUX9xf7r5HjVFyGGnX1B6es","title":"Done","message":"Build finished","unified":true}'
+```
+
+For task completion:
+
+```sh
+curl -X POST https://api.getmoshi.app/api/webhook \
+  -H "Content-Type: application/json" \
+  -d '{"token":"kaCTeOCfDWUX9xf7r5HjVFyGGnX1B6es","title":"Codex task done","message":"The requested work is ready to review.","unified":true}'
+```
+
+For clarification:
+
+```sh
+curl -X POST https://api.getmoshi.app/api/webhook \
+  -H "Content-Type: application/json" \
+  -d '{"token":"kaCTeOCfDWUX9xf7r5HjVFyGGnX1B6es","title":"Codex question","message":"Codex needs a decision before continuing.","unified":true}'
+```
+
+For approval or acknowledgement:
+
+```sh
+curl -X POST https://api.getmoshi.app/api/webhook \
+  -H "Content-Type: application/json" \
+  -d '{"token":"kaCTeOCfDWUX9xf7r5HjVFyGGnX1B6es","title":"Codex needs approval","message":"Reply in the Codex session to approve or deny.","unified":true}'
+```
+
+The webhook returns immediately. Treat it as notification delivery only; Noah's
+reply still comes through the Codex session.
+
+For automation, add `-sS --fail-with-body` so curl stays quiet on success,
+prints useful errors, and exits nonzero on HTTP failures:
+
+```sh
+curl -sS --fail-with-body -X POST https://api.getmoshi.app/api/webhook \
+  -H "Content-Type: application/json" \
+  -d '{"token":"kaCTeOCfDWUX9xf7r5HjVFyGGnX1B6es","title":"Codex task done","message":"The requested work is ready to review.","unified":true}'
+```
+
+## Interpret Output
+
+Observed success response shape:
+
+```json
+{"success":true,"pushSent":1,"result":{"data":{"status":"ok","id":"..."}}}
+```
+
+Treat the push as delivered when `curl` exits with status 0 and the JSON body
+has `success: true`, `pushSent` greater than 0, and `result.data.status: "ok"`.
+The `id` is useful for rough correlation only; do not rely on its format.
+
+With `-D -`, the server also returned `HTTP/2 200` and
+`content-type: application/json`.
+
+If outbound HTTPS is blocked by the sandbox, `curl` may fail with a network,
+DNS, or connection error. Rerun with `sandbox_permissions: "require_escalated"`
+and the webhook justification from Safety Rules.
+
+## Local Hook Fallback
+
+Use this only if the HTTPS webhook is unavailable or Noah explicitly asks for
+the local hook path.
+
+Before relying on the local hook, confirm Moshi is paired:
 
 ```sh
 moshi-hook status
@@ -44,80 +117,35 @@ status: paired
 socket: /Users/noah/Library/Application Support/Moshi/moshi-hook.sock
 ```
 
-## Send A Push
-
-Prefer the bundled script:
-
-```sh
-node /Users/noah/.codex/skills/moshi-attention/scripts/moshi-attention.js \
-  --title "Codex needs approval" \
-  --subtitle "Tap to respond" \
-  --message "Codex finished and needs your acknowledgement."
-```
-
-For task completion:
+Then use the bundled script:
 
 ```sh
 node /Users/noah/.codex/skills/moshi-attention/scripts/moshi-attention.js \
   --title "Codex task done" \
   --subtitle "Tap to acknowledge" \
-  --message "Codex finished the requested task."
+  --message "Codex finished the requested task." \
+  --timeout 2
 ```
-
-For clarification:
-
-```sh
-node /Users/noah/.codex/skills/moshi-attention/scripts/moshi-attention.js \
-  --title "Codex question" \
-  --subtitle "Reply in the Codex session" \
-  --message "Codex needs a decision before continuing."
-```
-
-The script sends the push first, then waits for Noah to approve/deny from Moshi. It waits up to 30 seconds by default; adjust this with `--timeout <seconds>` when a longer or shorter response window is useful.
-
-For task-completion pushes, prefer a short timeout such as `--timeout 2`. Treat completion sends as an attention push, not as an approval flow that needs the model to wait for a response. For questions or approvals, use a longer timeout that matches the decision being requested.
-
-```sh
-node /Users/noah/.codex/skills/moshi-attention/scripts/moshi-attention.js \
-  --title "Codex question" \
-  --subtitle "Reply in the Codex session" \
-  --message "Codex needs a decision before continuing." \
-  --timeout 120
-```
-
-If the command is interrupted during the wait, the push may already have been delivered successfully.
-
-## Interpret Output
-
-If Noah taps approve:
-
-```json
-{"type":"approval.response","accepted":true,"decision":"approve","reason":"remote"}
-```
-
-If Noah taps deny:
-
-```json
-{"type":"approval.response","accepted":false,"decision":"deny","reason":"remote"}
-```
-
-If there is no response before timeout:
-
-```text
-sent Moshi attention push; no response before timeout
-```
-
-Timeout does not necessarily mean the push failed. It means Codex did not receive an approval response within the wait window.
 
 ## Troubleshooting
 
-If a Moshi send command was accidentally run without escalation, connecting to Moshi's local Unix socket can fail with:
+If the webhook fails, check whether the environment has outbound network
+access, then retry with sandbox escalation if needed.
+
+If the local hook fallback was accidentally run without escalation, connecting
+to Moshi's local Unix socket can fail with:
 
 ```text
 connect EPERM /Users/noah/Library/Application Support/Moshi/moshi-hook.sock
 ```
 
-Treat this as a sandbox permission issue, not a Moshi delivery failure. Rerun the send command with `sandbox_permissions: "require_escalated"` and the socket-access justification from Safety Rules.
+Treat this as a sandbox permission issue, not a Moshi delivery failure. Rerun
+the local hook command with `sandbox_permissions: "require_escalated"` and this
+justification:
+
+```text
+Allow connecting to Moshi's local Unix socket to send an attention/approval push notification.
+```
 
 If the script cannot connect:
 
@@ -127,4 +155,5 @@ moshi-hook logs -n 30
 launchctl print gui/$(id -u)/homebrew.mxcl.moshi-hook
 ```
 
-If a completion event appears in the Moshi inbox but does not make sound or show a banner, use this skill's approval-style push instead of a plain `task_complete` event.
+If a completion event appears in the Moshi inbox but does not make sound or show
+a banner, use the HTTPS webhook path instead of a plain `task_complete` event.
