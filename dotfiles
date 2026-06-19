@@ -12,6 +12,14 @@ function e_error()    { echo -e " \033[1;31m ✖\033[0m  $*"; };
 function e_arrow()    { echo -e " \033[1;33m ➜\033[0m  $*"; };
 
 e_header "dotfiles :: v$VERSION"
+echo
+
+e_arrow "Install Chrome before we begin to ensure links open into Chrome"
+echo
+read -n1 -s -r -p $"Press any key to open Chrome install page..."
+open "https://www.google.com/chrome/"
+echo
+read -n1 -s -r -p $"Press any key to continue after installing Chrome..."
 
 # ask for administrator password up front
 echo && e_arrow "You may be prompted for your admin password ..."
