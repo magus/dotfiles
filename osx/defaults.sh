@@ -74,6 +74,8 @@ sudo chflags nohidden /Volumes
 
 # Set the icon size of Dock items to 36 pixels
 defaults write com.apple.dock tilesize -int 36
+# Auto hide dock
+defaults write com.apple.dock autohide -bool true
 
 # Wipe all (default) app icons from the Dock
 # This is only really useful when setting up a new Mac, or if you don’t use
