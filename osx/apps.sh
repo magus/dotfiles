@@ -28,6 +28,9 @@ open "https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to
 open "https://chrome.google.com/webstore/detail/1password-password-manage/aomjjhallfgjeglblehebfpbcfeobpgk?hl=en"
 open "https://1password.com/downloads/"
 
+# iTerm2
+open "https://iterm2.com/"
+
 # Inconsolata font
 # https://github.com/googlefonts/Inconsolata
 curl -L -o Inconsolata.zip https://github.com/googlefonts/Inconsolata/releases/download/v3.000/fonts_ttf.zip
