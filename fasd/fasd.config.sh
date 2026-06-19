@@ -1,20 +1,28 @@
 #!/bin/bash
 
-# install disabled fasd formula
-# https://stackoverflow.com/questions/73586208/can-you-install-disabled-homebrew-packages
+# Homebrew's fasd formula is disabled, so install from source instead.
 
-echo " "
-echo "  🚨 fasd brew formula is disabled, requires manual installation but it's easy!"
-echo " "
-echo '       https://github.com/clvv/fasd'
-echo " "
-echo " "
-echo "       git clone git@github.com:clvv/fasd.git"
-echo "       cd fasd"
-echo "       make install"
-echo " "
-read -n 1 -s -r -p "  ⏳ press any key to proceed…"
-echo " "
-echo " "
-echo "  ✅ done, run \`fasd\` to confirm installation"
-echo " "
+set -e
+
+prefix="$HOME/.local"
+
+if command -v fasd >/dev/null 2>&1 || [ -x "$prefix/bin/fasd" ]; then
+  echo 'fasd already installed'
+  exit 0
+fi
+
+repo='https://github.com/clvv/fasd.git'
+tmpdir="$(mktemp -d)"
+
+cleanup() {
+  rm -rf "$tmpdir"
+}
+
+trap cleanup EXIT
+
+echo 'installing fasd from source'
+mkdir -p "$prefix/bin"
+git clone --depth 1 "$repo" "$tmpdir/fasd"
+make -C "$tmpdir/fasd" install PREFIX="$prefix"
+
+echo "fasd installed to $prefix/bin/fasd"
