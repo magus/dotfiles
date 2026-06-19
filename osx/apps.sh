@@ -77,5 +77,8 @@ open "https://help.github.com/articles/testing-your-ssh-connection/"
 open "https://github.com/settings/ssh"
 open "https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/"
 
+# Chrome
+open "https://www.google.com/chrome/"
+
 # Navigate back
 cd "$RESTORE_DIR"
