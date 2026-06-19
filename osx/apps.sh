@@ -7,45 +7,26 @@ cd /tmp
 # mpv
 brew install --cask mpv
 
-# Slack
-curl -L -o slack.zip "https://slack.com/ssb/download-osx-beta"
-unzip slack.zip
-mv Slack.app /Applications
-rm slack.zip
-open /Applications/Slack.app
+# The Unarchiver
+open "https://theunarchiver.com/"
+
+# Extensions
+# Name in middle of url
+open "https://chromewebstore.google.com/detail/the-great-suspender-reloa/hlofigcdgjlnalbkeeinfcjceabpamci"
+open "https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh"
+open "https://chrome.google.com/webstore/detail/go-back-with-backspace/eekailopagacbcdloonjhbiecobagjci/related?hl=en"
 
 # Visual Studio Code
-curl -L -o vs-code.zip "https://go.microsoft.com/fwlink/?LinkID=620882"
-unzip vs-code.zip
-mv "Visual Studio Code.app" /Applications
-rm vs-code.zip
+open "https://code.visualstudio.com/"
 
-# Transmission
-curl -L -o Transmission.dmg "https://transmission.cachefly.net/Transmission-2.84.dmg"
-hdiutil mount -nobrowse Transmission.dmg
-cp -R "/Volumes/Transmission/Transmission.app" /Applications
-hdiutil unmount "/Volumes/Transmission"
-rm Transmission.dmg
+# Github SSH keys
+open "https://help.github.com/articles/testing-your-ssh-connection/"
+open "https://github.com/settings/ssh"
+open "https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/"
 
-# Spectacle
-curl -L -o Spectacle.zip "https://s3.amazonaws.com/spectacle/downloads/Spectacle+1.2.zip"
-unzip Spectacle.zip
-mv Spectacle.app /Applications
-open /Applications/Spectacle.app
-rm Spectacle.zip
-
-# The Unarchiver
-curl -L -o TheUnarchiver.zip https://dl.devmate.com/cx.c3.theunarchiver/TheUnarchiver.zip
-unzip TheUnarchiver.zip
-mv The\ Unarchiver.app /Applications
-rm TheUnarchiver.zip
-
-# ScrollReverser
-curl -L -o ScrollReverser.zip https://pilotmoon.com/downloads/ScrollReverser-1.7.6.zip
-unzip ScrollReverser.zip
-mv Scroll\ Reverser.app /Applications
-rm ScrollReverser.zip
-open /Applications/Scroll\ Reverser.app
+# 1Password
+open "https://chrome.google.com/webstore/detail/1password-password-manage/aomjjhallfgjeglblehebfpbcfeobpgk?hl=en"
+open "https://1password.com/downloads/"
 
 # Inconsolata font
 # https://github.com/googlefonts/Inconsolata
@@ -59,26 +40,6 @@ open $HOME/.dotfiles/fonts/SourceCodePro/*.otf
 # Meslo font
 # used by zsh/p10k.zsh.symlink (powerline)
 open $HOME/.dotfiles/fonts/MesloLGS-NerdFont/*.ttf
-
-
-# Open pages for Brave extensions
-# Name in middle of url
-open "https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"
-open "https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi"
-open "https://chrome.google.com/webstore/detail/reddit-enhancement-suite/kbmfpngjjgdllneeigpgjifpgocmfgmb"
-open "https://chrome.google.com/webstore/detail/go-back-with-backspace/eekailopagacbcdloonjhbiecobagjci/related?hl=en"
-
-# 1Password
-open "https://chrome.google.com/webstore/detail/1password-password-manage/aomjjhallfgjeglblehebfpbcfeobpgk?hl=en"
-open "https://1password.com/downloads/"
-
-# Github SSH keys
-open "https://help.github.com/articles/testing-your-ssh-connection/"
-open "https://github.com/settings/ssh"
-open "https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/"
-
-# Chrome
-open "https://www.google.com/chrome/"
 
 # Navigate back
 cd "$RESTORE_DIR"
