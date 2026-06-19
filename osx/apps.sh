@@ -7,9 +7,6 @@ cd /tmp
 # mpv
 brew install --cask mpv
 
-# The Unarchiver
-open "https://theunarchiver.com/"
-
 # Extensions
 # Name in middle of url
 open "https://chromewebstore.google.com/detail/the-great-suspender-reloa/hlofigcdgjlnalbkeeinfcjceabpamci"
