@@ -16,12 +16,15 @@ if [ ! -e "$(which brew)" ]; then
   exit 1
 fi
 
+# Homebrew 6 defaults to prompting before installs. Keep dotfiles setup moving.
+export HOMEBREW_NO_ASK=1
 
 # Update homebrew
 brew update
 
 # Install homebrew packages
 brew install coreutils nmap parallel iftop
+brew install --force-bottle ffmpeg
 brew install fpp
 brew install git-delta
 brew install git-absorb
