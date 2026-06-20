@@ -25,6 +25,7 @@ brew update
 # Install homebrew packages
 brew install coreutils nmap parallel iftop
 brew install --force-bottle ffmpeg
+brew install --force-bottle imagemagick
 brew install fpp
 brew install git-delta
 brew install git-absorb
