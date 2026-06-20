@@ -23,18 +23,29 @@ export HOMEBREW_NO_ASK=1
 brew update
 
 # Install homebrew packages
-brew install coreutils nmap parallel iftop
-brew install --force-bottle ffmpeg
-brew install --force-bottle imagemagick
-brew install fpp
-brew install git-delta
-brew install git-absorb
-brew install direnv
-brew install vim
-brew install tmux
-brew install fzf
-brew install ripgrep
-brew install magus/git-stack/git-stack
+source_packages=(
+  coreutils
+  fpp
+  iftop
+  magus/git-stack/git-stack
+  parallel
+  tmux
+)
 
-# javascript
-brew install fnm
+brew install "${source_packages[@]}"
+
+# Packages where falling back to a source build is especially slow.
+force_bottle_packages=(
+  direnv
+  ffmpeg
+  fnm
+  fzf
+  git-absorb
+  git-delta
+  imagemagick
+  nmap
+  ripgrep
+  vim
+)
+
+brew install --force-bottle "${force_bottle_packages[@]}"
