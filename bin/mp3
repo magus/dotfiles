@@ -1,31 +1,45 @@
 #!/bin/bash
 
 stderr() {
-   printf '%s\n' "$*" >&2
+    printf '%s\n' "$*" >&2
 }
 
 run() {
-   stderr '❯' "$@"
-   "$@"
+    stderr '❯' "$@"
+    "$@"
 }
 
 # URL is required
 URL="$1"
 if [ -z "$URL" ]; then
-   echo "Must specify a url"
-   exit 1
+    echo "Must specify a url"
+    exit 1
 fi
 
 if ! check_dep "yt-dlp"; then
-   echo "Must install yt-dlp"
-   exit 1
+    stderr "❌ yt-dlp is required but was not found on PATH."
+    stderr
+    stderr "Github"
+    stderr "https://github.com/yt-dlp/yt-dlp#release-files"
+    stderr
+    stderr '  mkdir -p "$HOME/.local/bin"'
+    stderr '  mv "$HOME/Downloads/yt-dlp_macos" "$HOME/.local/bin/yt-dlp"'
+    stderr '  chmod a+rx "$HOME/.local/bin/yt-dlp"'
+    stderr '  xattr -d com.apple.quarantine "$HOME/.local/bin/yt-dlp" 2>/dev/null || true'
+    stderr '  yt-dlp --version'
+    stderr
+    stderr "Homebrew"
+    stderr
+    stderr "  brew install yt-dlp"
+    stderr
+    exit 1
 fi
 
 output="$HOME/Downloads/%(title)s.%(ext)s"
 
 # first try to download m4a/mp3 audio format
 if run yt-dlp -k -f "bestaudio[ext=m4a]/bestaudio[ext=mp3]" -o "$output" "$URL"; then
-   exit 0
+    exit 0
 fi
 
 stderr
