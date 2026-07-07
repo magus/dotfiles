@@ -37,7 +37,7 @@ fi
 while true; do
   # run the command, redirecting all output to stdout
   # in order to ensure we capture everything
-  output=$(${COMMAND[@]} 2>&1)
+  output=$("${COMMAND[@]}" 2>&1)
   clear_screen
   stderr "$(date +"%Y-%m-%d %H:%M:%S")"
   stderr "$output"
