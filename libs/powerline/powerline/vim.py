@@ -108,7 +108,7 @@ class VimPowerline(Powerline):
 					self.last_window_id += 1
 					window.vars['powerline_window_id'] = curwindow_id
 				statusline = self.window_statusline.format(curwindow_id)
-				if window.options['statusline'] != statusline:
+				if window.options['statusline'] != statusline.encode('ascii'):
 					window.options['statusline'] = statusline
 				if curwindow_id == window_id if window_id else window is vim.current.window:
 					r = (window, curwindow_id, window.number)
