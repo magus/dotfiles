@@ -59,7 +59,8 @@ fi
 
 # rebase target needs to account for new commit created above
 rebase_target=$((relative_number + 2))
-git rebase -i --autosquash HEAD~"$rebase_target"
+# Keep autosquash interactive mode, but accept the generated todo without opening an editor.
+GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash HEAD~"$rebase_target"
 
 if [ "$save_stash" = true ]; then
   git stash pop -q
