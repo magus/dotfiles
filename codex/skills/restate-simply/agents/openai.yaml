@@ -1,0 +1,4 @@
+interface:
+  display_name: "Restate Simply"
+  short_description: "Restate the last message in clear, simple English"
+  default_prompt: "Use $restate-simply to restate my last message."
