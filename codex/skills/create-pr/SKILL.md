@@ -74,6 +74,12 @@ If the branch already has suitable commits, do not rewrite them just to make the
 
 ## PR Body
 
+When Noah asks for a PR summary, body, description, or other PR-facing copy to
+paste into GitHub, always return the complete PR body inside a fenced `markdown`
+code block. Do not render the PR body directly as normal chat Markdown. If the
+body contains its own code fences, use an outer fence longer than every inner
+fence. Put an optional PR title outside the fenced body.
+
 Use `## Problem` and `## Solution` as the default top-level sections. Add `## Test` when test evidence, command output, artifact links, or verification notes are more readable as their own section.
 
 Write for skim-read reviewers.
@@ -225,5 +231,8 @@ The `line` must be on the PR diff. If GitHub rejects the anchor, inspect the dif
 Pull request review comment API reference: https://docs.github.com/en/rest/pulls/comments#create-a-review-comment-for-a-pull-request
 
 ## Final Response
+
+For PR-summary, PR-body, or other copy-only requests, return the complete
+GitHub-ready body inside a fenced `markdown` code block.
 
 Report the PR URL with its title and draft/ready status.
