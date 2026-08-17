@@ -49,6 +49,7 @@ mkdir -p "$codex_dir/skills"
 mkdir -p "$agents_dir/skills"
 
 link_path "$src_dir/config.toml" "$codex_dir/config.toml"
+link_path "$src_dir/AGENTS.md" "$codex_dir/AGENTS.md"
 link_path "$src_dir/skills/skill-lock.json" "$agents_dir/.skill-lock.json"
 
 cleanup_broken_skill_links "$codex_dir/skills"
