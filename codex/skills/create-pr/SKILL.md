@@ -9,6 +9,12 @@ Use this skill when Noah asks to create a GitHub pull request from local or
 already-pushed changes, or asks for PR-facing text such as a title, summary,
 body, description, or reviewer note for those changes.
 
+When drafting PR titles, descriptions, reviewer notes, or other text for Noah,
+also use `$noah-voice`. Read [its instructions](../noah-voice/SKILL.md) and
+apply its GitHub pull request guidance. Preserve the existing PR structure,
+verification requirements, formatting, and publishing rules; `$noah-voice`
+controls tone and wording.
+
 Prefer `gh` for GitHub operations. Use the GitHub app or web only when `gh` is unavailable, unauthenticated, or missing a capability needed for the task.
 
 ## Preflight
