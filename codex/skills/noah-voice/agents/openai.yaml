@@ -1,0 +1,4 @@
+interface:
+  display_name: "Noah’s Writing Voice"
+  short_description: "Draft Slack and PR text in Noah’s natural voice"
+  default_prompt: "Use $noah-voice to rewrite this draft so it sounds like Noah."
