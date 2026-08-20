@@ -14,11 +14,18 @@ Edit text to remove AI patterns and add human voice.
 3. Add soul (see next section).
 4. Self-audit: "What makes this obviously AI generated?" Fix remaining tells.
 
+## Preserve accuracy
+
+- Preserve meaning, intent, facts, limits, uncertainty, ambiguity, and tone. Do not invent missing information.
+- Keep exact names, code, commands, paths, URLs, numbers, quoted errors, and protocol terms when changing them could reduce accuracy.
+- Keep useful lists and code blocks when their structure carries meaning.
+- If the writing is already clear, make only necessary changes.
+
 ## Adding soul
 
 Removing patterns is half the job. Sterile, voiceless writing is just as obvious.
 
-- **Have opinions.** React to facts instead of neutrally listing pros and cons.
+- **Have opinions in authored text.** React to facts instead of neutrally listing pros and cons. When editing or restating existing text, preserve the source's stance and do not add one.
 - **Vary rhythm.** Short sentences. Then longer ones that take their time. Mix it up.
 - **Acknowledge complexity.** "Impressive but also kind of unsettling" beats "impressive."
 - **Use "I" when it fits.** First person isn't unprofessional.
