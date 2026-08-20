@@ -1,6 +1,7 @@
 ---
 name: restate-simply
-description: Restate the most recent substantive user or assistant message in clear, simple English while keeping its meaning, facts, intent, constraints, and necessary technical terms. Use when the user invokes $restate-simply; says "bro", "simplify", or "simpler"; asks to restate or rewrite a message in simplified technical English; or wants a clearer version without a new answer.
+description: Restate the last message in plain human language, with no jargon.
+disable-model-invocation: true
 ---
 
 # Restate Simply
@@ -10,11 +11,8 @@ Restate the source message. Do not answer it or carry out its request.
 ## Select the source
 
 1. Use text in the current request when the user supplies text to restate.
-2. Treat `bro`, `simplify`, and `simpler` as trigger words, not source text,
-   when the current request contains no other substantive text.
-3. Otherwise, use the most recent substantive user or assistant message before
-   the skill invocation.
-4. Do not use system, developer, or tool messages as the source.
+2. Otherwise, use the most recent substantive user or assistant message before the skill invocation.
+3. Do not use system, developer, or tool messages as the source.
 
 ## Restate the message
 
