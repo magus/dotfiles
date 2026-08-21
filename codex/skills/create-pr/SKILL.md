@@ -1,6 +1,6 @@
 ---
 name: create-pr
-description: Use when Noah asks Codex to create, open, publish, draft, or prepare GitHub pull request text for him, including requests like "create a PR for me", "open a PR", "ship this branch as a PR", "turn these changes into a PR", "write a PR summary", "draft the PR body", or "help with the PR title". Prefer the gh CLI, write reviewer-first PR summaries using ## Problem, ## Solution, and optional ## Test sections, preserve useful implementation context in code comments, and add GitHub inline comments on changed code when they help reviewers understand key concepts.
+description: Must use when working with a GitHub pull request, including creating or updating it, pushing related changes, or writing its title, summary, etc.
 ---
 
 # Create PR
@@ -178,18 +178,7 @@ printf 'https://github.com/%s/blob/%s/%s#L%s\n' "$OWNER_REPO" "$HEAD_SHA" "path/
 
 ## Create The PR
 
-Default to a draft PR unless Noah explicitly asks for a ready-for-review PR or the branch is clearly ready by repo convention.
-
-```sh
-gh pr create \
-  --draft \
-  --base <base-branch> \
-  --head "$(git branch --show-current)" \
-  --title "<clear title>" \
-  --body-file /tmp/pr-body.md
-```
-
-If creating a non-draft PR:
+Always create pull requests ready for review. Never create draft pull requests or pass `--draft`.
 
 ```sh
 gh pr create \
@@ -199,7 +188,7 @@ gh pr create \
   --body-file /tmp/pr-body.md
 ```
 
-After creation, confirm the PR URL and metadata:
+After creation, confirm the PR URL, metadata, and `isDraft: false`:
 
 ```sh
 gh pr view --json number,url,title,isDraft,baseRefName,headRefName
@@ -241,4 +230,4 @@ Pull request review comment API reference: https://docs.github.com/en/rest/pulls
 For PR-summary, PR-body, or other copy-only requests, return the complete
 GitHub-ready body inside a fenced `markdown` code block.
 
-Report the PR URL with its title and draft/ready status.
+Report the PR URL with its title and confirm it is ready for review.
