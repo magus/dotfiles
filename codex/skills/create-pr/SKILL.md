@@ -101,6 +101,30 @@ Write for skim-read reviewers.
 - Do not use label-colon bullets like `Implementation: ...` or `CI: <url>`.
 - Use short bold subheads when a section needs grouping.
 
+### Technical precision
+
+Use exact names from the current diff, configuration, or verified output. Inline
+code makes technical details easy to scan and prevents ambiguous prose.
+
+- Wrap literal identifiers, commands, flags, package names, target triples,
+  executable names, environment variables, CI queues and step keys, filenames,
+  artifact names, paths, and exact errors in backticks.
+- Name the actual executable or dependency instead of a broad tool family or
+  marketing name. Write `cargo`, not Cargo, when referring to the command. Use
+  `gcc-mingw-w64-x86-64` or the exact `llvm-mingw` archive name instead of
+  MinGW when those are the dependencies the change actually uses.
+- When platforms or architectures use different implementations, state the
+  concrete mapping. For example, connect `x86_64-pc-windows-gnu` to
+  `gcc-mingw-w64-x86-64` and `aarch64-pc-windows-gnullvm` to its exact pinned
+  `llvm-mingw` archive rather than describing both as a MinGW build.
+- Preserve review-relevant versions, artifact compatibility, runtime flags, and
+  additional behavior from the diff. Do not hide meaningful changes behind
+  umbrella terms or shorten a summary until it becomes inaccurate.
+- Verify technical names against the diff or source before using them. Do not
+  invent package names, versions, commands, or verification. Keep ordinary
+  platform and product names such as Linux, Windows, Rust, and Buildkite in
+  prose when they do not refer to literal code values.
+
 Organize the summary around the reviewer's scan path.
 
 - Start with what changed and why the reviewer should care.
