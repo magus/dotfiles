@@ -55,7 +55,7 @@ Do not turn logs, screenshots, issue context, or test output into code comments 
 
 Run focused tests or checks that match the changed surface area. Capture exact commands and important output. For failures, include the failing command, the relevant excerpt, and whether the failure is pre-existing, environmental, or caused by the branch.
 
-If verification details are substantial, put them in a separate `## Test` section in the PR body. Include commands run, concise output excerpts, and links to output artifacts such as screenshots, recordings, logs, CI runs, or deployed previews.
+Include a `## Test` section only for meaningful validation performed separately from automated CI. Explain the one-off commands, manual workflow, created resource, deployment, or direct interaction that verified the change, along with the relevant result or artifact. Do not list unit tests, routine checks, Buildkite runs, or other checks already shown on the PR.
 
 Use fenced code blocks for logs in the PR body:
 
@@ -86,7 +86,7 @@ code block. Do not render the PR body directly as normal chat Markdown. If the
 body contains its own code fences, use an outer fence longer than every inner
 fence. Put an optional PR title outside the fenced body.
 
-Use `## Problem` and `## Solution` as the default top-level sections. Add `## Test` when test evidence, command output, artifact links, or verification notes are more readable as their own section.
+Use `## Problem` and `## Solution` as the default top-level sections. Add `## Test` only when meaningful validation beyond automated CI needs its own section.
 
 Write for skim-read reviewers.
 
@@ -129,7 +129,7 @@ Organize the summary around the reviewer's scan path.
 
 - Start with what changed and why the reviewer should care.
 - Then show where to focus in the diff.
-- Then show how the change was tested.
+- Then show independent validation when it adds information beyond CI.
 - Prefer "what changed" over a chronological story of the work.
 - Separate user-facing behavior, implementation details, migrations, and risks when more than one applies.
 - Keep links close to the claim they support.
@@ -179,16 +179,14 @@ What changed and why this shape fits.
 
 ## Test
 
-How this was verified.
+How the change was verified beyond automated CI.
 
-- `command`
-  Result
-- [Rendered screenshot artifact](https://github.com/org/repo/actions/runs/123/artifacts/456)
-- [Passing CI run](https://github.com/org/repo/actions/runs/123)
-- Not run because <reason>
+- Ran `<one-off command>` and confirmed `<specific result>`.
+- Created `<resource>`, exercised `<interaction>`, and confirmed `<observed behavior>`.
+- [Screenshot or recording of the verified behavior](https://github.com/org/repo/assets/verified-behavior.png)
 ```
 
-Omit `## Test` when verification is trivial and fits cleanly in `## Solution`.
+Omit `## Test` unless it documents meaningful validation performed separately from automated CI. Do not include a section just to repeat unit tests, routine checks, or CI results already visible on the PR.
 
 Ground factual claims with links when practical. Prefer durable links such as issue URLs, GitHub Actions run URLs, docs URLs, and commit-SHA code permalinks over branch links that can move.
 
