@@ -14,7 +14,9 @@
   "workbench.tree.indent": 15,
   "workbench.tree.renderIndentGuides": "always",
   "workbench.colorCustomizations": {
-    "tree.indentGuidesStroke": "#05ef3c"
+    "tree.indentGuidesStroke": "#05ef3c",
+    "tab.activeBackground": "#514566",
+    "tab.activeForeground": "#ffffff",
   },
   "workbench.colorTheme": "Palenight (Mild Contrast)",
   "workbench.secondarySideBar.defaultVisibility": "hidden",
