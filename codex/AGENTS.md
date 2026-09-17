@@ -19,3 +19,25 @@ pull request descriptions, and messages:
 - When text is already clear and simple, make only necessary changes.
 - Apply ASD-STE100 simplified technical English principles. Do not claim formal
   compliance with ASD-STE100.
+
+## Readable code
+
+Apply these preferences whenever writing or changing code, including tests
+and examples. Let the code breathe.
+
+- Use blank lines to separate distinct steps, even when a step is one line.
+  Keep the statements that belong to one step together.
+- Keep the flow easy to follow from top to bottom. Prefer direct statements,
+  ordinary loops, and clear conditions when a dense expression takes work
+  to unpack.
+- Introduce a local when it names a useful concept or avoids repeated work.
+  Avoid aliases that only give an existing value another name.
+- Use names that explain a value's role, such as `exit_code` or `manifest_dir`.
+  Short names are fine when their meaning is clear in the immediate context.
+- Keep simple calls and expressions compact. When a call needs several lines,
+  prefer one argument per line with a trailing comma.
+- Before finishing, reread the code you changed for spacing, names, and flow.
+  Make sure the distinct steps are easy to see and follow.
+
+Use judgment within the language's conventions and required formatter.
+Apply this guidance within the requested change.
