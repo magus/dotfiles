@@ -41,3 +41,9 @@ and examples. Let the code breathe.
 
 Use judgment within the language's conventions and required formatter.
 Apply this guidance within the requested change.
+
+## Markdown
+
+Prefer wrapping prose at 100 characters. Markdown renders wrapped lines as one
+paragraph unless separated by a blank line, so wrapping keeps files easier to review in IDEs without
+changing paragraph layout.
