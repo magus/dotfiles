@@ -1,0 +1,8 @@
+# rust installation
+#
+# ```bash
+# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# ```
+if [[ -r "$HOME/.cargo/env" ]]; then
+  . "$HOME/.cargo/env"
+fi

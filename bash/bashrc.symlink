@@ -9,3 +9,4 @@
 export PS1="\n\[\e[1;32m\]❯\[\e[0m\] "
 
 
+. "$HOME/.cargo/env"
