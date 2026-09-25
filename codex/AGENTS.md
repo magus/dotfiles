@@ -27,6 +27,10 @@ and examples. Let the code breathe.
 
 - Use blank lines to separate distinct steps, even when a step is one line.
   Keep the statements that belong to one step together.
+- Write short internal comments as compact notes. Put markers such as
+  `⚠️ TEMPORARY` on their own line. Use one complete thought per line when
+  practical, with concise wording. Keep related lines together. Use blank
+  comment lines only between distinct topics. Match nearby casing and punctuation.
 - Keep the flow easy to follow from top to bottom. Prefer direct statements,
   ordinary loops, and clear conditions when a dense expression takes work
   to unpack.
