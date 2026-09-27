@@ -1,16 +1,63 @@
-#!/bin/sh
-# a shell script to print directory size summaries
+#!/usr/bin/env bash
+
+# Prints directory size summaries, largest first
 # magus (noah@iamnoah.com)
 # original by:
 # rick vannorman 20oct2004
 
-BACKDIR="$(pwd)";
-[[ -z $@ ]] && DUXDIR="$BACKDIR" || DUXDIR="$@";
+usage() {
+  stderr "Usage: dux [-a] [directory]"
+  stderr
+  stderr "Options:"
+  stderr "  -a, --alphabetical       Sort alphabetically by path"
+  stderr "  -h, --help               Display this help message"
+  stderr
+  stderr "Examples:"
+  stderr "  dux"
+  stderr "  dux -a ~/Downloads"
+  exit "${1:-0}"
+}
 
-cd "$DUXDIR"
+stderr() {
+  echo "$@" >&2
+}
 
-du -ckHa | sort -nr | awk '{
-  dir = $0;                    # preserve the input recordd
+sort_option="-nr"
+
+while [[ "$#" -gt 0 ]]; do
+  case "$1" in
+    -a|--alphabetical)
+      sort_option="-k2"
+      shift
+      ;;
+    -h|--help)
+      usage
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -*)
+      stderr "Unknown option: $1"
+      usage 1
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+if [[ "$#" -gt 1 ]]; then
+  stderr "Expected at most one directory"
+  usage 1
+fi
+
+directory="${1:-.}"
+
+cd -- "$directory" || exit 1
+
+du -ckHa | sort "$sort_option" | awk '{
+  dir = $0;                    # preserve the input record
   x = gsub(/\//,"",dir);       # count the slashes, nesting level
   if (x != 1) next;            # ignore all but top level
   size = $1 / 1;               # extract size to int
@@ -27,5 +74,3 @@ du -ckHa | sort -nr | awk '{
   }
   printf("%12.3sK %s\n",size,$0); # display user friendly output
 }'
-
-cd "$BACKDIR"
