@@ -22,8 +22,8 @@ pull request descriptions, and messages:
 
 ## Readable code
 
-Apply these preferences whenever writing or changing code, including tests
-and examples. Let the code breathe.
+Apply these preferences as you write or change code, including tests and examples.
+Do not leave readability for a final cleanup. Let the code breathe.
 
 - Use blank lines to separate distinct steps, even when a step is one line.
   Keep the statements that belong to one step together.
@@ -34,13 +34,25 @@ and examples. Let the code breathe.
 - Keep the flow easy to follow from top to bottom. Prefer direct statements,
   ordinary loops, and clear conditions when a dense expression takes work
   to unpack.
-- Introduce a local when it names a useful concept or avoids repeated work.
+- Introduce a local when it names a useful concept, separates a distinct step,
+  or makes an expression easier to read, even if it is used only once.
   Avoid aliases that only give an existing value another name.
+- Do not hide several operations inside a call argument. When an inline expression
+  is hard to read, compute it in named steps before the call. This includes building
+  paths, reading files, and serializing data.
 - Use names that explain a value's role, such as `exit_code` or `manifest_dir`.
   Short names are fine when their meaning is clear in the immediate context.
-- Keep simple calls and expressions compact. When a call needs several lines,
-  prefer one argument per line with a trailing comma.
-- Before finishing, reread the code you changed for spacing, names, and flow.
+- When a constructed command or other value is hard to picture, add a short comment
+  with a representative example of its final form. Keep the example accurate and
+  make placeholders clear.
+- Keep simple calls and expressions compact. In a multiline call or function
+  signature, put each argument or parameter on its own line, including `self`,
+  `*args`, and `**kwargs`. Use a trailing comma when the language allows it.
+- In Python, never use multiline `from ... import ...` statements. Import the module
+  and use qualified names instead, such as `function_calling_tool.FunctionCallingTool`.
+- For multiline Python docstrings, put the opening `"""` on its own line.
+  Start the summary on the next line.
+- Before finishing, reread the code you changed against these rules.
   Make sure the distinct steps are easy to see and follow.
 
 Use judgment within the language's conventions and required formatter.
