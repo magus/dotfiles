@@ -34,14 +34,26 @@ Do not leave readability for a final cleanup. Let the code breathe.
 - Keep the flow easy to follow from top to bottom. Prefer direct statements,
   ordinary loops, and clear conditions when a dense expression takes work
   to unpack.
+- Order a file by what matters most to the reader. Put its main public behavior,
+  such as an app and its routes, before private helpers and supporting definitions.
+  Do not make readers pass a wall of constants, models, and tiny helpers first.
+  In Python, keep definitions before code that needs them during module evaluation.
+  Keep the entry-point call after the definitions it needs.
 - Introduce a local when it names a useful concept, separates a distinct step,
   or makes an expression easier to read, even if it is used only once.
   Avoid aliases that only give an existing value another name.
+- Keep values in the smallest scope that uses them. A useful name does not require
+  a module-level constant. Move single-use globals into the function that uses them.
+  Inline a simple one-use value when its name adds no useful meaning.
 - Do not hide several operations inside a call argument. When an inline expression
   is hard to read, compute it in named steps before the call. This includes building
   paths, reading files, and serializing data.
 - Use names that explain a value's role, such as `exit_code` or `manifest_dir`.
   Short names are fine when their meaning is clear in the immediate context.
+- Name a file after its single intended export. Avoid a broad filename that makes
+  readers translate between the file and the function or class they need.
+  Give the export a specific name that says what it does or tests.
+  Put supporting modules in a suitable subdirectory instead of crowding the package root.
 - When a constructed command or other value is hard to picture, add a short comment
   with a representative example of its final form. Keep the example accurate and
   make placeholders clear.
@@ -52,6 +64,16 @@ Do not leave readability for a final cleanup. Let the code breathe.
   and use qualified names instead, such as `function_calling_tool.FunctionCallingTool`.
 - For multiline Python docstrings, put the opening `"""` on its own line.
   Start the summary on the next line.
+- Use `textwrap.dedent` for inline multiline Python strings so the content can follow
+  the surrounding indentation without adding that indentation to the value.
+- Keep embedded scripts, configuration, and other file content in separate files with
+  their proper names and extensions. Read those files instead of embedding them as
+  multiline strings in code.
+- Name module-level compiled regular expressions `_RE_<NAME>`.
+  Put them with the supporting definitions near the bottom of the file.
+- When dispatching on one value in Python, prefer `match` / `case` to an `if` / `elif`
+  chain. Include an explicit `case _` that raises an error with the unsupported value.
+  Do not let an unknown value fall through to a valid operation.
 - Before finishing, reread the code you changed against these rules.
   Make sure the distinct steps are easy to see and follow.
 
