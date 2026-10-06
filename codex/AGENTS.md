@@ -17,6 +17,12 @@ pull request descriptions, and messages:
 - Answer directly. Avoid unnecessary headings, prefaces, explanations, and
   closing notes.
 - When text is already clear and simple, make only necessary changes.
+- When revising text I will copy and use, give me the complete revised text in one
+  code fence. Do not give me only a fragment to insert or replace in an earlier
+  response, or make me find the insertion point and combine the edits myself.
+- For long text or repeated revisions, use your judgment to keep the complete
+  current version in a file instead. Apply the edits to that file and link it
+  in your response so I can open and copy it. Do not make me apply the edits.
 - Apply ASD-STE100 simplified technical English principles. Do not claim formal
   compliance with ASD-STE100.
 
