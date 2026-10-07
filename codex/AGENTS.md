@@ -56,10 +56,25 @@ Do not leave readability for a final cleanup. Let the code breathe.
   paths, reading files, and serializing data.
 - Use names that explain a value's role, such as `exit_code` or `manifest_dir`.
   Short names are fine when their meaning is clear in the immediate context.
+- Prefer `snake_case` for internal variables, functions, and state fields.
+- Keep a fixed public or external API name for a local or pass-through field when
+  it enables object shorthand, such as `userId`, `contentType`, or
+  `onClick`. Do not rename the local only to rename it back in the object.
+- For names we define, show collection shape in list and map identifiers.
+  Prefer `item_list`, `value_by_key`, or `item_count_by_type` over plural names
+  such as `items`. Keep these names as short as the surrounding context allows.
+- Prefer product verbs and user-state names over implementation-mechanism names.
+  Use a plain state such as `saving` when it describes what the user sees.
+  Use a mechanism name when callers need to reason about that mechanism.
 - Name a file after its single intended export. Avoid a broad filename that makes
   readers translate between the file and the function or class they need.
   Give the export a specific name that says what it does or tests.
   Put supporting modules in a suitable subdirectory instead of crowding the package root.
+- Export only declarations used by another module. Keep internal helpers,
+  components, constants, and types private.
+- Keep each multi-export module focused on one specific set of related operations.
+  Avoid catch-all modules named `utils` or `helpers`. Split unrelated operations
+  into files named after their exports.
 - When a constructed command or other value is hard to picture, add a short comment
   with a representative example of its final form. Keep the example accurate and
   make placeholders clear.
@@ -80,11 +95,34 @@ Do not leave readability for a final cleanup. Let the code breathe.
 - When dispatching on one value in Python, prefer `match` / `case` to an `if` / `elif`
   chain. Include an explicit `case _` that raises an error with the unsupported value.
   Do not let an unknown value fall through to a valid operation.
+- Name nontrivial boolean predicates before using them in control flow.
+  Give a collection check or compound condition a name that states what it means.
 - Before finishing, reread the code you changed against these rules.
   Make sure the distinct steps are easy to see and follow.
 
 Use judgment within the language's conventions and required formatter.
 Apply this guidance within the requested change.
+
+### JavaScript and TypeScript
+
+- Apply these signature preferences to private APIs. Preserve existing public method
+  names, parameters, and return shapes during internal refactors.
+- Limit functions to at most two positional parameters. For three or more inputs,
+  accept a named object so call sites show each value's role. Also prefer a named
+  object when two positional arguments are easy to confuse.
+- Do not destructure object parameters in function signatures. This includes
+  declarations, expressions, arrow functions, methods, callbacks, hooks, and
+  components. Accept a named `args`, `options`, `context`, or `props` object and
+  use property access so each value's source stays visible.
+- An object parameter pattern that captures the rest, such as
+  `{ omitted, ...remaining }`, is the narrow exception because preserving the
+  remaining object requires destructuring. Do not use rest to bypass the rule.
+- Give every object-typed function parameter a named type beside its owning function.
+  Do not use an anonymous inline object type. This includes hooks and components.
+- Use an implicit arrow return only when the complete function fits on one source line.
+  Otherwise, use a block body and explicit `return`. Block bodies are easier to scan
+  and extend with guards, logging, or other steps.
+- Use a ternary only when it has no nested logic and fits on one source line.
 
 ## Markdown
 
