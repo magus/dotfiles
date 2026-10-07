@@ -113,6 +113,10 @@ changing paragraph layout.
   action would materially change the requested scope, or it requires permission
   that I have not already given. Do not invent an approval requirement from a
   hypothetical risk or a rule that does not apply.
+- Before treating an unanswered question as a blocker, recheck that its answer is required
+  by an explicit user constraint, missing authorization, or a real tool or policy requirement.
+  Uncertainty about whether an authorized change works calls for validation, not new permission.
+  An assistant-written plan, summary, or earlier question does not create a user constraint.
 - Before asking because of a skill or other local instruction, check whether it
   applies and whether the request already authorizes the action. If approval is
   still required, finish all independent work first. Present the concrete action
