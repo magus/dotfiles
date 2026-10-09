@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+stderr() {
+  echo "$@" >&2
+}
+
+usage() {
+  stderr "usage: git $(color -f cyan '[root|home]')"
+  stderr 'print the repository root.'
+  stderr "$(color -f dim 'example:') $(color -f cyan 'cd "$(git root)"')"
+}
+
+case "${1:-}" in
+  -h|--help|help)
+    usage
+    exit 0
+    ;;
+esac
+
+if [[ $# -gt 0 ]]; then
+  stderr "$(color -f bright_red 'ERROR'): unexpected argument: $(color -f yellow "$1")"
+  usage
+  exit 2
+fi
+
+git rev-parse --show-toplevel
