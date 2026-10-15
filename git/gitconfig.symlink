@@ -78,3 +78,5 @@
 	prune = true
 [maintenance "prefetch"]
 	enabled = false
+[index]
+	threads = true
