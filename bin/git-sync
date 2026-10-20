@@ -28,6 +28,8 @@ check_sync_exit_code() {
 # handle special case when we are on the source branch
 if [[ "$CURRENT_BRANCH" == "$SOURCE_BRANCH" ]]; then
   git fetch --no-tags origin "$SOURCE_BRANCH"
+  check_sync_exit_code $?
+
   git switch -C "$SOURCE_BRANCH" "origin/$SOURCE_BRANCH"
   check_sync_exit_code $?
 else
