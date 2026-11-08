@@ -43,12 +43,14 @@ setopt promptsubst		#expansion/substitution in prompts
 # emacs line editing
 bindkey -e
 
-# `⌥ + ← →` to move back and forward words
-# `esc + f b` also works in this same way
+# `⌥ + ←` and `⌥ + →` move back and forward words
+# `esc + b` and `esc + f` also work in this same way
+# forward stops at word ends, backward stops at word starts
 #
 # discover codes by using `cat -v` and pressing the keys
 #
-bindkey "^[^[[C" forward-word
+bindkey "^[^[[C" emacs-forward-word
+bindkey "^[f" emacs-forward-word
 bindkey "^[^[[D" backward-word
 
 # zsh-users/zsh-history-substring-search
