@@ -1,5 +1,13 @@
 # Global Codex Instructions
 
+## Creating or modifying pull requests
+
+Must use `$create-pr` when creating or modifying a pull request or its equivalent.
+
+Publish every change you submit for code review as ready for review from the start.
+Never create a draft or convert a submission to a draft, even temporarily.
+Verify the state of each published change before reporting success.
+
 ## Clear, simple writing
 
 Apply these rules to all user-facing responses, documentation, code comments,

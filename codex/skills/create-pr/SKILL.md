@@ -1,13 +1,19 @@
 ---
 name: create-pr
-description: Must use when working with a GitHub pull request, including creating or updating it, pushing related changes, or writing its title, summary, etc.
+description: Must use when creating or modifying a pull request or its equivalent.
 ---
 
 # Create PR
 
-Use this skill when Noah asks to create a GitHub pull request from local or
-already-pushed changes, or asks for PR-facing text such as a title, summary,
-body, description, or reviewer note for those changes.
+Publish every change you submit for code review as ready for review from the start.
+Never create a draft or convert a submission to a draft, even temporarily.
+Verify the state of each published change before reporting success.
+
+Throughout this skill, “pull request” (PR) means any change proposed for code review.
+Use the repository's tools to carry out the steps below. Adapt the example commands
+to those tools and check how they set the initial review state. Override any default
+that would publish a draft. If a change you publish unexpectedly appears as a draft,
+mark it ready for review and verify its state again.
 
 When drafting PR titles, descriptions, reviewer notes, or other text for Noah,
 also use `$noah-voice`. Read [its instructions](../noah-voice/SKILL.md) and
