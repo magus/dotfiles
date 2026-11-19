@@ -111,13 +111,30 @@ Do not leave readability for a final cleanup. Let the code breathe.
 Use judgment within the language's conventions and required formatter.
 Apply this guidance within the requested change.
 
+### Function signatures and calls
+
+In every language, read the call on its own. Choose a form that makes each
+argument's role clear without looking up the signature.
+
+- When names help, usually name every argument. Even with two inputs,
+  `resize(width=640, height=480)` makes it easy to spot swapped dimensions.
+  Use named arguments or an object or struct with named fields.
+- Keep two arguments positional when the operation makes their roles clear.
+  In `add(x, y)`, both values are terms in the sum.
+- When the function acts on one obvious input, that input can stay positional.
+  Name the options that control how the function acts on it. In
+  `fetch(url, timeout=30, retries=3)`, the URL tells readers what to fetch.
+  The names explain what the two numbers control.
+- Several flags or optional fields can share one options object. For example,
+  `apply(config, { dryRun: true, overwrite: false })` can also read
+  `apply(config, options)` when the caller already has the options together.
+- Pass three or more arguments by position only when a required interface
+  dictates their order. Preserve existing public APIs during internal refactors.
+
 ### JavaScript and TypeScript
 
 - Apply these signature preferences to private APIs. Preserve existing public method
   names, parameters, and return shapes during internal refactors.
-- Limit functions to at most two positional parameters. For three or more inputs,
-  accept a named object so call sites show each value's role. Also prefer a named
-  object when two positional arguments are easy to confuse.
 - Do not destructure object parameters in function signatures. This includes
   declarations, expressions, arrow functions, methods, callbacks, hooks, and
   components. Accept a named `args`, `options`, `context`, or `props` object and
