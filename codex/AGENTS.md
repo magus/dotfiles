@@ -8,6 +8,18 @@ Publish every change you submit for code review as ready for review from the sta
 Never create a draft or convert a submission to a draft, even temporarily.
 Verify the state of each published change before reporting success.
 
+## Browser use
+
+- Do not install or run Playwright, its CLI, browser servers, or scripts and tests
+  that use it. This also applies when Playwright targets installed Google Chrome.
+- Do not download or launch bundled Chromium, Chrome for Testing, or Chrome Headless Shell.
+- Use the built-in browser tools with the ChatGPT browser or installed Google Chrome.
+  A built-in tool's `tab.playwright` API is allowed when it controls one of those browsers;
+  this does not authorize installing Playwright or launching a bundled browser.
+- Keep browser sandboxing enabled. Do not pass `--no-sandbox` or disable browser security.
+- If a project check requires prohibited browser tooling, use an allowed alternative
+  or report that check as not run. Do not silently fall back to Playwright.
+
 ## Clear, simple writing
 
 Apply these rules to all user-facing responses, documentation, code comments,
