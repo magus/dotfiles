@@ -32,5 +32,5 @@ prepend_path "/opt/zig/0.16.0"
 # opencode
 prepend_path "$HOME/.opencode/bin"
 
-# Added by cua-driver-rs installer — see https://github.com/trycua/cua
+# local executables
 prepend_path "$HOME/.local/bin"
